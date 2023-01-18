@@ -72,8 +72,8 @@ def create_xml(variable="U", surface="zNormal", file_format="vtp"):
 
 
 def write_pvd(
-    variables=["fi", "dT"],
-    surfaces=["zNormal"],
+    variables=("fi", "dT",),
+    surfaces=("zNormal",),
 ):
     """Write PVD files for requested slices."""
     for variable in variables:
@@ -82,4 +82,4 @@ def write_pvd(
 
 
 if __name__ == "__main__":
-    write_pvd(create_xml)
+    write_pvd()
