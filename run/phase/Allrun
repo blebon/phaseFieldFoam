@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Source tutorial run functions
+source $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+# Get application name
+application=`getApplication`
+
+if [ ! -f log.decomposePar ]; then
+    ./Allrun.pre
+fi
+
+runParallel $application
+runApplication reconstructPar -newTimes
+
+#------------------------------------------------------------------------------

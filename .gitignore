@@ -1,0 +1,70 @@
+# Compiled source
+*.o
+*.so
+
+# Packages
+*.7z
+*.gz
+*.rar
+*.tar
+*.zip
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+*.dat
+log.*
+*.foam
+*.vtk
+*.pvsm
+
+# Mesh files
+boundary
+cellLevel
+cellZones
+faces
+facezones
+level0Edge
+neighbour
+owner
+pointLevel
+points
+pointZones
+refinementHistory
+surfaceIndex
+wrongFaces
+*.eMesh
+*.extendedFeatureEdgeMesh
+.keep
+polyMesh/
+extendedFeatureEdgeMesh/
+nSurfaceLayers
+thickness
+thicknessFraction
+*.hdf
+*.unv
+*.cgns
+*.med
+
+# Folders
+platforms/
+mingw_w64GccDPInt32Opt/
+linux64Gcc*Int32Opt/
+lnInclude/
+__pycache__/
+
+# run Folders
+0/
+0.[0-9]*/
+1*/
+2*/
+3*/
+4*/
+5*/
+6*/
+7*/
+8*/
+9*/
+postProcessing/
+dynamicCode/

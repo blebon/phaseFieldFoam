@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Source tutorial clean functions
+source $WM_PROJECT_DIR/bin/tools/CleanFunctions
+
+cleanCase
+
+#------------------------------------------------------------------------------
