@@ -47,13 +47,6 @@ source $WM_PROJECT_DIR/bin/tools/RunFunctions
 export application=`getApplication`
 ./Allrun
 
-postProcess -func 'cutPlaneSurface(funcName=zNormal, fields=(fi dT), point=(0. 0. 0.), normal=(0 0 1))' -latestTime
-
-touch $(basename $PWD).foam
-
-python3 convert_vtk.py
-python3 generate_pvd.py
-
 date
 
 #------------------------------------------------------------------------------
