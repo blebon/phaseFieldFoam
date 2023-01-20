@@ -25,11 +25,9 @@ import xml.etree.cElementTree as ET
 from natsort import natsorted
 
 
-def create_xml(variable="U", surface="zNormal", file_format="vtp"):
-    """Create <variable>.pvd file with existing VTK files.
+def create_xml(surface="zNormal", file_format="vtp"):
+    """Create <surface>.pvd file with existing VTK files.
 
-    :param variable: Name of field.
-    :type variable: str
     :param surface: Surface of vtk/vtp files.
     :type surface: str
     :param file_format: vtp or vtk.
@@ -61,24 +59,22 @@ def create_xml(variable="U", surface="zNormal", file_format="vtp"):
             timestep="{0:s}".format(time),
             group="",
             part="0",
-            file=f"{surface}/{time}/{variable}_cutPlane.{file_format}",
+            file=f"{surface}/{time}/cutPlane.{file_format}",
         )
     dataset.tail = "\n    "
     tree = ET.ElementTree(root)
     tree.write(
-        "postProcessing/{0:s}_{1:s}.pvd".format(variable, surface), xml_declaration=True
+        "postProcessing/{0:s}.pvd".format(surface), xml_declaration=True
     )
     return 0
 
 
 def write_pvd(
-    variables=("fi", "dT",),
     surfaces=("zNormal",),
 ):
     """Write PVD files for requested slices."""
-    for variable in variables:
-        for surface in surfaces:
-            create_xml(variable, surface)
+    for surface in surfaces:
+        create_xml(surface)
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ Pre-requisites:
 
 * A working installation of `OpenFOAM 10 <https://openfoam.org/release/10/>`_.
 
-In the phaseFieldFoam/application/solver/multiphase/phaseFieldFoam directory, run:    
+In the phaseFieldFoam/applications/solver/multiphase/phaseFieldFoam directory, run:    
 
 .. code-block:: console
   
