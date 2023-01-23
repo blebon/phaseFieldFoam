@@ -75,3 +75,9 @@ Contour plots
 
 The sump profile can be plotted from the VTK files that are saved in the 
 postProcessing directory.
+
+.. Figure:: ../images/Crystal.png
+  :width: 80%
+  :alt: Crystal growth after 0.5 s
+
+  Predicted crystal contour and under-cooling after 0.5 s of growth.
