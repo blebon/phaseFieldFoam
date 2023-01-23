@@ -41,9 +41,6 @@ Initialize the fields.
 Physical properties
 -------------------
 
-Physical properties
-^^^^^^^^^^^^^^^^^^^
-
 The `physical properties <../solver/phaseFieldFoam.html#nomenclature>`_ are prescribed in the constant/physicalProperties dictionary file.
 
 Example usage:
