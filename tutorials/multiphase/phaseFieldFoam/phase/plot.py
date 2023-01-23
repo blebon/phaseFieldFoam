@@ -127,7 +127,16 @@ def plot_crystal(image_name="Crystal.png", cmap="jet"):
     triang = tr.Triangulation(x, y, triangles=tri)
     fi = _dict["fi"]
     dT = _dict["dT"]
-    ax.tricontour(triang, fi, [0.5,], colors=["k",])
+    ax.tricontour(
+        triang,
+        fi,
+        [
+            0.5,
+        ],
+        colors=[
+            "k",
+        ],
+    )
     cs = ax.tricontourf(triang, dT, cmap=cmap, levels=levels, extend="min")
 
     cbar = plt.colorbar(cs)

@@ -8,13 +8,13 @@ from datetime import datetime
 
 # -- Project information -----------------------------------------------------
 
-project = 'phaseFieldFoam'
+project = "phaseFieldFoam"
 year = datetime.now().year
 copyright = f"{year}, Bruno Lebon"
-author = 'Bruno Lebon'
+author = "Bruno Lebon"
 
 # The full version, including alpha/beta/rc tags
-release = 'OF10.0.1'
+release = "OF10.0.1"
 
 # -- Path setup --------------------------------------------------------------
 
@@ -52,7 +52,7 @@ extensions = [
 autosectionlabel_prefix_document = True
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -65,12 +65,12 @@ exclude_patterns = ["build", "Thumbs.db", ".DS_Store"]
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = "alabaster"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 html_theme_options = {
     "github_user": "BCAST",

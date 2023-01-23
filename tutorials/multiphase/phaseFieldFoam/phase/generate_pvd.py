@@ -63,9 +63,7 @@ def create_xml(surface="zNormal", file_format="vtp"):
         )
     dataset.tail = "\n    "
     tree = ET.ElementTree(root)
-    tree.write(
-        "postProcessing/{0:s}.pvd".format(surface), xml_declaration=True
-    )
+    tree.write("postProcessing/{0:s}.pvd".format(surface), xml_declaration=True)
     return 0
 
 

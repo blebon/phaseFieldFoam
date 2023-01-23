@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"fv*": "cpp",
+			"*Properties": "cpp",
+			"*Transport*": "cpp",
+			"*Dict*": "cpp",
+			"*.C": "cpp",
+			"*.H": "cpp",
+			"DT": "cpp",
+			"fi": "cpp",
+			"*.orig": "cpp",
+			"*Transport": "cpp",
+			"*Dict": "cpp",
+			"*.py": "python",
+			"*.rst": "restructuredtext",
+			"*.awk": "shellscript",
+			"*.sed": "shellscript",
+			"Doxyfile": "shellscript",
+		}
+	}
+}

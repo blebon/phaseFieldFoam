@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/applications/**",
+                "/opt/wvec/OpenFOAM/OpenFOAM-10/src/**",
+                "/opt/wvec/OpenFOAM/OpenFOAM-10/applications/**"
+            ],
+            "defines": [],
+            "compilerPath": "/opt/wvec/OpenFOAM/ThirdParty-10/platforms/linux64/gcc-12.1.0/bin/g++",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
+}
