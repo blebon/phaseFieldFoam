@@ -23,12 +23,12 @@ phaseFieldFoam
   This work includes a solver based on the model of:
 
   James A. Warren, Ryo Kobayashi, Alexander E. Lobkovsky and W. Craig Carter,
-  "Extending phase field models of solidification to polycrystalline materials", Acta Materialia **51**(20), 2003, 6035-6058, `doi:10.1016/S1359-6454(03)00388-4 <https://doi.org/10.1016/S1359-6454(03)00388-4>`_.
+  "Extending phase field models of solidification to polycrystalline materials", Acta Materialia **51**(20), 2003, 6035-6058, [doi:10.1016/S1359-6454(03)00388-4](https://doi.org/10.1016/S1359-6454(03)00388-4).
 
   as well as a tutorial case from:
   
-  NIST, "FiPy: A Finite Volume PDE Solver Using Python: examples.phase.anisotropy". `https://www.ctcms.nist.gov/fipy/examples/phase/generated/examples.phase.anisotropy.html <https://www.ctcms.nist.gov/fipy/examples/phase/generated/examples.phase.anisotropy.html>`_.
+  NIST, "FiPy: A Finite Volume PDE Solver Using Python: examples.phase.anisotropy". [https://www.ctcms.nist.gov/fipy/examples/phase/generated/examples.phase.anisotropy.html](https://www.ctcms.nist.gov/fipy/examples/phase/generated/examples.phase.anisotropy.html).
 
   * [Application](applications/solvers/multiphase/phaseFieldFoam) - Phase field equations solver 
   * [Tutorial case](tutorials/multiphase/phaseFieldFoam/phase) - Tutorial case corresponding to the above reference 
-  * :doc:`tutorials/phase` - Documentation
+  * [Documentation](docs/source) - Documentation
