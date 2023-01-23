@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Plots the sump profile.
+"""Plots the crystal and under-cooling.
 
-This script plots the sump profile using the output in the
+This script plots the phase field contour using the output in the
 postProcessing directory.
 
 Example:
     Run python script in case root directory:
 
-        $ python3 plot_sump.py
+        $ python3 plot.py
 
 Todo:
     * None
