@@ -1,6 +1,18 @@
+/**
+@file
+    @brief The phase field equation
+*/
 {
+/**
+@var
+    @brief Phase field gradients
+*/
     volVectorField gradFi(fvc::grad(fi));
 
+/**
+@var
+    @brief x component of the phase field gradients
+*/
     volScalarField gradFix
     (
         IOobject
@@ -14,6 +26,10 @@
         gradFi.component(vector::X)
     );
 
+/**
+@var
+    @brief y component of the phase field gradients
+*/
     volScalarField gradFiy
     (
         IOobject
@@ -26,15 +42,31 @@
         ),
         gradFi.component(vector::Y)
     );
-    
+
+/**
+@var
+    @brief &psi;
+*/
     volScalarField psi =
         constant::mathematical::pi/8.
         + Foam::atan2(gradFiy, gradFix);
 
+/**
+@var
+    @brief &Phi;
+*/
     volScalarField Phi = Foam::tan(N * psi/2);
 
+/**
+@var
+    @brief &beta;
+*/
     volScalarField beta = (1 - sqr(Phi))/(1 + sqr(Phi));
-    
+
+/**
+@var
+    @brief Phase field anisotropy source
+*/
     volScalarField fiSource =
         fi * (1.0 - fi) *
         (fi - 0.5 - kappa1/constant::mathematical::pi
@@ -46,6 +78,10 @@
 
     D = Ddiag*tensor(1,0,0,0,1,0,0,0,0) + Doffdiag*tensor(0,1,0,-1,0,0,0,0,0);
     
+/**
+@var
+    @brief The phase field equation
+*/
     fvScalarMatrix fiEqn
     (
         fvm::ddt(fi) 
@@ -54,7 +90,7 @@
         fiSource
     );
 
-    fiEqn.relax();
+    fiEqn.relax(); //!< Apply relaxation to the phase field equation
 
-    fiEqn.solve();
+    fiEqn.solve(); //!< Solve the phase field equation
 }

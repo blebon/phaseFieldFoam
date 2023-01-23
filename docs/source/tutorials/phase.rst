@@ -89,4 +89,5 @@ To check if the numerical predictions are identical to the benchmark, run the fo
   $ mkdir -p test/build
   $ cd test/build
   $ cmake ..
+  $ make
   $ ./test_phasefield

@@ -1,5 +1,14 @@
+/**
+@file
+    @brief Variables and fields initialization
+*/
+
     Info<< "Reading field fi\n" << endl;
 
+/**
+@var
+    @brief The phase field volume scalar field
+*/
     volScalarField fi
     (
         IOobject
@@ -15,6 +24,10 @@
 
     Info<< "Reading field dT\n" << endl;
 
+/**
+@var
+    @brief The undercooling volume scalar field
+*/
     volScalarField dT
     (
         IOobject
@@ -30,6 +43,10 @@
 
     Info<< "Reading physicalProperties\n" << endl;
 
+/**
+@var
+    @brief The physical properties dictionary file
+*/
     IOdictionary physicalProperties
     (
         IOobject
@@ -45,6 +62,10 @@
 
     Info<< "Reading diffusivity DT\n" << endl;
 
+/**
+@var
+    @brief Heat conductivity
+*/
     dimensionedScalar DT
     (
         "DT",
@@ -54,6 +75,10 @@
 
     Info<< "Creating tensor field D\n" << endl;
 
+/**
+@var
+    @brief Anisotropy diffusion tensor
+*/
     volTensorField D
     (
         IOobject
@@ -75,6 +100,10 @@
 
     Info<< "Reading tau\n" << endl;
 
+/**
+@var
+    @brief &tau;
+*/
     dimensionedScalar tau
     (
         "tau",
@@ -84,6 +113,10 @@
 
     Info<< "Reading alpha\n" << endl;
 
+/**
+@var
+    @brief &alpha;
+*/
     dimensionedScalar alpha
     (
         "alpha",
@@ -93,6 +126,10 @@
 
     Info<< "Reading c\n" << endl;
 
+/**
+@var
+    @brief c
+*/
     dimensionedScalar c
     (
         "c",
@@ -102,6 +139,10 @@
 
     Info<< "Reading symmetry N\n" << endl;
 
+/**
+@var
+    @brief Crystal symmetry
+*/
     dimensionedScalar N
     (
         "N",
@@ -111,6 +152,10 @@
 
     Info<< "Reading symmetry kappa1\n" << endl;
 
+/**
+@var
+    @brief &kappa;1
+*/
     dimensionedScalar kappa1
     (
         "kappa1",
@@ -120,6 +165,10 @@
 
     Info<< "Reading symmetry kappa2\n" << endl;
 
+/**
+@var
+    @brief &kappa;2
+*/
     dimensionedScalar kappa2
     (
         "kappa2",

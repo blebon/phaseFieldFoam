@@ -22,10 +22,10 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Application
-    laplacianFoam
+    phaseFieldFoam
 
 Description
-    Solves a simple Laplace equation, e.g. for thermal diffusion in a solid.
+    Solves phase field equations with anisotropy source.
 
 \*---------------------------------------------------------------------------*/
 
