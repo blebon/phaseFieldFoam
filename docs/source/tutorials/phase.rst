@@ -79,8 +79,8 @@ postProcessing directory.
 
   Predicted crystal contour and under-cooling after 0.5 s of growth.
 
-Checking benchmark
-------------------
+Benchmarking
+------------
 
 To check if the numerical predictions are identical to the benchmark, run the following commands in the case directory:
 
