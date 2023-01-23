@@ -25,7 +25,7 @@ release = 'OF10.0.1'
 from os import path, sep
 import sys
 
-tutorials_path_list = ["tutorials", "heatTransfer", project]
+tutorials_path_list = ["tutorials", "multiphase", project]
 tutorials_path = path.abspath(f"..{sep}..{sep}{sep.join(tutorials_path_list)}{sep}")
 sys.path.insert(0, tutorials_path)
 
