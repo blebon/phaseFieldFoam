@@ -14,6 +14,7 @@ runParallel $application
 runApplication reconstructPar -newTimes
 
 postProcess -func 'cutPlaneSurface(funcName=zNormal, fields=(fi dT), point=(0. 0. 0.), normal=(0 0 1))' -latestTime
+postProcess -func 'graphCell(funcName=centreline, fields=(fi dT), start=(0 -6.25 0), end=(0 6.25 0), axis=y)' -latestTime
 
 touch $(basename $PWD).foam
 

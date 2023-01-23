@@ -81,3 +81,15 @@ postProcessing directory.
   :alt: Crystal growth after 0.5 s
 
   Predicted crystal contour and under-cooling after 0.5 s of growth.
+
+Checking benchmark
+------------------
+
+To check if the numerical predictions are identical to the benchmark, run the following commands in the case directory:
+
+.. code-block:: console
+
+  $ mkdir -p test/build
+  $ cd test/build
+  $ cmake ..
+  $ ./test_phasefield
