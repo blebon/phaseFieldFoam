@@ -1,6 +1,7 @@
 #define BOOST_TEST_MODULE CheckVariableValues
 #include <boost/test/included/unit_test.hpp>
 
+#include <filesystem>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -17,8 +18,17 @@ struct VariableVectors
           column{column},
           end_time{end_time}
     {
-        expected = read_variable("../" + casename + ".xy", column); // Expected in test directory when run in build subdir
-        numerical = read_variable("../../postProcessing/" + casename + "/" + end_time + "/line.xy", column); // Numerical result in postProcessing directory
+        string expected_path{"../" + casename + ".xy"}; // Expected in test directory when run in build subdir
+        filesystem::path fexpected{ expected_path };
+        if (!filesystem::exists(fexpected))
+            expected_path = casename + ".xy";
+        expected = read_variable(expected_path, column); // Try current directory if not found
+
+        string numerical_path{"../../postProcessing/" + casename + "/" + end_time + "/line.xy"};
+        filesystem::path fnumerical{ numerical_path };
+        if (!filesystem::exists(fnumerical))
+            numerical_path = "../postProcessing/" + casename + "/" + end_time + "/line.xy";
+        numerical = read_variable(numerical_path, column); // Numerical result in postProcessing directory
     }
 
     ~VariableVectors()
@@ -76,8 +86,12 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
 
     BOOST_AUTO_TEST_CASE(CheckIfCentrelineCoordinatesMatch)
     {
-        BOOST_TEST_MESSAGE("Requiring coordinates to be equal");
         VariableVectors centreline{ "centreline", 1 };
+        BOOST_TEST_MESSAGE("Looking for benchmark file.");
+        BOOST_ASSERT(!centreline.expected.empty());
+        BOOST_TEST_MESSAGE("Looking for numerical predictions file.");
+        BOOST_ASSERT(!centreline.numerical.empty());
+        BOOST_TEST_MESSAGE("Requiring coordinates to be equal");
         BOOST_REQUIRE_EQUAL_COLLECTIONS(centreline.expected.begin(), centreline.expected.end(),
                                         centreline.numerical.begin(), centreline.numerical.end());
     }
@@ -85,8 +99,8 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
     BOOST_AUTO_TEST_CASE(CheckIfCentrelinePhaseFieldValuesMatchExpectedValues,
         * utf::depends_on("CheckIfVariableValuesMatchExpectedValues/CheckIfCentrelineCoordinatesMatch"))
     {
-        BOOST_TEST_MESSAGE("Checking centreline phase field values");
         VariableVectors centreline{ "centreline", 2 };
+        BOOST_TEST_MESSAGE("Checking centreline phase field values");
         BOOST_CHECK_EQUAL_COLLECTIONS(centreline.expected.begin(), centreline.expected.end(),
                                       centreline.numerical.begin(), centreline.numerical.end());
     }
@@ -94,8 +108,8 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
     BOOST_AUTO_TEST_CASE(CheckIfCentrelineUndercoolingValuesMatchExpectedValues,
         * utf::depends_on("CheckIfVariableValuesMatchExpectedValues/CheckIfCentrelineCoordinatesMatch"))
     {
-        BOOST_TEST_MESSAGE("Checking centreline undercooling values");
         VariableVectors centreline{ "centreline", 3 };
+        BOOST_TEST_MESSAGE("Checking centreline undercooling values");
         BOOST_CHECK_EQUAL_COLLECTIONS(centreline.expected.begin(), centreline.expected.end(),
                                       centreline.numerical.begin(), centreline.numerical.end());
     }
