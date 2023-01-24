@@ -90,4 +90,4 @@ To check if the numerical predictions are identical to the benchmark, run the fo
   $ cd test/build
   $ cmake ..
   $ make
-  $ ./test_phasefield
+  $ BOOST_TEST_LOG_LEVEL=message ./test_phasefield

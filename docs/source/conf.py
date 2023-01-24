@@ -44,9 +44,9 @@ breathe_default_project = project
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "breathe",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
-    "breathe",
     "sphinx.ext.mathjax",
 ]
 autosectionlabel_prefix_document = True

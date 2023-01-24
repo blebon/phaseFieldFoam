@@ -1,4 +1,4 @@
-#define BOOST_TEST_MODULE Checkphase field values
+#define BOOST_TEST_MODULE CheckVariableValues
 #include <boost/test/included/unit_test.hpp>
 
 #include <fstream>
@@ -8,23 +8,25 @@
 #include <boost/algorithm/string.hpp>
 
 using namespace std;
+namespace utf = boost::unit_test;
 
-struct PhaseFieldVectors
+struct VariableVectors
 {
-    PhaseFieldVectors(string casename, string end_time = "0.5")
+    VariableVectors(string casename, size_t column = 1, string end_time = "0.5")
         : casename{casename},
+          column{column},
           end_time{end_time}
     {
-        expected = read_phasefield("../" + casename + ".xy"); // Expected in test directory when run in build subdir
-        numerical = read_phasefield("../../postProcessing/" + casename + "/" + end_time + "/line.xy"); // Numerical result in postProcessing directory
+        expected = read_variable("../" + casename + ".xy", column); // Expected in test directory when run in build subdir
+        numerical = read_variable("../../postProcessing/" + casename + "/" + end_time + "/line.xy", column); // Numerical result in postProcessing directory
     }
 
-    ~PhaseFieldVectors()
+    ~VariableVectors()
     {
 
     }
 
-    vector<double> read_phasefield(string filename)
+    vector<double> read_variable(string filename, size_t column)
     {
         ifstream datafile(filename);
         vector<double> expected;
@@ -37,7 +39,8 @@ struct PhaseFieldVectors
             line_array.clear();
             boost::split(line_array, line, boost::is_any_of("\t "), boost::token_compress_on);
             if ( strcmp(line_array[0].c_str(), "#") == 0 ) continue; // Skip headers and comments
-            number = stod(line_array[1]); // Phase field values are in the second column
+            number = stod(line_array[column]); // Variable values in column
+            // printf("%f %f\n", stod(line_array[1]), number);
             expected.push_back(number);
         }
 
@@ -45,17 +48,20 @@ struct PhaseFieldVectors
     }
 
     public:
-    //! Expected phase field values
-    /*! Vector holding the expected phase field values. */
+    //! Expected variable values
+    /*! Vector holding the expected variable values. */
     vector<double> expected;
-    //! Predicted phase field values
-    /*! Vector holding the predicted phase field values. */
+    //! Predicted variable values
+    /*! Vector holding the predicted variable values. */
     vector<double> numerical;
 
     private:
     //! Case name
-    /*! String holding the line along which phase field values are compared*/
+    /*! String holding the line along which variable values are compared*/
     string casename;
+    //! Column of variable to compare
+    /*! 1 = Phase field &phi;, 2 = Undercooling DT. */
+    size_t column;
     //! Case end time
     /*! String holding the time at which the simulation ends*/
     string end_time;
@@ -66,12 +72,30 @@ struct F {
   ~F() { BOOST_TEST_MESSAGE( "Teardown fixture" ); }
 };
 
-BOOST_FIXTURE_TEST_SUITE(CheckIfphasefieldvaluesMatchExpectedValues, F);
+BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
 
-    BOOST_AUTO_TEST_CASE(CheckIfCentrelinephasefieldvaluesMatchExpectedValues)
+    BOOST_AUTO_TEST_CASE(CheckIfCentrelineCoordinatesMatch)
+    {
+        BOOST_TEST_MESSAGE("Requiring coordinates to be equal");
+        VariableVectors centreline{ "centreline", 1 };
+        BOOST_REQUIRE_EQUAL_COLLECTIONS(centreline.expected.begin(), centreline.expected.end(),
+                                        centreline.numerical.begin(), centreline.numerical.end());
+    }
+    
+    BOOST_AUTO_TEST_CASE(CheckIfCentrelinePhaseFieldValuesMatchExpectedValues,
+        * utf::depends_on("CheckIfVariableValuesMatchExpectedValues/CheckIfCentrelineCoordinatesMatch"))
     {
         BOOST_TEST_MESSAGE("Checking centreline phase field values");
-        PhaseFieldVectors centreline{ "centreline" };
+        VariableVectors centreline{ "centreline", 2 };
+        BOOST_CHECK_EQUAL_COLLECTIONS(centreline.expected.begin(), centreline.expected.end(),
+                                      centreline.numerical.begin(), centreline.numerical.end());
+    }
+
+    BOOST_AUTO_TEST_CASE(CheckIfCentrelineUndercoolingValuesMatchExpectedValues,
+        * utf::depends_on("CheckIfVariableValuesMatchExpectedValues/CheckIfCentrelineCoordinatesMatch"))
+    {
+        BOOST_TEST_MESSAGE("Checking centreline undercooling values");
+        VariableVectors centreline{ "centreline", 3 };
         BOOST_CHECK_EQUAL_COLLECTIONS(centreline.expected.begin(), centreline.expected.end(),
                                       centreline.numerical.begin(), centreline.numerical.end());
     }

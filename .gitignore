@@ -10,53 +10,57 @@
 *.zip
 
 # Logs and databases
+*.bak
+*.dat
+*.foam
 *.log
+*.pvd
+*.pvsm
 *.sql
 *.sqlite
-*.dat
-log.*
-*.foam
 *.vtk
-*.pvsm
+*.vtp
+log.*
 
 # Mesh files
+.keep
+*.cgns
+*.eMesh
+*.extendedFeatureEdgeMesh
+*.hdf
+*.med
+*.unv
 boundary
 cellLevel
 cellZones
+extendedFeatureEdgeMesh/
 faces
 facezones
 level0Edge
 neighbour
+nSurfaceLayers
 owner
 pointLevel
 points
 pointZones
+polyMesh/
 refinementHistory
 surfaceIndex
-wrongFaces
-*.eMesh
-*.extendedFeatureEdgeMesh
-.keep
-polyMesh/
-extendedFeatureEdgeMesh/
-nSurfaceLayers
 thickness
 thicknessFraction
-*.hdf
-*.unv
-*.cgns
-*.med
+wrongFaces
 
 # Folders
-platforms/
-mingw_w64GccDPInt32Opt/
+.pytest_cache/
+__pycache__/
 linux64Gcc*Int32Opt/
 lnInclude/
-__pycache__/
+mingw_w64GccDPInt32Opt/
+platforms/
 
 # run Folders
-0/
 0.[0-9]*/
+0/
 1*/
 2*/
 3*/
@@ -66,5 +70,5 @@ __pycache__/
 7*/
 8*/
 9*/
-postProcessing/
 dynamicCode/
+postProcessing/
