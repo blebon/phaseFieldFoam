@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "OF10",
+			"type": "shell",
+			"command": "source",
+			"args": [
+				"/opt/wvec/OpenFOAM/OpenFOAM-10/etc/bashrc",
+				"WM_COMPILER_TYPE=ThirdParty",
+				"WM_COMPILER=Gcc121"
+			],
+			"problemMatcher": []
+		}
+	]
+}

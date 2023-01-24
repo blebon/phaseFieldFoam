@@ -5,6 +5,10 @@
 		}
 	],
 	"settings": {
+		// Source OF10 when launching terminal
+        "terminal.integrated.env.linux":{
+			"BASH_INIT_COMMAND": "source /opt/wvec/OpenFOAM/OpenFOAM-10/etc/bashrc WM_COMPILER_TYPE=ThirdParty WM_COMPILER=Gcc121"
+		},
 		// CMake
 		"cmake.buildDirectory": "${workspaceFolder}/run/phase/test/build",
 		"cmake.cmakePath": "/usr/local/bin/cmake",
@@ -12,6 +16,15 @@
 			"-DCMAKE_CXX_COMPILER=/opt/wvec/OpenFOAM/ThirdParty-10/platforms/linux64/gcc-12.1.0/bin/c++"
 		],
 		"cmake.sourceDirectory": "${workspaceFolder}/run/phase/test",
+		// pytest
+		"python.terminal.activateEnvInCurrentTerminal": false,
+		"python.terminal.activateEnvironment": false,
+		"python.defaultInterpreterPath": "/opt/wvec/miniconda3/bin/python3",
+		"python.testing.unittestEnabled": false,
+		"python.testing.pytestEnabled": true,
+		"python.testing.pytestArgs": [
+			"tests"
+		],
 		// File associations
 		"files.associations": {
 			// OpenFOAM

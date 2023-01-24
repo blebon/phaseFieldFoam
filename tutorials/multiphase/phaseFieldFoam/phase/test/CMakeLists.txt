@@ -25,4 +25,4 @@ INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 add_executable(test_phasefield test_phasefield.cpp)
 add_test(NAME test_phasefield COMMAND test_phasefield)
 
-TARGET_LINK_LIBRARIES( test_phasefield LINK_PUBLIC ${Boost_LIBRARIES} )
+TARGET_LINK_LIBRARIES(test_phasefield LINK_PUBLIC ${Boost_LIBRARIES})
