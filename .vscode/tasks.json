@@ -11,6 +11,15 @@
 				"WM_COMPILER=Gcc121"
 			],
 			"problemMatcher": []
+		},
+		{
+			"label": "OF10-Young",
+			"type": "shell",
+			"command": "source",
+			"args": [
+				"~/OpenFOAM/OpenFOAM-10/etc/bashrc"
+			],
+			"problemMatcher": []
 		}
 	]
 }

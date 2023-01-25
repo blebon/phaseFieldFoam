@@ -14,6 +14,20 @@
             "cppStandard": "c++14",
             "intelliSenseMode": "linux-gcc-x64",
             "configurationProvider": "ms-vscode.makefile-tools"
+        },
+        {
+            "name": "Linux-Young",
+            "includePath": [
+                "${workspaceFolder}/applications/**",
+                "~/OpenFOAM/OpenFOAM-10/src/**",
+                "~/OpenFOAM/OpenFOAM-10/applications/**"
+            ],
+            "defines": [],
+            "compilerPath": "/shared/ucl/apps/gcc/10.2.0-p95889/bin/g++",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],
     "version": 4

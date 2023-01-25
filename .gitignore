@@ -21,6 +21,7 @@
 *.vtk
 *.vtp
 log.*
+OF10*
 
 # Mesh files
 .keep

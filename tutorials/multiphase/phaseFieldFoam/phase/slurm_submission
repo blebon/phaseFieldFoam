@@ -1,0 +1,28 @@
+#!/bin/bash -l
+
+#SBATCH --nodes=1
+#SBATCH --job-name=OF10_phase
+#SBATCH --export=NONE
+#SBATCH --mail-user=Bruno.Lebon@brunel.ac.uk
+#SBATCH --output=run_%j.out
+
+
+pwd; hostname; date
+
+source /opt/wvec/OpenFOAM/OpenFOAM-10/etc/bashrc WM_COMPILER_TYPE=ThirdParty WM_COMPILER=Gcc121
+# Source tutorial run functions
+source $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+# Get application name
+export application=`getApplication`
+
+# Set to number of procs
+foamDictionary system/decomposeParDict -entry numberOfSubdomains -set 56
+foamDictionary system/decomposeParDict -entry hierarchicalCoeffs/n -set "( 8 7 1 )"
+sed -i 's/(400 400 1)/(4000 4000 1)/g' system/blockMeshDict
+
+./Allrun
+
+date
+
+#------------------------------------------------------------------------------
