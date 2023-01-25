@@ -13,12 +13,13 @@ else()
 endif(MSVC)
 
 # Boost Library
-set(Boost_NO_SYSTEM_PATHS TRUE)
-if (Boost_NO_SYSTEM_PATHS)
+string (REGEX MATCH "\\.el[1-9]" os_version_suffix ${CMAKE_SYSTEM})
+if (os_version_suffix) # If on davy or v-sys-bcast, os_version_suffix will be .el7, not blank
+  set(Boost_NO_SYSTEM_PATHS TRUE)
   set(BOOST_ROOT "/usr/include/boost169")
   set(BOOST_INCLUDE_DIR "/usr/include/boost169/boost")
   set(BOOST_LIBRARYDIR "/usr/lib64/boost169")
-endif (Boost_NO_SYSTEM_PATHS)
+endif (os_version_suffix)
 find_package(Boost 1.69.0 COMPONENTS unit_test_framework REQUIRED)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
