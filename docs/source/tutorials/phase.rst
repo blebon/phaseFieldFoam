@@ -86,8 +86,8 @@ To check if the numerical predictions are identical to the benchmark, run the fo
 
 .. code-block:: console
 
-  $ mkdir -p test/build
-  $ cd test/build
-  $ cmake ..
+  $ cd test
+  $ cmake -S . -B build
+  $ cd build
   $ make
   $ BOOST_TEST_LOG_LEVEL=message ./test_phasefield

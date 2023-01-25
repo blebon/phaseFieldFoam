@@ -12,14 +12,17 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 endif(MSVC)
 
+# Check Linux distro
+execute_process(COMMAND lsb_release --short --id OUTPUT_VARIABLE LINUX_DISTRO OUTPUT_STRIP_TRAILING_WHITESPACE)
+# execute_process(COMMAND lsb_release --short --release OUTPUT_VARIABLE DISTRO_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
+
 # Boost Library
-string (REGEX MATCH "\\.el[1-9]" os_version_suffix ${CMAKE_SYSTEM})
-if (os_version_suffix) # If on davy or v-sys-bcast, os_version_suffix will be .el7, not blank
+if (LINUX_DISTRO MATCHES "Centos") # If on davy or v-sys-bcast, distro will be Centos
   set(Boost_NO_SYSTEM_PATHS TRUE)
   set(BOOST_ROOT "/usr/include/boost169")
   set(BOOST_INCLUDE_DIR "/usr/include/boost169/boost")
   set(BOOST_LIBRARYDIR "/usr/lib64/boost169")
-endif (os_version_suffix)
+endif (LINUX_DISTRO MATCHES "Centos")
 find_package(Boost 1.69.0 COMPONENTS unit_test_framework REQUIRED)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
