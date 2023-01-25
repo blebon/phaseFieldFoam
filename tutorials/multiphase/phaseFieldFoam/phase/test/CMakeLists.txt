@@ -22,7 +22,13 @@ endif (Boost_NO_SYSTEM_PATHS)
 find_package(Boost 1.69.0 COMPONENTS unit_test_framework REQUIRED)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
+# Compile and link test executable
 add_executable(test_phasefield test_phasefield.cpp)
 add_test(NAME test_phasefield COMMAND test_phasefield)
-
 TARGET_LINK_LIBRARIES(test_phasefield LINK_PUBLIC ${Boost_LIBRARIES})
+
+# Run tests after making
+add_custom_command(TARGET test_phasefield
+                   COMMENT "Run tests"
+                   POST_BUILD COMMAND test_phasefield --color_output=yes --log_level=message
+)
