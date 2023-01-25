@@ -10,8 +10,7 @@
             "request": "launch",
             "module": "pytest",
             "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "preLaunchTask": "OF10",
+            "console": "integratedTerminal"
         }
     ]
 }
