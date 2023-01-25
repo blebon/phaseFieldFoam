@@ -7,15 +7,15 @@
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
-    format      ascii;
-    class       volScalarField;
-    object      fi;
+    format          ascii;
+    class           volScalarField;
+    object          fi;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 0 0 0 0 0 0];
+dimensions      [ 0 0 0 0 0 0 0 ];
 
-internalField   uniform 0.0;
+internalField   uniform 0;
 
 boundaryField
 {
@@ -28,5 +28,6 @@ boundaryField
         type            empty;
     }
 }
+
 
 // ************************************************************************* //

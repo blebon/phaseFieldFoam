@@ -7,10 +7,10 @@
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
-    format      ascii;
-    class       dictionary;
-    location    "system";
-    object      controlDict;
+    format          ascii;
+    class           dictionary;
+    location        "system";
+    object          controlDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -46,7 +46,8 @@ runTimeModifiable true;
 
 OptimisationSwitches
 {
-    fileHandler collated;
+    fileHandler     collated;
 }
+
 
 // ************************************************************************* //

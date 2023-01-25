@@ -7,13 +7,13 @@
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
-    format      ascii;
-    class       volScalarField;
-    object      dT;
+    format          ascii;
+    class           volScalarField;
+    object          dT;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 0 0 0 0 0 0];
+dimensions      [ 0 0 0 0 0 0 0 ];
 
 internalField   uniform -0.5;
 
@@ -28,5 +28,6 @@ boundaryField
         type            empty;
     }
 }
+
 
 // ************************************************************************* //

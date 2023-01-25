@@ -49,6 +49,7 @@ export application=`getApplication`
 
 # Set to number of procs
 foamDictionary system/decomposeParDict -entry numberOfSubdomains -set 40
+foamDictionary system/decomposeParDict -entry hierarchicalCoeffs/n -set "( 8 5 1 )"
 sed -i 's/(400 400 1)/(4000 4000 1)/g' system/blockMeshDict
 
 ./Allrun
