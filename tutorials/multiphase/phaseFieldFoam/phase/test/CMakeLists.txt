@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.17)
 
 project(Vreeman2002 LANGUAGES CXX)
 
@@ -26,12 +26,12 @@ if(UNIX)
   endif(LINUX_DISTRO MATCHES "CentOS")
 endif(UNIX)
 find_package(Boost 1.69.0 COMPONENTS unit_test_framework REQUIRED)
-INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+include_directories(${Boost_INCLUDE_DIR})
 
 # Compile and link test executable
 add_executable(test_phasefield test_phasefield.cpp)
 add_test(NAME test_phasefield COMMAND test_phasefield)
-TARGET_LINK_LIBRARIES(test_phasefield LINK_PUBLIC ${Boost_LIBRARIES})
+target_link_libraries(test_phasefield LINK_PUBLIC ${Boost_LIBRARIES})
 
 # Run tests after making
 add_custom_command(TARGET test_phasefield

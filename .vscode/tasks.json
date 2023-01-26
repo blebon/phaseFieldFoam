@@ -10,7 +10,11 @@
 				"WM_COMPILER_TYPE=ThirdParty",
 				"WM_COMPILER=Gcc121"
 			],
-			"problemMatcher": []
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
 		},
 		{
 			"label": "OF10-Young",

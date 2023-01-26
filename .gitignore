@@ -2,6 +2,9 @@
 *.o
 *.so
 
+# Ignore the build directory
+build/
+
 # Packages
 *.7z
 *.gz

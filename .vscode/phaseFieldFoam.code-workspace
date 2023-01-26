@@ -10,12 +10,12 @@
 			"BASH_INIT_COMMAND": "source /opt/wvec/OpenFOAM/OpenFOAM-10/etc/bashrc WM_COMPILER_TYPE=ThirdParty WM_COMPILER=Gcc121"
 		},
 		// CMake
-		"cmake.buildDirectory": "${workspaceFolder}/run/phase/test/build",
-		"cmake.cmakePath": "/usr/local/bin/cmake",
+		"cmake.buildDirectory": "${workspaceFolder}/build",
+		"cmake.cmakePath": "cmake",
 		"cmake.configureArgs": [
 			"-DCMAKE_CXX_COMPILER=/opt/wvec/OpenFOAM/ThirdParty-10/platforms/linux64/gcc-12.1.0/bin/c++"
 		],
-		"cmake.sourceDirectory": "${workspaceFolder}/run/phase/test",
+		"cmake.sourceDirectory": "${workspaceFolder}",
 		// pytest
 		"python.terminal.activateEnvInCurrentTerminal": false,
 		"python.terminal.activateEnvironment": false,
