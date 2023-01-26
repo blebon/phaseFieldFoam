@@ -12,19 +12,21 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 endif(MSVC)
 
-# Check Linux distro
-execute_process(COMMAND lsb_release --short --id OUTPUT_VARIABLE LINUX_DISTRO OUTPUT_STRIP_TRAILING_WHITESPACE)
-# execute_process(COMMAND lsb_release --short --release OUTPUT_VARIABLE DISTRO_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
-
 # Boost Library
-if (LINUX_DISTRO MATCHES "Centos") # If on davy or v-sys-bcast, distro will be Centos
-  set(Boost_NO_SYSTEM_PATHS TRUE)
-  set(BOOST_ROOT "/usr/include/boost169")
-  set(BOOST_INCLUDE_DIR "/usr/include/boost169/boost")
-  set(BOOST_LIBRARYDIR "/usr/lib64/boost169")
-endif (LINUX_DISTRO MATCHES "Centos")
+if(UNIX)
+  message("-- Determining id of the Linux distributor")
+  execute_process(COMMAND lsb_release --short --id OUTPUT_VARIABLE LINUX_DISTRO OUTPUT_STRIP_TRAILING_WHITESPACE)
+  # execute_process(COMMAND lsb_release --short --release OUTPUT_VARIABLE DISTRO_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
+  if (LINUX_DISTRO MATCHES "CentOS") # If on davy or v-sys-bcast, distro will be Centos
+    message("-- Using boost 1.69 on CentOS")
+    set(Boost_NO_SYSTEM_PATHS TRUE)
+    set(BOOST_ROOT "/usr/include/boost169")
+    set(BOOST_INCLUDE_DIR "/usr/include/boost169/boost")
+    set(BOOST_LIBRARYDIR "/usr/lib64/boost169")
+  endif(LINUX_DISTRO MATCHES "CentOS")
+endif(UNIX)
 find_package(Boost 1.69.0 COMPONENTS unit_test_framework REQUIRED)
-INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 
 # Compile and link test executable
 add_executable(test_phasefield test_phasefield.cpp)
