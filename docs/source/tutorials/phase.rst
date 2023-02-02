@@ -2,6 +2,9 @@
 Tutorial: Growth of a 2D crystal
 ================================
 
+.. contents:: Contents:
+  :backlinks: none
+
 This tutorial describes how to pre-process, run and post-process a simple crystal growth case with phaseFieldFoam.
 
 Pre-processing
@@ -16,7 +19,7 @@ Change to the case directory.
 Mesh generation
 ---------------
 
-Generate the mesh in the case directory.
+Generate the mesh in the case directory using `blockMesh <https://doc.cfd.direct/openfoam/user-guide-v10/blockmesh>`_.
 
 .. code-block:: console
 

@@ -27,6 +27,11 @@
 		],
 		// File associations
 		"files.associations": {
+			// Documentation
+			"*.awk": "shellscript",
+			"*.rst": "restructuredtext",
+			"*.sed": "shellscript",
+			"Doxyfile": "shellscript",
 			// OpenFOAM
 			"files": "shellscript",
 			"options": "shellscript",
@@ -43,17 +48,12 @@
 			"dT": "cpp",
 			"faces": "cpp",
 			"fi": "cpp",
-			"log.*": "log",
 			"neighbour": "cpp",
 			"owner": "cpp",
 			"points": "cpp",
-			"*.pvd": "xml",
+			"log.*": "log",
+            "*.pvd": "xml",
 			"*.pvsm": "xml",
-			// Documentation
-			"*.awk": "shellscript",
-			"*.rst": "restructuredtext",
-			"*.sed": "shellscript",
-			"Doxyfile": "shellscript",
 			// Scripts
 			"*.py": "python",
 			// Testing

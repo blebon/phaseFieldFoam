@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "Centos",
             "includePath": [
                 "/usr/include/boost169/boost/**",
                 "${workspaceFolder}/applications/**",
@@ -16,7 +16,7 @@
             "configurationProvider": "ms-vscode.makefile-tools"
         },
         {
-            "name": "Linux-Young",
+            "name": "Young",
             "includePath": [
                 "${workspaceFolder}/applications/**",
                 "~/OpenFOAM/OpenFOAM-10/src/**",
@@ -24,6 +24,21 @@
             ],
             "defines": [],
             "compilerPath": "/shared/ucl/apps/gcc/10.2.0-p95889/bin/g++",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
+        },
+        {
+            "name": "Ubuntu",
+            "includePath": [
+                "/usr/include/boost/**",
+                "${workspaceFolder}/**",
+                "/opt/openfoam10/src/**",
+                "/opt/openfoam10/applications/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/g++",
             "cStandard": "c11",
             "cppStandard": "c++14",
             "intelliSenseMode": "linux-gcc-x64",
