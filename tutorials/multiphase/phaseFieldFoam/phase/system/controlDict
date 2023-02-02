@@ -49,5 +49,8 @@ OptimisationSwitches
     fileHandler     collated;
 }
 
+libs (
+    "libmyFvModels.so"
+);
 
 // ************************************************************************* //

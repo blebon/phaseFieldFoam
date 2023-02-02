@@ -93,7 +93,7 @@
         dimensionedTensor
         (
             "D",
-            dimArea/dimTime,
+            dimArea,
             tensor::zero
         ) 
     );
@@ -176,3 +176,4 @@
         physicalProperties.lookup("kappa2")
     );
 
+#include "createFvModels.H"

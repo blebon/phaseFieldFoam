@@ -63,19 +63,27 @@
 */
     volScalarField beta = (1 - sqr(Phi))/(1 + sqr(Phi));
 
+// /**
+// @var
+//     @brief Phase field anisotropy source (explicit)
+// */
+//     volScalarField fiSourceExplicit =
+//         fi * (1.0 - fi) *
+//         (fi - 0.5 - kappa1/constant::mathematical::pi
+//         * Foam::atan(kappa2 * dT));
+
 /**
 @var
-    @brief Phase field anisotropy source
+    @brief Phase field anisotropy source (implicit)
 */
-    volScalarField fiSource =
-        fi * (1.0 - fi) *
+    volScalarField fiSourceImplicit =
+        (1.0 - fi) *
         (fi - 0.5 - kappa1/constant::mathematical::pi
-        * Foam::atan(kappa2 * dT))/tau;
+        * Foam::atan(kappa2 * dT));
 
-    volScalarField Da = sqr(alpha) * (1 + c*beta)/tau;
+    volScalarField Da = sqr(alpha) * (1 + c*beta);
     volScalarField Ddiag = Da * (1 + c*beta);
     volScalarField Doffdiag = Da * c * (-N * 2 * Phi / (1 + sqr(Phi)));
-
     D = Ddiag*tensor(1,0,0,0,1,0,0,0,0) + Doffdiag*tensor(0,1,0,-1,0,0,0,0,0);
     
 /**
@@ -84,10 +92,12 @@
 */
     fvScalarMatrix fiEqn
     (
-        fvm::ddt(fi) 
+        fvm::ddt(tau, fi) 
       - fvm::laplacian(D, fi)
      ==
-        fiSource
+        // fiSourceExplicit
+        fvm::Sp(fiSourceImplicit, fi)
+        // fvModels.source(fi)
     );
 
     fiEqn.relax(); //!< Apply relaxation to the phase field equation

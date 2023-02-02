@@ -5,6 +5,7 @@
             "includePath": [
                 "/usr/include/boost169/boost/**",
                 "${workspaceFolder}/applications/**",
+                "${workspaceFolder}/src/**",
                 "/opt/wvec/OpenFOAM/OpenFOAM-10/src/**",
                 "/opt/wvec/OpenFOAM/OpenFOAM-10/applications/**"
             ],
@@ -19,6 +20,7 @@
             "name": "Young",
             "includePath": [
                 "${workspaceFolder}/applications/**",
+                "${workspaceFolder}/src/**",
                 "~/OpenFOAM/OpenFOAM-10/src/**",
                 "~/OpenFOAM/OpenFOAM-10/applications/**"
             ],
