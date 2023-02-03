@@ -93,7 +93,7 @@
         dimensionedTensor
         (
             "D",
-            dimArea,
+            dimArea/dimTime,
             tensor::zero
         ) 
     );

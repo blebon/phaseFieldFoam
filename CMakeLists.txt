@@ -71,6 +71,9 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON) # -fPIC
 
+# If Debug
+# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DFULLDEBUG -g -O0 -gdwarf-4")
+
 message(STATUS "Setting common OpenFOAM include paths")
 set(PHASEFIELDFOAM_DIR applications/solvers/multiphase/${PROJECT_NAME})
 

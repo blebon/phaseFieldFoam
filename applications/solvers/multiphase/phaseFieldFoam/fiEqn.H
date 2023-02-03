@@ -81,7 +81,7 @@
         (fi - 0.5 - kappa1/constant::mathematical::pi
         * Foam::atan(kappa2 * dT));
 
-    volScalarField Da = sqr(alpha) * (1 + c*beta);
+    volScalarField Da = sqr(alpha) * (1 + c*beta)/tau;
     volScalarField Ddiag = Da * (1 + c*beta);
     volScalarField Doffdiag = Da * c * (-N * 2 * Phi / (1 + sqr(Phi)));
     D = Ddiag*tensor(1,0,0,0,1,0,0,0,0) + Doffdiag*tensor(0,1,0,-1,0,0,0,0,0);
@@ -92,7 +92,7 @@
 */
     fvScalarMatrix fiEqn
     (
-        fvm::ddt(tau, fi) 
+        fvm::ddt(fi) 
       - fvm::laplacian(D, fi)
      ==
         // fiSourceExplicit

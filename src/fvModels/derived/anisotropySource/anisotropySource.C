@@ -25,7 +25,7 @@ License
 
 #include "anisotropySource.H"
 #include "fvModels.H"
-#include "fvMatrix.H"
+#include "fvmSup.H"
 #include "addToRunTimeSelectionTable.H"
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
@@ -35,6 +35,7 @@ namespace Foam
 namespace fv
 {
     defineTypeNameAndDebug(anisotropySource, 0);
+
     addToRunTimeSelectionTable
     (
         fvModel,
@@ -49,6 +50,7 @@ namespace fv
 
 void Foam::fv::anisotropySource::readCoeffs()
 {
+    tau_ = coeffs().lookupOrDefault<scalar>("tau", 0.0003);
     kappa1_ = coeffs().lookupOrDefault<scalar>("kappa1", 0.9);
     kappa2_ = coeffs().lookupOrDefault<scalar>("kappa2", 20.0);
 }
@@ -65,6 +67,7 @@ Foam::fv::anisotropySource::anisotropySource
 )
 :
     fvModel(name, modelType, dict, mesh),
+    tau_(NaN),
     kappa1_(NaN),
     kappa2_(NaN)
 {
@@ -88,40 +91,22 @@ Foam::wordList Foam::fv::anisotropySource::addSupFields() const
 
 void Foam::fv::anisotropySource::addSup
 (
-    fvMatrix<scalar>& eqn
+    fvMatrix<scalar>& eqn,
+    const word& fieldName
 ) const
 {
-    //- Cell volumes
-    const scalarField& V = mesh().V();
     //- Phase field variable &phi;
     const volScalarField& fi = mesh().lookupObject<volScalarField>("fi");
     //- Undercooling variable &Delta;T
     const volScalarField& dT = mesh().lookupObject<volScalarField>("dT");
 
     // No &phi;* as source is implicit
-    eqn.diag() += V*(1.0 - fi) *
-        (fi - 0.5 - kappa1_/constant::mathematical::pi
-        * Foam::atan(kappa2_ * dT));
-}
+    volScalarField fiSourceImplicit =
+        (1.0 - fi) *
+        (fi - 0.5 - this->kappa1()/constant::mathematical::pi
+        * Foam::atan(this->kappa2() * dT))/this->tau();
 
-
-void Foam::fv::anisotropySource::addSup
-(
-    fvMatrix<scalar>& eqn,
-    const word& fieldName
-) const
-{
-    //- Cell volumes
-    const scalarField& V = mesh().V();
-    //- Phase field variable &phi;
-    const volScalarField& fi = mesh().lookupObject<volScalarField>(fieldName);
-    //- Undercooling variable &Delta;T
-    const volScalarField& dT = mesh().lookupObject<volScalarField>("dT");
-
-    // No &phi;* as source is implicit
-    eqn.diag() += V*(1.0 - fi) *
-        (fi - 0.5 - kappa1_/constant::mathematical::pi
-        * Foam::atan(kappa2_ * dT));
+    eqn -= fvm::Sp(fiSourceImplicit, fi);
 }
 
 

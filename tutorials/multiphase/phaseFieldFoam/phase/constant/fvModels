@@ -21,6 +21,7 @@ anisotropy
 
     anisotropySourceCoeffs
     {
+        tau             0.0003;
         kappa1          0.9;
         kappa2          20;
     }

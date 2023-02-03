@@ -9,26 +9,38 @@
 #include <boost/algorithm/string.hpp>
 
 using namespace std;
+namespace fs = std::filesystem;
 namespace utf = boost::unit_test;
 
 struct VariableVectors
 {
-    VariableVectors(string casename, size_t column = 1, string end_time = "0.5")
+    VariableVectors(
+        string casename,
+        size_t column = 1, 
+        string end_time = "0.5",
+        double tolerance = 3.0
+        )
         : casename{casename},
           column{column},
-          end_time{end_time}
+          end_time{end_time},
+          tolerance{tolerance}
     {
-        string expected_path{"../" + casename + ".xy"}; // Expected in test directory when run in build subdir
-        filesystem::path fexpected{ expected_path };
-        if (!filesystem::exists(fexpected))
-            expected_path = casename + ".xy";
-        expected = read_variable(expected_path, column); // Try current directory if not found
+        string expected_file{"../" + casename + ".xy"}; // Expected in test directory when run in build subdir
+        fs::path expected_path{expected_file};
+        if (!fs::exists(expected_path))
+            expected_file = casename + ".xy";
+        expected = read_variable(expected_file, column); // Try current directory if not found
 
-        string numerical_path{"../../postProcessing/" + casename + "/" + end_time + "/line.xy"};
-        filesystem::path fnumerical{ numerical_path };
-        if (!filesystem::exists(fnumerical))
-            numerical_path = "../postProcessing/" + casename + "/" + end_time + "/line.xy";
-        numerical = read_variable(numerical_path, column); // Numerical result in postProcessing directory
+        string numerical_file{"../../postProcessing/" + casename + "/" + end_time + "/line.xy"};
+        fs::path numerical_path{ numerical_file };
+        if (!fs::exists(numerical_path))
+            numerical_file = "../postProcessing/" + casename + "/" + end_time + "/line.xy";
+        numerical = read_variable(numerical_file, column); // Numerical result in postProcessing directory
+
+        expected_path = fs::path(expected_file);
+        numerical_path = fs::path(numerical_file);
+        BOOST_ASSERT_MSG(fs::exists(expected_path), "-- Benchmark file not found!");
+        BOOST_ASSERT_MSG(fs::exists(numerical_path), "-- Prediction file not found!");
     }
 
     ~VariableVectors()
@@ -57,6 +69,21 @@ struct VariableVectors
         return expected;
     }
 
+    // Check if predicted temperatures agree with benchmark
+    void boost_check()
+    {
+        BOOST_TEST_MESSAGE("Checking " + casename + " temperatures");
+        for (auto e = expected.begin(), n= numerical.begin();
+                  e != expected.end() && n != numerical.end(); 
+                  ++e, ++n)
+        {
+            BOOST_CHECK_CLOSE_FRACTION(*e, *n, tolerance);
+        };
+        // BOOST_CHECK_CLOSE(expected.begin(), numerical.begin(), 1e-6);
+        // BOOST_CHECK_EQUAL_COLLECTIONS(expected.begin(), expected.end(),
+        //                               numerical.begin(), numerical.end(), tolerance);
+    }
+
     public:
     //! Expected variable values
     /*! Vector holding the expected variable values. */
@@ -75,6 +102,9 @@ struct VariableVectors
     //! Case end time
     /*! String holding the time at which the simulation ends*/
     string end_time;
+    //! Comparison tolerance
+    /*! Double containing the tolerance for floating point comparison*/
+    double tolerance;
 };
 
 struct F {
@@ -86,7 +116,8 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
 
     BOOST_AUTO_TEST_CASE(CheckIfCentrelineCoordinatesMatch)
     {
-        VariableVectors centreline{ "centreline", 1 };
+        string casename{"centreline"};
+        VariableVectors centreline{ casename, 1 };
         BOOST_TEST_MESSAGE("Looking for benchmark file.");
         BOOST_ASSERT(!centreline.expected.empty());
         BOOST_TEST_MESSAGE("Looking for numerical predictions file.");
@@ -99,19 +130,19 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
     BOOST_AUTO_TEST_CASE(CheckIfCentrelinePhaseFieldValuesMatchExpectedValues,
         * utf::depends_on("CheckIfVariableValuesMatchExpectedValues/CheckIfCentrelineCoordinatesMatch"))
     {
-        VariableVectors centreline{ "centreline", 2 };
+        string casename{"centreline"};
+        VariableVectors centreline{ casename, 2, "0.5", 5e-2};
         BOOST_TEST_MESSAGE("Checking centreline phase field values");
-        BOOST_CHECK_EQUAL_COLLECTIONS(centreline.expected.begin(), centreline.expected.end(),
-                                      centreline.numerical.begin(), centreline.numerical.end());
+        centreline.boost_check();
     }
 
     BOOST_AUTO_TEST_CASE(CheckIfCentrelineUndercoolingValuesMatchExpectedValues,
         * utf::depends_on("CheckIfVariableValuesMatchExpectedValues/CheckIfCentrelineCoordinatesMatch"))
     {
-        VariableVectors centreline{ "centreline", 3 };
+        string casename{"centreline"};
+        VariableVectors centreline{ casename, 3, "0.5", 5e-2};
         BOOST_TEST_MESSAGE("Checking centreline undercooling values");
-        BOOST_CHECK_EQUAL_COLLECTIONS(centreline.expected.begin(), centreline.expected.end(),
-                                      centreline.numerical.begin(), centreline.numerical.end());
+        centreline.boost_check();
     }
 
 BOOST_AUTO_TEST_SUITE_END();

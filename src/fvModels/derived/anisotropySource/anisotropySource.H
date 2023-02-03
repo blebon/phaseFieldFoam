@@ -25,8 +25,7 @@ Class
     Foam::fv::anisotropySource
 
 Description
-    Model for applying a heat source. Requires either the power, Q, or the
-    power per unit volume, q, to be specified.
+    Model for applying the anistropy source.
 
 Usage
     Example usage:
@@ -35,6 +34,7 @@ Usage
     {
         type            anisotropySource;
 
+        tau             0.0003;
         kappa1          0.9;
         kappa2          20;
 
@@ -68,6 +68,9 @@ class anisotropySource
     public fvModel
 {
     // Private data
+
+        //- &tau;
+        scalar tau_;
 
         //- Anisotropy coefficient
         scalar kappa1_;
@@ -108,6 +111,11 @@ public:
 
         // Return coefficients
 
+            const scalar& tau() const
+            {
+                return tau_;
+            }
+            
             const scalar& kappa1() const
             {
                 return kappa1_;
@@ -128,12 +136,6 @@ public:
 
         // Sources
 
-            //- Add implicit contribution to &phi; equation
-            virtual void addSup
-            (
-                fvMatrix<scalar>& eqn
-            ) const;
-            
             //- Add implicit contribution to &phi; equation
             virtual void addSup
             (
