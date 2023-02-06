@@ -79,7 +79,7 @@
     volScalarField fiSourceImplicit =
         (1.0 - fi) *
         (fi - 0.5 - kappa1/constant::mathematical::pi
-        * Foam::atan(kappa2 * dT));
+        * Foam::atan(kappa2 * dT))/tau;
 
     volScalarField Da = sqr(alpha) * (1 + c*beta)/tau;
     volScalarField Ddiag = Da * (1 + c*beta);
