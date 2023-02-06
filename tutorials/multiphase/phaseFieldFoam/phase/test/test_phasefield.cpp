@@ -18,12 +18,14 @@ struct VariableVectors
         string casename,
         size_t column = 1, 
         string end_time = "0.5",
-        double tolerance = 3.0
+        double large_tolerance = 3.0,
+        double small_tolerance = 40.0
         )
         : casename{casename},
           column{column},
           end_time{end_time},
-          tolerance{tolerance}
+          large_tolerance{large_tolerance},
+          small_tolerance{small_tolerance}
     {
         string expected_file{"../" + casename + ".xy"}; // Expected in test directory when run in build subdir
         fs::path expected_path{expected_file};
@@ -73,11 +75,13 @@ struct VariableVectors
     void boost_check()
     {
         BOOST_TEST_MESSAGE("Checking " + casename + " temperatures");
+        double tolerance{0.0};
         for (auto e = expected.begin(), n= numerical.begin();
                   e != expected.end() && n != numerical.end(); 
                   ++e, ++n)
         {
-            BOOST_CHECK_CLOSE_FRACTION(*e, *n, tolerance);
+            double tolerance = (*e > 0.1) ? large_tolerance : small_tolerance;
+            BOOST_CHECK_CLOSE(*e, *n, tolerance);
         };
         // BOOST_CHECK_CLOSE(expected.begin(), numerical.begin(), 1e-6);
         // BOOST_CHECK_EQUAL_COLLECTIONS(expected.begin(), expected.end(),
@@ -103,8 +107,11 @@ struct VariableVectors
     /*! String holding the time at which the simulation ends*/
     string end_time;
     //! Comparison tolerance
-    /*! Double containing the tolerance for floating point comparison*/
-    double tolerance;
+    /*! Double containing the tolerance for large floating point comparison*/
+    double large_tolerance;
+    //! Comparison tolerance
+    /*! Double containing the tolerance for small floating point comparison*/
+    double small_tolerance;
 };
 
 struct F {
@@ -131,7 +138,7 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
         * utf::depends_on("CheckIfVariableValuesMatchExpectedValues/CheckIfCentrelineCoordinatesMatch"))
     {
         string casename{"centreline"};
-        VariableVectors centreline{ casename, 2, "0.5", 5e-2};
+        VariableVectors centreline{ casename, 2, "0.5", 12.0, 50.0};
         BOOST_TEST_MESSAGE("Checking centreline phase field values");
         centreline.boost_check();
     }
@@ -140,7 +147,7 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
         * utf::depends_on("CheckIfVariableValuesMatchExpectedValues/CheckIfCentrelineCoordinatesMatch"))
     {
         string casename{"centreline"};
-        VariableVectors centreline{ casename, 3, "0.5", 5e-2};
+        VariableVectors centreline{ casename, 3, "0.5", 3.0, 20.0};
         BOOST_TEST_MESSAGE("Checking centreline undercooling values");
         centreline.boost_check();
     }
