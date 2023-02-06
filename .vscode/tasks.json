@@ -17,6 +17,22 @@
 			}
 		},
 		{
+			"label": "OF10-Debug",
+			"type": "shell",
+			"command": "source",
+			"args": [
+				"/opt/wvec/OpenFOAM/OpenFOAM-10/etc/bashrc",
+				"WM_COMPILE_OPTION=Debug",
+				"WM_COMPILER_TYPE=ThirdParty",
+				"WM_COMPILER=Gcc121"
+			],
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
 			"label": "OF10-Young",
 			"type": "shell",
 			"command": "source",

@@ -59,6 +59,12 @@ endif(NOT ${Boost_FOUND})
 enable_testing()
 
 message(STATUS "Setting common OpenFOAM compilation options")
+if(CMAKE_BUILD_TYPE MATCHES "Debug")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}gdb3 -DFULLDEBUG -O0 -gdwarf-4")
+else()
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+endif(CMAKE_BUILD_TYPE MATCHES "Debug")
+message(STATUS "Compiling in ${CMAKE_BUILD_TYPE} mode")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -70,15 +76,11 @@ add_compile_definitions(WM_LABEL_SIZE=$ENV{WM_LABEL_SIZE})
 add_compile_options(
     -Wall -Wextra -Wold-style-cast -Wnon-virtual-dtor -Wno-unused-parameter -Wno-invalid-offsetof -Wno-attributes
 )
-add_compile_options(-O3)
 add_compile_definitions(NoRepository)
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftemplate-depth-100")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON) # -fPIC
-
-# If Debug
-# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DFULLDEBUG -g -O0 -gdwarf-4")
 
 message(STATUS "Setting common OpenFOAM include paths")
 set(PHASEFIELDFOAM_DIR applications/solvers/multiphase/${PROJECT_NAME})
@@ -155,11 +157,20 @@ list(APPEND OF_LINK_LIBRARIES
 )
 build_OF_library()
 
+set(OF_TEST_NAME test_anisotropySource)
+set(OF_TEST_DIR tests/fvModels)
+set(OF_TEST_INCLUDE_PATHS ${OF_TEST_DIR})
+set(OF_TEST_LINK_LIBRARIES)
+list(APPEND OF_TEST_LINK_LIBRARIES 
+    finiteVolume meshTools sampling myFvModels fvModels fvConstraints
+)
+test_OF_library()
+
 # phaseFieldFoam
 add_executable(${PROJECT_NAME} ${PHASEFIELDFOAM_DIR}/phaseFieldFoam.C)
 # Linking
 foreach(loop_lib
-    finiteVolume fvModels fvConstraints meshTools
+    finiteVolume myFvModels fvModels fvConstraints meshTools
 )
     target_link_libraries(${PROJECT_NAME} LINK_PUBLIC ${loop_lib})
 endforeach()

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Source tutorial run functions
+source $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+# Get application name
+application=`getApplication`
+
+# Compile
+wmake ..
+
+# Mesh
+blockMesh
+
+# Run
+runApplication ./test_anisotropySource --log_level=all
+
+#------------------------------------------------------------------------------
