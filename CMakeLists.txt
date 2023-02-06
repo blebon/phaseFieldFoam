@@ -6,6 +6,8 @@ if(UNIX)
     # execute_process(COMMAND lsb_release --short --release OUTPUT_VARIABLE DISTRO_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
     if(LINUX_DISTRO MATCHES "CentOS")
         set(CMAKE_CXX_COMPILER /opt/wvec/OpenFOAM/ThirdParty-10/platforms/linux64/gcc-12.1.0/bin/c++)
+    elseif(LINUX_DISTRO MATCHES "Ubuntu")
+        set(CMAKE_CXX_COMPILER /usr/bin/c++)
     endif(LINUX_DISTRO MATCHES "CentOS")
 endif(UNIX)
 
