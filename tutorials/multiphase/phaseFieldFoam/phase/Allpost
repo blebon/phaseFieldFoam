@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Source tutorial run functions
+source $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+# Get application name
+application=`getApplication`
+
+runApplication postProcess -func 'cutPlaneSurface(funcName=zNormal, fields=(fi dT), point=(0. 0. 0.), normal=(0 0 1))' -latestTime
+mv log.postProcess log.postProcess.cutPlaneSurface
+runApplication postProcess -func 'graphCell(funcName=centreline, fields=(fi dT), start=(0 -6.25 0), end=(0 6.25 0), axis=y)' -latestTime
+mv log.postProcess log.postProcess.graphCell
+
+touch $(basename $PWD).foam
+
+python3 convert_vtk.py
+python3 generate_pvd.py
+python3 plot.py
+
+#------------------------------------------------------------------------------
