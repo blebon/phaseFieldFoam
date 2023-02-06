@@ -67,6 +67,7 @@ Foam::fv::anisotropySource::anisotropySource
 )
 :
     fvModel(name, modelType, dict, mesh),
+    set_(coeffs(), mesh),
     tau_(NaN),
     kappa1_(NaN),
     kappa2_(NaN)
@@ -85,7 +86,7 @@ Foam::fv::anisotropySource::~anisotropySource()
 
 Foam::wordList Foam::fv::anisotropySource::addSupFields() const
 {
-    return wordList();
+    return wordList(1, "fi");
 }
 
 
@@ -95,8 +96,13 @@ void Foam::fv::anisotropySource::addSup
     const word& fieldName
 ) const
 {
+    if (debug)
+    {
+        Info << type() << ": applying source to " << eqn.psi().name() << endl;
+    }
+    
     //- Phase field variable &phi;
-    const volScalarField& fi = mesh().lookupObject<volScalarField>("fi");
+    const volScalarField& fi = mesh().lookupObject<volScalarField>(fieldName);
     //- Undercooling variable &Delta;T
     const volScalarField& dT = mesh().lookupObject<volScalarField>("dT");
 
@@ -106,7 +112,22 @@ void Foam::fv::anisotropySource::addSup
         (fi - 0.5 - this->kappa1()/constant::mathematical::pi
         * Foam::atan(this->kappa2() * dT))/this->tau();
 
-    eqn -= fvm::Sp(fiSourceImplicit, fi);
+    //- Sp terms
+    scalarField& Sp = eqn.diag();
+    //- Cell volumes
+    const scalarField& V = mesh().V();
+    //- Cells in cellset
+    const labelList& cells = set_.cells();
+    
+    // Equivalent to eqn -= fvm::Sp(fiSourceImplicit, fi); over cellset set_
+    forAll(cells, i)
+    {
+        const label celli = cells[i];
+
+        const scalar Vc = V[celli];
+        const scalar S = fiSourceImplicit[celli];
+        Sp[celli] += Vc*S;
+    }
 }
 
 

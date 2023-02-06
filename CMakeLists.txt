@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.17 FATAL_ERROR)
 
-if (UNIX)
+if(UNIX)
     message(STATUS "Determining id of the Linux distributor")
     execute_process(COMMAND lsb_release --short --id OUTPUT_VARIABLE LINUX_DISTRO OUTPUT_STRIP_TRAILING_WHITESPACE)
     # execute_process(COMMAND lsb_release --short --release OUTPUT_VARIABLE DISTRO_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
-    if (LINUX_DISTRO MATCHES "CentOS")
+    if(LINUX_DISTRO MATCHES "CentOS")
         set(CMAKE_CXX_COMPILER /opt/wvec/OpenFOAM/ThirdParty-10/platforms/linux64/gcc-12.1.0/bin/c++)
-    endif (LINUX_DISTRO MATCHES "CentOS")
-endif (UNIX)
+    endif(LINUX_DISTRO MATCHES "CentOS")
+endif(UNIX)
 
 project(phaseFieldFoam LANGUAGES CXX C)
 
@@ -62,6 +62,7 @@ message(STATUS "Setting common OpenFOAM compilation options")
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}gdb3 -DFULLDEBUG -O0 -gdwarf-4")
 else()
+    set(CMAKE_BUILD_TYPE Release)
     set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 endif(CMAKE_BUILD_TYPE MATCHES "Debug")
 message(STATUS "Compiling in ${CMAKE_BUILD_TYPE} mode")
@@ -111,7 +112,7 @@ macro(build_OF_library)
     # Copying to OpenFOAM lib path
     add_custom_command(TARGET ${OF_LIB_NAME}
                        COMMENT "Copying lib${OF_LIB_NAME}.so to $ENV{FOAM_USER_LIBBIN}"
-                       POST_BUILD COMMAND cp lib${OF_LIB_NAME}.so $ENV{FOAM_USER_LIBBIN}
+                       POST_BUILD COMMAND cp lib${OF_LIB_NAME}.so $ENV{FOAM_USER_LIBBIN}/
     )
 endmacro(build_OF_library)
 
@@ -181,5 +182,5 @@ target_link_options(${PROJECT_NAME} PUBLIC LINKER:--add-needed,--no-as-needed)
 # Copy phaseFieldFoam executable upon successful compilation
 add_custom_command(TARGET ${PROJECT_NAME}
                    COMMENT "Copying ${PROJECT_NAME} to $ENV{FOAM_USER_APPBIN}"
-                   POST_BUILD COMMAND cp ${PROJECT_NAME} $ENV{FOAM_USER_APPBIN}
+                   POST_BUILD COMMAND cp ${PROJECT_NAME} $ENV{FOAM_USER_APPBIN}/
 )

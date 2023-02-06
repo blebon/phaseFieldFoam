@@ -34,6 +34,8 @@ Usage
     {
         type            anisotropySource;
 
+        selectionMode   all;
+
         tau             0.0003;
         kappa1          0.9;
         kappa2          20;
@@ -47,6 +49,7 @@ Usage
 #define anisotropySource_H
 
 #include "fvModel.H"
+#include "fvCellSet.H"
 #include "fvMesh.H"
 #include "volFields.H"
 #include "NamedEnum.H"
@@ -69,7 +72,10 @@ class anisotropySource
 {
     // Private data
 
-        //- &tau;
+        //- The set of cells the fvModel applies to
+        fvCellSet set_;
+        
+        // - &tau;
         scalar tau_;
 
         //- Anisotropy coefficient

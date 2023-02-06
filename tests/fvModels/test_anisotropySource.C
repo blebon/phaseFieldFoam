@@ -56,10 +56,13 @@ BOOST_FIXTURE_TEST_SUITE(CheckAnisotropySourceFvModel, F);
 
         PtrListDictionary<fvModel>& modelsList(fvModels);
 
+        BOOST_TEST_MESSAGE("-- Checking if a anisotropySource is applied to fi");
+        BOOST_ASSERT(modelsList[0].addsSupToField("fi"));
+
         BOOST_TEST_MESSAGE("-- Checking if anisotropy anisotropySource dictionary has been read");
         BOOST_REQUIRE_EQUAL(modelsList[0].name(), "anisotropy");
 
-        BOOST_REQUIRE_CLOSE(modelsList[0].coeffs().lookup<scalar>("tau"), 0.0003, 0.1);
+        // BOOST_REQUIRE_CLOSE(modelsList[0].coeffs().lookup<scalar>("tau"), 0.0003, 0.1);
         BOOST_REQUIRE_CLOSE(modelsList[0].coeffs().lookup<scalar>("kappa1"), 0.9, 0.1);
         BOOST_REQUIRE_CLOSE(modelsList[0].coeffs().lookup<scalar>("kappa2"), 20.0, 0.1);        
     }

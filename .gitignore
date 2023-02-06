@@ -62,8 +62,10 @@ wrongFaces
 .pytest_cache/
 __pycache__/
 linux64Gcc*Int32Opt/
+linux64Gcc*Int32Debug/
 lnInclude/
 mingw_w64GccDPInt32Opt/
+mingw_w64GccDPInt32Debug/
 platforms/
 
 # run Folders
