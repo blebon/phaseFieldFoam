@@ -10,7 +10,7 @@ if [ ! -f log.decomposePar ]; then
     ./Allrun.pre
 fi
 
-runParallel $application
+GMON_OUT_PREFIX=$application runParallel $application
 runApplication reconstructPar -newTimes
 
 ./Allpost
