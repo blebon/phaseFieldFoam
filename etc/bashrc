@@ -155,7 +155,7 @@ fi
 # Location of user files
 # ~~~~~~~~~~~~~~~~~~~~~~
 if [ -d $HOME/Scratch/$WM_PROJECT/$USER-$WM_PROJECT_VERSION ]; then
-    export WM_PROJECT_USER_DIR=$HOME/$WM_PROJECT/$USER-$WM_PROJECT_VERSION
+    export WM_PROJECT_USER_DIR=$HOME/Scratch/$WM_PROJECT/$USER-$WM_PROJECT_VERSION
 else
     export WM_PROJECT_USER_DIR=$HOME/$WM_PROJECT/$USER-$WM_PROJECT_VERSION
 fi
