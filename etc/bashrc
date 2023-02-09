@@ -42,11 +42,15 @@ export WM_PROJECT_VERSION=10
 #
 # Please set to the appropriate path if the default is not correct.
 #
-[ "$BASH" -o "$ZSH_NAME" ] && \
+# [ "$BASH" -o "$ZSH_NAME" ] && \
 # export FOAM_INST_DIR=$(cd $(dirname ${BASH_SOURCE:-$0})/../.. && pwd -P) || \
-[ -d /opt/wvec/$WM_PROJECT ] && export FOAM_INST_DIR=/opt/wvec/$WM_PROJECT || \
-[ -d /opt/$WM_PROJECT ] && export FOAM_INST_DIR=/opt/$WM_PROJECT || \
-[ -d $HOME/$WM_PROJECT ] && export FOAM_INST_DIR=$HOME/$WM_PROJECT
+if [ -d /opt/wvec/$WM_PROJECT ]; then
+    export FOAM_INST_DIR=/opt/wvec/$WM_PROJECT
+elif [ -d /opt/$WM_PROJECT ]; then
+    export FOAM_INST_DIR=/opt/$WM_PROJECT
+else
+    export FOAM_INST_DIR=$HOME/$WM_PROJECT
+fi
 # export FOAM_INST_DIR=~$WM_PROJECT
 # export FOAM_INST_DIR=/usr/local/$WM_PROJECT
 #
@@ -150,8 +154,11 @@ fi
 
 # Location of user files
 # ~~~~~~~~~~~~~~~~~~~~~~
-[ -d $HOME/Scratch/$WM_PROJECT/$USER-$WM_PROJECT_VERSION ] && export WM_PROJECT_USER_DIR=$HOME/$WM_PROJECT/$USER-$WM_PROJECT_VERSION || \
-[ -d $HOME/$WM_PROJECT/$USER-$WM_PROJECT_VERSION ] export WM_PROJECT_USER_DIR=$HOME/$WM_PROJECT/$USER-$WM_PROJECT_VERSION
+if [ -d $HOME/Scratch/$WM_PROJECT/$USER-$WM_PROJECT_VERSION ]; then
+    export WM_PROJECT_USER_DIR=$HOME/$WM_PROJECT/$USER-$WM_PROJECT_VERSION
+else
+    export WM_PROJECT_USER_DIR=$HOME/$WM_PROJECT/$USER-$WM_PROJECT_VERSION
+fi
 
 # Source initialisation functions
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
