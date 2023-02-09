@@ -1,0 +1,133 @@
+#----------------------------------*-sh-*--------------------------------------
+# =========                 |
+# \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+#  \\    /   O peration     | Website:  https://openfoam.org
+#   \\  /    A nd           | Copyright (C) 2014-2018 OpenFOAM Foundation
+#    \\/     M anipulation  |
+#------------------------------------------------------------------------------
+# License
+#     This file is part of OpenFOAM.
+#
+#     OpenFOAM is free software: you can redistribute it and/or modify it
+#     under the terms of the GNU General Public License as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+#
+#     OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
+#     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+#     FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+#     for more details.
+#
+#     You should have received a copy of the GNU General Public License
+#     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
+#
+# File
+#     wmake/scripts/AllwmakeParseArguments
+#
+# Description
+#     Allwmake argument parser
+#
+# Usage
+#     # Parse the arguments by sourcing this script
+#     . $WM_PROJECT_DIR/wmake/scripts/AllwmakeParseArguments
+#
+#------------------------------------------------------------------------------
+Script=${0##*/}
+
+if [ -z "$WM_PROJECT_DIR" ]
+then
+    echo "$Script error: The OpenFOAM environment is not set."
+    echo "    Check the OpenFOAM entries in your dot-files and source them."
+    echo "    If in doubt, please read:"
+    echo "       http://openfoam.org/download/source/setting-environment"
+    exit 1
+fi
+
+usage() {
+    exec 1>&2
+    while [ "$#" -ge 1 ]; do echo "$1"; shift; done
+
+    # Print normal usage options
+    cat<<USAGE
+
+Usage: $Script [OPTIONS]
+
+Executing $Script is equivalent to
+
+   wmake -all [OPTIONS]
+USAGE
+
+    wmake -help
+    exit 1
+}
+
+
+#------------------------------------------------------------------------------
+# Parse the arguments and options
+#------------------------------------------------------------------------------
+
+fromWmake=
+qOpt=
+
+for arg in "$@"
+do
+    # Remove arg
+    shift
+
+    case "$arg" in
+        -h | -help)
+            usage
+            exit 0
+            ;;
+        # Check if called from wmake to avoid recursion
+        -fromWmake)
+            fromWmake="fromWmake"
+            ;;
+        -q)
+            qOpt="-q"
+            # Permanently remove arg
+            continue
+            ;;
+        # Target type
+        lib | libo | libso | dep | objects)
+            targetType=$arg
+            ;;
+    esac
+
+    # Re-insert arg
+    set -- "$@" "$arg"
+done
+
+
+#------------------------------------------------------------------------------
+# Execute wmake -all if not called from wmake
+#------------------------------------------------------------------------------
+
+if [ -z "$fromWmake" ]
+then
+    exec wmake -all $qOpt $*
+else
+    # Print command
+    [ -z "$targetType" ] || targetSpace=" "
+    echo "$Script $targetType$targetSpace$(echo $PWD | sed s%$WM_PROJECT_DIR/%% )"
+fi
+
+
+#------------------------------------------------------------------------------
+# If WM_CONTINUE_ON_ERROR not set activate the shell option "stop on error"
+#------------------------------------------------------------------------------
+
+if [ -z "${WM_CONTINUE_ON_ERROR}" ]
+then
+    set -e
+fi
+
+
+#------------------------------------------------------------------------------
+# Cleanup local variables and functions
+#------------------------------------------------------------------------------
+
+unset Script usage fromWmake
+
+
+#------------------------------------------------------------------------------

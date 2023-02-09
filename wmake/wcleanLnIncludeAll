@@ -1,0 +1,92 @@
+#!/bin/sh
+#------------------------------------------------------------------------------
+# =========                 |
+# \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+#  \\    /   O peration     | Website:  https://openfoam.org
+#   \\  /    A nd           | Copyright (C) 2011-2018 OpenFOAM Foundation
+#    \\/     M anipulation  |
+#------------------------------------------------------------------------------
+# License
+#     This file is part of OpenFOAM.
+#
+#     OpenFOAM is free software: you can redistribute it and/or modify it
+#     under the terms of the GNU General Public License as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+#
+#     OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
+#     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+#     FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+#     for more details.
+#
+#     You should have received a copy of the GNU General Public License
+#     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Script
+#     wcleanLnIncludeAll
+#
+# Usage
+#     wcleanLnIncludeAll [dir1] .. [dirN]
+#
+# Description
+#     Delete all the lnInclude directories in the tree.
+#
+#------------------------------------------------------------------------------
+Script=${0##*/}
+
+# Source the wmake functions
+. ${0%/*}/scripts/wmakeFunctions
+
+#------------------------------------------------------------------------------
+# Parse arguments and options
+#------------------------------------------------------------------------------
+
+# Default to the CWD
+if [ "$#" -eq 0 ]
+then
+    # Add the CWD to the arguments
+    set -- .
+elif [ "$1" = "-h" -o "$1" = "-help" ]
+then
+    echo "Usage: $Script [dir1] .. [dirN]"
+    echo
+    echo "    Delete all the lnInclude directories in the tree"
+    echo
+    exit 0
+fi
+
+
+#------------------------------------------------------------------------------
+# Search up the directory tree for the Make sub-directory,
+# check the existence of the 'files' file and clean there if present
+#------------------------------------------------------------------------------
+
+# Need to add an option or special logic to control cdSource
+# MakeDir=Make
+# cdSource
+
+
+#------------------------------------------------------------------------------
+# Search for all lnInclude directories and delete them
+#------------------------------------------------------------------------------
+
+for dir
+do
+    if [ -d "$dir" ]
+    then
+        echo "removing lnInclude directories: $dir"
+        find $dir -depth -type d -name lnInclude -exec rm -rf {} \;
+    else
+        echo "no directory: $dir" 1>&2
+    fi
+done
+
+
+#------------------------------------------------------------------------------
+# Cleanup local variables and functions
+#------------------------------------------------------------------------------
+
+unset Script MakeDir
+
+
+#------------------------------------------------------------------------------

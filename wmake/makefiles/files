@@ -1,0 +1,62 @@
+#----------------------------*- makefile-gmake -*------------------------------
+# =========                 |
+# \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+#  \\    /   O peration     | Website:  https://openfoam.org
+#   \\  /    A nd           | Copyright (C) 2011-2020 OpenFOAM Foundation
+#    \\/     M anipulation  |
+#------------------------------------------------------------------------------
+# License
+#     This file is part of OpenFOAM.
+#
+#     OpenFOAM is free software: you can redistribute it and/or modify it
+#     under the terms of the GNU General Public License as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+#
+#     OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
+#     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+#     FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+#     for more details.
+#
+#     You should have received a copy of the GNU General Public License
+#     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
+#
+# File
+#     wmake/makefiles/files
+#
+# Description
+#     A Makefile to process Make/files for gmake
+#
+#     If the Make/files file does not contain a SOURCE list the source file
+#     names in it are converted into the SOURCE list for gmake.
+#------------------------------------------------------------------------------
+
+GENERAL_RULES   = $(WM_DIR)/rules/General
+include $(GENERAL_RULES)/general
+
+
+#------------------------------------------------------------------------------
+# Declare names of make system control files
+#------------------------------------------------------------------------------
+
+OBJECTS_DIR     = $(MAKE_DIR)/$(WM_OPTIONS)
+OPTIONS         = $(MAKE_DIR)/options
+FILES           = $(OBJECTS_DIR)/files
+
+include $(OPTIONS)
+
+
+#------------------------------------------------------------------------------
+# Scan Make/files for source file names and create the SOURCE entry
+#------------------------------------------------------------------------------
+
+# Create a sed pattern from the source file suffix list
+SUFFIX_SED = \
+    $(foreach s,$(SUFFIXES),'-e s/\(^ *\)\([^ ]*\$(s)$$\)/\1SOURCE += \2/')
+
+# Prepend SOURCE += to each of the source file names
+$(FILES): $(MAKE_DIR)/files
+	@sed $(SUFFIX_SED) $(MAKE_DIR)/files > $(FILES)
+
+
+#------------------------------------------------------------------------------

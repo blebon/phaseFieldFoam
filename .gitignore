@@ -1,13 +1,34 @@
+# Editor and misc backup files
+*~
+.*~
+.*.swp
+*.bak
+*.bak[0-9][0-9]
+\#*\#
+
+# File-browser settings
+.directory
+
+# CVS recovered versions
+.#*
+
 # Ignore build directories
 build/
 debug/
 
 # Compiled source
-*.o
+*.[oa]
+*.la
 *.so
 
-# Ignore the build directory
-build/
+# Corefiles
+core
+
+# Derived files
+lex.yy.c
+
+# Dependency files
+*.dep
 
 # Packages
 *.7z
@@ -29,6 +50,18 @@ build/
 *.vtp
 log.*
 OF10*
+
+# Build directories
+.pytest_cache/
+__pycache__/
+linux*Clang*/
+linux*Gcc*/
+linux*Nvcc*/
+linux*Icc*/
+linuxming*/
+mingw*Gcc*/
+mingw*Gcc*/
+platforms/
 
 # Mesh files
 .keep
@@ -58,19 +91,11 @@ thickness
 thicknessFraction
 wrongFaces
 
-# Folders
-.pytest_cache/
-__pycache__/
-linux64Gcc*Int32Opt/
-linux64Gcc*Int32Debug/
-lnInclude/
-mingw_w64GccDPInt32Opt/
-mingw_w64GccDPInt32Debug/
-platforms/
+# lnInclude (symlink) directories
+lnInclude
 
-# run Folders
+# Run Folders
 0.[0-9]*/
-0/
 1*/
 2*/
 3*/
@@ -82,3 +107,6 @@ platforms/
 9*/
 dynamicCode/
 postProcessing/
+
+# Reinstate wmake/rules that might look like build directories
+!wmake/rules/*/

@@ -1,0 +1,18 @@
+SUFFIXES += .c
+
+cWARN        = -Xcompiler -Wall
+
+cc          = nvcc -ccbin=/opt/wvec/OpenFOAM/ThirdParty-10/platforms/linux64/gcc-12.1.0/bin/gcc -m64 -arch=all
+
+include $(DEFAULT_RULES)/c$(WM_COMPILE_OPTION)
+
+cFLAGS      = $(GFLAGS) $(cWARN) $(cOPT) $(cDBUG) $(LIB_HEADER_DIRS) -Xcompiler -fPIC
+
+ctoo        = $(WM_SCHEDULER) $(cc) $(cFLAGS) -c $< -o $@
+
+LINK_LIBS   = $(cDBUG)
+
+LINKLIBSO   = $(cc) -Xlinker -fuse-ld=bfd -shared
+
+LINKEXE     = $(cc) -Xlinker -fuse-ld=bfd \
+              -Xlinker --add-needed -Xlinker -z -Xlinker nodefs

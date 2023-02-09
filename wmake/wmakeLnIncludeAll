@@ -1,0 +1,219 @@
+#!/bin/bash
+#------------------------------------------------------------------------------
+# =========                 |
+# \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+#  \\    /   O peration     | Website:  https://openfoam.org
+#   \\  /    A nd           | Copyright (C) 2011-2021 OpenFOAM Foundation
+#    \\/     M anipulation  |
+#------------------------------------------------------------------------------
+# License
+#     This file is part of OpenFOAM.
+#
+#     OpenFOAM is free software: you can redistribute it and/or modify it
+#     under the terms of the GNU General Public License as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+#
+#     OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
+#     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+#     FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+#     for more details.
+#
+#     You should have received a copy of the GNU General Public License
+#     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Script
+#     wmakeLnIncludeAll
+#
+# Usage
+#     wmakeLnIncludeAll [dir1 .. dirN]
+#
+# Description
+#     Find directories with a 'Make/files' that contains a 'LIB =' directive
+#     and execute 'wmakeLnInclude' for each one
+#
+#------------------------------------------------------------------------------
+Script=${0##*/}
+
+usage() {
+    cat<<USAGE
+
+Usage: $Script [OPTION] [dir1 .. dirN]
+
+options:
+  -j                Compile using all local cores/hyperthreads
+  -j <N> | -j<N>    Compile using N cores/hyperthreads
+  -help  | -h       Print the usage
+
+Find directories with a 'Make/files' that contains a 'LIB =' directive
+and execute 'wmakeLnInclude -update' for each one
+
+USAGE
+}
+
+error() {
+    while [ "$#" -ge 1 ]; do echo "$1"; shift; done
+    usage
+    exit 1
+}
+
+
+#------------------------------------------------------------------------------
+# Parse arguments and options
+#------------------------------------------------------------------------------
+
+nCores=0
+
+# Default 'wmakeLnInclude' option
+wmLnOpt=
+
+# Option to execute 'wmakeLnInclude' on all dependent libraries
+depOpt=
+
+while [ "$#" -gt 0 ]
+do
+    case "$1" in
+        -h | -help)   # Provide immediate help
+            usage && exit 0
+            ;;
+        -u | -update)
+            wmLnOpt="-update"
+            ;;
+         -d | -dep)
+            depOpt=true
+            shift
+            ;;
+        # Parallel execution on WM_NCOMPPROCS cores
+        -j)
+            nCores=$WM_NCOMPPROCS
+            test $# -ge 2 && (($2 + 1)) > /dev/null 2>&1 \
+                && shift && nCores=$1
+            ;;
+        # Parallel compilation on specified number of cores
+        -j*)
+            nCores=${1#-j}
+            ;;
+        -*)
+            error "unknown option: '$*'"
+            ;;
+        *)
+            break
+            ;;
+    esac
+    shift
+done
+
+
+if [ "$depOpt" = true ]
+then
+
+    MakeDir=Make
+
+    [ -r $MakeDir/options ] || {
+        echo "$Script error: file '$MakeDir/options' does not exist" 1>&2
+        exit 1
+    }
+
+    # shellcheck disable=SC2034
+    LIB_SRC="$WM_PROJECT_DIR/src"
+
+    # shellcheck disable=SC2016
+    includeDirs="
+        $WM_PROJECT_DIR/src/$WM_PROJECT
+        $WM_PROJECT_DIR/src/OSspecific/$WM_OSTYPE
+        $(grep -e '-I.*lnInclude' $MakeDir/options |
+        sed -e 's%-I\([.$(a-zA-Z0-9_)/]*\)lnInclude.*%\1%' -e 's/$(\(.*\))/$\1/')"
+
+    printed=
+    for d in $includeDirs
+    do [ ! -d "$d" ]
+       path=$(eval echo "$d")
+       if [ ! -d "$path/lnInclude" ]
+       then
+           [ $printed ] || echo "$Script: running wmakeLnInclude on dependent libraries:"
+           printed=true
+           echo -n "    "
+           eval wmakeLnInclude $wmLnOpt "$d"
+       fi
+    done
+
+    unset MakeDir LIB_SRC printed
+
+else
+
+    if [ "$nCores" -gt 0 ]
+    then
+        echo "$Script: starting wmakeLnInclude processes on $nCores cores"
+    else
+        echo "$Script: running wmakeLnInclude"
+    fi
+
+    # Defaults to searching from CWD
+    [ "$#" -gt 0 ] || set -- .
+
+    for checkDir
+    do
+        if [ -d "$checkDir" ]
+        then
+            echo "    searching $checkDir for 'Make' directories"
+        else
+            echo "    skipping non-dir $checkDir"
+            continue
+        fi
+
+        find "$checkDir" -depth -type d -name Make -print | while read -r MakeDir
+        do
+            topDir=${MakeDir%/Make}    # trim /Make from the end
+            if [ -d "$topDir" ]
+            then
+                if grep -e '^ *LIB *=' "$MakeDir/files" >/dev/null 2>&1
+                then
+                    # If running in parallel start wmakeLnInclude on nCores
+                    # and more as the cores become free
+                    if [ "$nCores" -gt 0 ]
+                    then
+                        # shellcheck disable=SC2207
+                        joblist=($(jobs -p))
+                        while (( ${#joblist[*]} > "$nCores" ))
+                        do
+                            # When the job limit is reached wait for a job to finish
+                            wait -n
+                            # shellcheck disable=SC2207
+                            joblist=($(jobs -p))
+                        done
+                        wmakeLnInclude $wmLnOpt "$topDir" &
+                    else
+                        wmakeLnInclude $wmLnOpt "$topDir"
+                    fi
+                elif [ -d "$topDir/lnInclude" ]
+                then
+                    echo "    removing spurious $topDir/lnInclude"
+                    rm -rf "$topDir/lnInclude"
+                fi
+            fi
+        done
+    done
+
+    if [ "$nCores" -gt 0 ]
+    then
+        # Wait for all of the wmakeLnInclude jobs to finish
+        wait
+
+        # Synchronise the file system to ensure that all of the links exist
+        # before compilation
+        # sync
+        sleep 3
+    fi
+
+    unset joblist
+fi
+
+
+#------------------------------------------------------------------------------
+# Cleanup local variables and functions
+#------------------------------------------------------------------------------
+
+unset Script usage error nCores wmLnOpt depOpt
+
+
+#------------------------------------------------------------------------------
