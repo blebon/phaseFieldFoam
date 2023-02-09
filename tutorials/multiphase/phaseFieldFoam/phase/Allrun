@@ -11,6 +11,8 @@ if [ ! -f log.decomposePar ]; then
 fi
 
 GMON_OUT_PREFIX=$application runParallel $application
+# nProcs=$(foamDictionary system/decomposeParDict -entry numberOfSubdomains -value)
+# mpirun -np $nProcs valgrind --tool=callgrind $application -parallel > log.$application 2>&1
 runApplication reconstructPar -newTimes
 
 ./Allpost

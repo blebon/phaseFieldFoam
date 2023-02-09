@@ -67,6 +67,7 @@ platforms/
 *.out
 analysis*.txt
 phaseFieldFoam.[0-9]*
+callgrind.out.[0-9]*
 
 # Mesh files
 .keep
