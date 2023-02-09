@@ -63,6 +63,10 @@ mingw*Gcc*/
 mingw*Gcc*/
 platforms/
 
+# Profiling files
+*.out
+analysis.txt
+
 # Mesh files
 .keep
 *.cgns

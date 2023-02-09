@@ -4,3 +4,4 @@ include $(GENERAL_RULES)/standard
 
 include $(DEFAULT_RULES)/c
 include $(DEFAULT_RULES)/c++
+include $(DEFAULT_RULES)/cu

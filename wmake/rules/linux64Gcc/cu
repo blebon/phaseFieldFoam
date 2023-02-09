@@ -1,0 +1,37 @@
+SUFFIXES += .cu
+
+c++WARN     = -Xcompiler -Wall -Xcompiler -Wextra -Xcompiler -Wold-style-cast -Xcompiler -Wnon-virtual-dtor \
+              -Xcompiler -Wno-unused-parameter -Xcompiler -Wno-invalid-offsetof -Xcompiler -Wno-attributes \
+              -Xcudafe "--diag_suppress=null_reference" -Xcudafe "--diag_suppress=subscript_out_of_range" \
+              -Xcudafe "--diag_suppress=extra_semicolon" -Xcudafe "--diag_suppress=partial_override" \
+              -Xcudafe "--diag_suppress=implicit_return_from_non_void_function" \
+              -Xcudafe "--diag_suppress=virtual_function_decl_hidden"
+
+# Suppress some warnings for flex++ and CGAL
+c++LESSWARN = -Xcompiler -Wno-old-style-cast -Xcompiler -Wno-unused-local-typedefs -Xcompiler -Wno-array-bounds
+
+CC          = nvcc -ccbin=g++ -std=c++14 -m64 -arch=all
+
+include $(DEFAULT_RULES)/cu$(WM_COMPILE_OPTION)
+
+cuFLAGS     = -x cu
+ptFLAGS     = -DNoRepository -Xcompiler -ftemplate-depth-100
+
+c++FLAGS    = $(GFLAGS) $(c++WARN) $(c++OPT) $(c++DBUG) $(ptFLAGS) \
+              $(LIB_HEADER_DIRS) -fPIC
+
+Ctoo        = $(WM_SCHEDULER) $(CC) $(c++FLAGS) $(cuFLAGS) -c $< -o $@
+cxxtoo      = $(Ctoo)
+cctoo       = $(Ctoo)
+cpptoo      = $(Ctoo)
+cutoo       = $(Ctoo)
+
+LINK_LIBS   = $(c++DBUG)
+
+LINKLIBSO   = $(CC) $(c++FLAGS) -Xlinker -fuse-ld=bfd -shared \
+              -cudart shared \
+              -Xlinker --add-needed -Xlinker --no-as-needed
+
+LINKEXE     = $(CC) $(c++FLAGS) -Xlinker -fuse-ld=bfd \
+              -cudart shared \
+              -Xlinker --add-needed -Xlinker --no-as-needed

@@ -1,2 +1,2 @@
-cDBUG       = -ggdb -DFULLDEBUG
-cOPT        = -O1 -fdefault-inline -finline-functions
+cDBUG       = -Xcompiler -ggdb -DFULLDEBUG
+cOPT        = -O1 -Xcompiler -fdefault-inline -Xcompiler -finline-functions

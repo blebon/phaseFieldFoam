@@ -224,7 +224,7 @@ unset MPFR_ARCH_PATH GMP_ARCH_PATH
 if [ -z "$WM_COMPILER_TYPE" ]
 then
     WM_COMPILER_TYPE=system
-    echo "Warning in $WM_PROJECT_DIR/etc/config.sh/settings:" 1>&2
+    echo "Warning in $WM_PROJECT_USER_DIR/etc/config.sh/settings:" 1>&2
     echo "    WM_COMPILER_TYPE not set, using '$WM_COMPILER_TYPE'" 1>&2
 fi
 
