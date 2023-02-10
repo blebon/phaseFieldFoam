@@ -1,4 +1,5 @@
 # Images
+*.dot
 *.jpeg
 *.jpg
 *.png

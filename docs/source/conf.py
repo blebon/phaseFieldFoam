@@ -48,6 +48,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.mathjax",
+    # "sphinx.ext.graphviz",
 ]
 autosectionlabel_prefix_document = True
 
