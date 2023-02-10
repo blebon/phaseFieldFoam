@@ -4,5 +4,10 @@
 source $WM_PROJECT_DIR/bin/tools/CleanFunctions
 
 cleanCase
+rm -f gmon.out
+rm -f analysis*.txt
+application=$(foamDictionary system/controlDict -entry application -value)
+rm -f $application.*
+rm -f Crystal.png
 
 #------------------------------------------------------------------------------

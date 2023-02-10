@@ -34,9 +34,10 @@ module load flex/2.5.39
 module load parallel
 module load dos2unix
 module load bison
+module load valgrind
 
 # source $HOME/OpenFOAM/OpenFOAM-10/etc/bashrc
-source /lustre/home/mmm0708/OpenFOAM/OpenFOAM-10/etc/bashrc
+source /lustre/home/${USER}/Scratch/OpenFOAM/${USER}-10/etc/bashrc
 
 # Load python3
 module load python3
