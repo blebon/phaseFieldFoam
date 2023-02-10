@@ -9,6 +9,6 @@ rm -f analysis*.txt
 application=$(foamDictionary system/controlDict -entry application -value)
 rm -f $application.*
 rm -f Crystal.png
-rm -f callgring.out.*
+rm -f callgrind.out.*
 
 #------------------------------------------------------------------------------
