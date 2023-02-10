@@ -68,6 +68,7 @@ platforms/
 analysis*.txt
 phaseFieldFoam.[0-9]*
 callgrind.out.[0-9]*
+vtune.*/
 
 # Mesh files
 .keep

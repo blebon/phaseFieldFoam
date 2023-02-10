@@ -13,7 +13,8 @@ fi
 # GMON_OUT_PREFIX=$application runParallel $application
 nProcs=$(foamDictionary system/decomposeParDict -entry numberOfSubdomains -value)
 echo Running $application with $nProcs processors on $(pwd)
-mpirun -np $nProcs valgrind --tool=callgrind $application -parallel > log.$application 2>&1
+# mpirun -np $nProcs valgrind --tool=callgrind $application -parallel > log.$application 2>&1
+mpiexec -np $nProcs vtune -collect hotspots -result-dir vtune $FOAM_USER_APPBIN/$application -parallel > log.$application 2>&1
 runApplication reconstructPar -newTimes
 
 ./Allpost
