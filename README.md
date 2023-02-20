@@ -33,4 +33,4 @@
 
 * [Application](applications/solvers/multiphase/phaseFieldFoam) - Phase field equations solver
 * [Tutorial case](tutorials/multiphase/phaseFieldFoam/phase) - Tutorial case corresponding to the above reference
-* [Documentation](docs/source) - Documentation
+* [Documentation](https://blebon.com/phaseFieldFoam/) - Documentation

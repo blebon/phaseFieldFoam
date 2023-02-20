@@ -74,9 +74,9 @@ html_theme = "alabaster"
 html_static_path = ["_static"]
 
 html_theme_options = {
-    "github_user": "BCAST",
+    "github_user": "blebon",
     "github_repo": "phaseFieldFoam",
-    "github_banner": False,
-    "github_button": False,
+    "github_banner": True,
+    "github_button": True,
     "sidebar_width": "300px",
 }
