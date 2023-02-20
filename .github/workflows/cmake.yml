@@ -1,0 +1,76 @@
+name: cmake
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'applications/solvers/multiphase/phaseFieldFoam/**'
+      - 'src/fvModels/**'
+      - 'tests/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'applications/solvers/multiphase/phaseFieldFoam/**'
+      - 'src/fvModels/**'
+      - 'tests/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: cmake
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Cache OpenFOAM 10
+      id: cache-OF10-CMake
+      uses: actions/cache@v3
+      with:
+        path: |
+          /opt/openfoam10
+          /usr/include/boost
+        key: ${{ runner.os }}-OF10
+    
+    - if: ${{ steps.cache-OF10-CMake.outputs.cache-hit == 'true' }}
+      name: OF10 cache hit
+      continue-on-error: true
+      run: |
+        echo OpenFOAM 10 already installed
+        sudo apt-get update
+
+    - if: ${{ steps.cache-OF10-CMake.outputs.cache-hit != 'true' }}
+      name: Install OpenFOAM 10
+      shell: bash
+      run: |
+        sudo sh -c "wget -O - https://dl.openfoam.org/gpg.key > /etc/apt/trusted.gpg.d/openfoam.asc"
+        sudo add-apt-repository http://dl.openfoam.org/ubuntu
+        sudo apt-get update
+        sudo apt-get -y install openfoam10
+        sudo apt-get -y install cmake libboost-all-dev
+
+    # - name: Install OpenFOAM 10
+    #   shell: bash
+    #   run: |
+    #     sudo sh -c "wget -O - https://dl.openfoam.org/gpg.key > /etc/apt/trusted.gpg.d/openfoam.asc"
+    #     sudo add-apt-repository http://dl.openfoam.org/ubuntu
+    #     sudo apt-get update
+    #     sudo apt-get -y install openfoam10
+    #     sudo apt-get -y install cmake libboost-all-dev
+    
+    - name: cmake
+      shell: bash
+      continue-on-error: true
+      run: |
+        source /opt/openfoam10/etc/bashrc || true
+        mkdir -p $FOAM_RUN
+        mkdir -p $FOAM_USER_LIBBIN
+        mkdir -p $FOAM_USER_APPBIN
+        cmake -DCMAKE_BUILD_TYPE=Release -S . -B build
+        cd build
+        make

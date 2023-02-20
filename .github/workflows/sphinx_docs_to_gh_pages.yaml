@@ -1,0 +1,43 @@
+name: Sphinx docs to gh-pages
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'docs/**'
+  workflow_dispatch:
+
+jobs:
+  sphinx_docs_to_gh-pages:
+    runs-on: ubuntu-latest
+    name: Sphinx docs to gh-pages
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Check doxygen is installed and latest version
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install graphviz
+          sudo apt-get -y install doxygen
+          
+      - name: Make conda environment
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          python-version: 3.9    # Python version to build the html sphinx documentation
+          environment-file: .github/conda-envs/docs_env.yaml    # Path to the documentation conda environment
+          auto-update-conda: false
+          auto-activate-base: false
+          show-channel-urls: true
+
+      - name: Running the Sphinx to gh-pages Action
+        uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.0.0
+        with:
+          branch: master
+          dir_docs: docs/source
+          sphinxapiopts: '--separate -o . ../'
+          sphinxapiexclude: '../*setup* ../*.ipynb'
+          sphinxopts: ''

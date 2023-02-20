@@ -1,0 +1,99 @@
+name: wmake
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'applications/solvers/multiphase/phaseFieldFoam/**'
+      - 'src/fvModels/**'
+      - 'tests/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'applications/solvers/multiphase/phaseFieldFoam/**'
+      - 'src/fvModels/**'
+      - 'tests/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: wmake
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    # - name: Cache OpenFOAM 10
+    #   id: cache-OF10
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: |
+    #       /opt/openfoam10
+    #     key: ${{ runner.os }}-OF10
+    
+    # - if: ${{ steps.cache-OF10.outputs.cache-hit == 'true' }}
+    #   name: OF10 cache hit
+    #   continue-on-error: true
+    #   run: |
+    #     echo OpenFOAM 10 already installed
+
+    # - if: ${{ steps.cache-OF10.outputs.cache-hit != 'true' }}
+    #   name: Install OpenFOAM 10
+    #   shell: bash
+    #   run: |
+    #     sudo sh -c "wget -O - https://dl.openfoam.org/gpg.key > /etc/apt/trusted.gpg.d/openfoam.asc"
+    #     sudo add-apt-repository http://dl.openfoam.org/ubuntu
+    #     sudo apt-get update
+    #     sudo apt-get -y install openfoam10
+    #     sudo apt-get -y install cmake libboost-all-dev
+
+    - name: Install OpenFOAM 10
+      shell: bash
+      run: |
+        sudo sh -c "wget -O - https://dl.openfoam.org/gpg.key > /etc/apt/trusted.gpg.d/openfoam.asc"
+        sudo add-apt-repository http://dl.openfoam.org/ubuntu
+        sudo apt-get update
+        sudo apt-get -y install openfoam10
+        sudo apt-get -y install cmake libboost-all-dev
+    
+    - name: wmake fvModels
+      shell: bash
+      working-directory: src/fvModels
+      continue-on-error: true
+      run: |
+        source /opt/openfoam10/etc/bashrc || true
+        export WM_PROJECT_USER_DIR=../../
+        wmake libso
+    
+    - name: wmake phaseFieldFoam
+      shell: bash
+      working-directory: applications/solvers/multiphase/phaseFieldFoam
+      continue-on-error: true
+      run: |
+        source /opt/openfoam10/etc/bashrc || true
+        wmake
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install testing dependencies
+      run: pip install pytest pytest-md pytest-emoji
+    
+    - name: Run unit tests
+      shell: bash
+      working-directory: tests
+      continue-on-error: true
+      run: |
+        source /opt/openfoam10/etc/bashrc || true
+        mkdir -p $FOAM_RUN
+        ln -s "$(realpath ../applications)" $WM_PROJECT_USER_DIR
+        ln -s "$(realpath ../src)" $WM_PROJECT_USER_DIR
+        pytest
+        ./Alltest
