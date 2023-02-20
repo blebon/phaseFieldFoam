@@ -15,6 +15,7 @@
 # Ignore build directories
 build/
 debug/
+prof/
 
 # Compiled source
 *.[oa]
@@ -65,6 +66,8 @@ platforms/
 
 # Profiling files
 *.out
+analysis*.dot
+analysis*.png
 analysis*.txt
 phaseFieldFoam.[0-9]*
 callgrind.out.[0-9]*

@@ -6,9 +6,13 @@ source $WM_PROJECT_DIR/bin/tools/RunFunctions
 # Get application name
 application=`getApplication`
 
-for i in `ls $application.[0-9]*`; do gprof $FOAM_USER_APPBIN/$application $i > analysis_$i.txt; done
+for i in `ls $application.[0-9]*`; do
+    gprof $FOAM_USER_APPBIN/$application $i > analysis_$i.txt;
+    gprof2dot analysis_$i.txt;
+    dot -Tpng -o analysis_$i.png analysis_$i.dot;
+done
 
-runApplication postProcess -func 'cutPlaneSurface(funcName=zNormal, fields=(fi dT), point=(0. 0. 0.), normal=(0 0 1))' -latestTime
+runApplication postProcess -func 'cutPlaneSurface(funcName=zNormal, fields=(fi dT), point=(0. 0. 0.), normal=(0 0 1))' -newTimes
 mv log.postProcess log.postProcess.cutPlaneSurface
 runApplication postProcess -func 'graphCell(funcName=centreline, fields=(fi dT), start=(0 -6.25 0), end=(0 6.25 0), axis=y)' -latestTime
 mv log.postProcess log.postProcess.graphCell
