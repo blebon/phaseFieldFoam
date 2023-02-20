@@ -3,14 +3,14 @@ name: wmake
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - 'applications/solvers/multiphase/phaseFieldFoam/**'
       - 'src/fvModels/**'
       - 'tests/**'
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - 'applications/solvers/multiphase/phaseFieldFoam/**'
       - 'src/fvModels/**'
