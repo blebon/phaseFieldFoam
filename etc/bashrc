@@ -46,6 +46,8 @@ export WM_PROJECT_VERSION=10
 # export FOAM_INST_DIR=$(cd $(dirname ${BASH_SOURCE:-$0})/../.. && pwd -P) || \
 if [ -d /opt/wvec/$WM_PROJECT ]; then
     export FOAM_INST_DIR=/opt/wvec/$WM_PROJECT
+elif [ -d /projects/bddir15/$WM_PROJECT ]; then
+    export FOAM_INST_DIR=/projects/bddir15/$WM_PROJECT
 elif [ -d /opt/$WM_PROJECT ]; then
     export FOAM_INST_DIR=/opt/$WM_PROJECT
 else
