@@ -1,0 +1,2 @@
+c++DBUG    = -pg -lineinfo -opt-info inline
+c++OPT     = -O2
