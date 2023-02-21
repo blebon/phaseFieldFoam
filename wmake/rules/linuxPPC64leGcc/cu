@@ -12,7 +12,7 @@ c++LESSWARN = -Xcompiler -Wno-old-style-cast -Xcompiler -Wno-unused-local-typede
 
 CC          = nvcc -ccbin=g++ -std=c++14 -m64 -arch=all -mcpu=power8
 
-include $(DEFAULT_RULES)/c++$(WM_COMPILE_OPTION)
+include $(DEFAULT_RULES)/cu$(WM_COMPILE_OPTION)
 
 cuFLAGS     = -x cu
 ptFLAGS     = -DNoRepository -Xcompiler -ftemplate-depth-100
