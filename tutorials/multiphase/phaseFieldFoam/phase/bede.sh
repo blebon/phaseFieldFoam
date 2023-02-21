@@ -9,14 +9,7 @@
 
 pwd; hostname; date
 
-module load gcc/10.2.0
-module load cmake
-module load boost
-module load openmpi
-module load vtk
-
-source /projects/bddir15/OpenFOAM/OpenFOAM-10/etc/bashrc
-unset FOAM_SIGFPE
+module load OpenFOAM/10/Opt
 
 conda activate base
 
