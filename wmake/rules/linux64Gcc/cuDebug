@@ -1,2 +1,2 @@
-c++DBUG    = -Xcompiler -ggdb3 -DFULLDEBUG
-c++OPT      = -O0 -Xcompiler -fdefault-inline
+cuDBUG    = -Xcompiler -ggdb3 -DFULLDEBUG
+cuOPT      = -O0 -Xcompiler -fdefault-inline
