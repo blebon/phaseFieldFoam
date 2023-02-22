@@ -10,11 +10,12 @@ if [ ! -f log.decomposePar ]; then
     ./Allrun.pre
 fi
 
-GMON_OUT_PREFIX=$application runParallel $application
-# nProcs=$(foamDictionary system/decomposeParDict -entry numberOfSubdomains -value)
-# rm -f gmon.out*
-# echo "Running $application in parallel on $(pwd) using $nProcs processes"
+# GMON_OUT_PREFIX=$application runParallel $application
+nProcs=$(foamDictionary system/decomposeParDict -entry numberOfSubdomains -value)
+rm -f gmon.out*
+echo "Running $application in parallel on $(pwd) using $nProcs processes"
 # ( export GMON_OUT_PREFIX=$application; mpirun -x GMON_OUT_PREFIX -n $nProcs $FOAM_USER_APPBIN/$application -parallel > log.$application 2>&1 )
+( export GMON_OUT_PREFIX=$application; nsys profile mpirun -x GMON_OUT_PREFIX -n $nProcs $FOAM_USER_APPBIN/$application -parallel > log.$application 2>&1 )
 # mpirun -np $nProcs valgrind --tool=callgrind $application -parallel > log.$application 2>&1
 # mpiexec -np $nProcs vtune -collect hotspots -result-dir vtune $FOAM_USER_APPBIN/$application -parallel > log.$application 2>&1
 runApplication reconstructPar -newTimes
