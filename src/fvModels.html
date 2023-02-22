@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Anisotropy source &#8212; phaseFieldFoam OF10.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorials" href="../tutorials/index.html" />
+    <link rel="prev" title="Libraries" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="anisotropy-source">
+<h1>Anisotropy source<a class="headerlink" href="#anisotropy-source" title="Permalink to this heading">¶</a></h1>
+<nav class="contents" id="contents">
+<p class="topic-title">Contents:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#anisotropy-source" id="id1">Anisotropy source</a></p>
+<ul>
+<li><p><a class="reference internal" href="#installation" id="id2">Installation</a></p></li>
+<li><p><a class="reference internal" href="#c-classes" id="id3">C++ Classes</a></p></li>
+<li><p><a class="reference internal" href="#testing" id="id4">Testing</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
+<p>Pre-requisites:</p>
+<ul class="simple">
+<li><p>A working installation of <a class="reference external" href="https://openfoam.org/release/10/">OpenFOAM 10</a>.</p></li>
+</ul>
+<p>In the phaseFieldFoam/src/fvModels directory, run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wmake<span class="w"> </span>libso
+</pre></div>
+</div>
+</section>
+<section id="c-classes">
+<h2>C++ Classes<a class="headerlink" href="#c-classes" title="Permalink to this heading">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N4Foam2fv16anisotropySourceE">
+<span id="_CPPv3N4Foam2fv16anisotropySourceE"></span><span id="_CPPv2N4Foam2fv16anisotropySourceE"></span><span id="Foam::fv::anisotropySource"></span><span class="target" id="classFoam_1_1fv_1_1anisotropySource"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">anisotropySource</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">fvModel</span></span><br /></dt>
+<dd><p>Model for applying the anistropy source. </p>
+<p><span class="target" id="_1Description"></span></p>
+<p><dl class="simple">
+<dt><strong>Usage</strong></dt><dd><p>Example usage: <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anisotropySource</span>
+<span class="p">{</span>
+    <span class="nb">type</span>            <span class="n">anisotropySource</span><span class="p">;</span>
+
+    <span class="n">selectionMode</span>   <span class="nb">all</span><span class="p">;</span>
+
+    <span class="n">tau</span>             <span class="mf">0.0003</span><span class="p">;</span>
+    <span class="n">kappa1</span>          <span class="mf">0.9</span><span class="p">;</span>
+    <span class="n">kappa2</span>          <span class="mi">20</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+ </p>
+</dd>
+</dl>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classFoam_1_1fv_1_1anisotropySource_1ab46234f1e29b4eed8e4566a193e81dba"></span><span class="sig-name descname"><span class="pre">TypeName</span> <span class="pre">(&quot;anisotropySource&quot;)</span></span></dt>
+<dd><p>Runtime type information. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4Foam2fv16anisotropySource16anisotropySourceERK4wordRK4wordRK10dictionaryRK6fvMesh">
+<span id="_CPPv3N4Foam2fv16anisotropySource16anisotropySourceERK4wordRK4wordRK10dictionaryRK6fvMesh"></span><span id="_CPPv2N4Foam2fv16anisotropySource16anisotropySourceERK4wordRK4wordRK10dictionaryRK6fvMesh"></span><span id="Foam::fv::anisotropySource::anisotropySource__wordCR.wordCR.dictionaryCR.fvMeshCR"></span><span class="target" id="classFoam_1_1fv_1_1anisotropySource_1af07d11f28b384a2c534bf90adaf6a85b"></span><span class="sig-name descname"><span class="n"><span class="pre">anisotropySource</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">word</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">word</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">modelType</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">dictionary</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dict</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">fvMesh</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mesh</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Construct from dictionary. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4Foam2fv16anisotropySourceD0Ev">
+<span id="_CPPv3N4Foam2fv16anisotropySourceD0Ev"></span><span id="_CPPv2N4Foam2fv16anisotropySourceD0Ev"></span><span id="Foam::fv::anisotropySource::~anisotropySource"></span><span class="target" id="classFoam_1_1fv_1_1anisotropySource_1a4285df1187a8b1d9f9bb5f947b1a46e4"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~anisotropySource</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Destructor. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK4Foam2fv16anisotropySource12addSupFieldsEv">
+<span id="_CPPv3NK4Foam2fv16anisotropySource12addSupFieldsEv"></span><span id="_CPPv2NK4Foam2fv16anisotropySource12addSupFieldsEv"></span><span id="Foam::fv::anisotropySource::addSupFieldsC"></span><span class="target" id="classFoam_1_1fv_1_1anisotropySource_1a22c79dad4e2bdd96aafbb2d2bc2e22fc"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="n"><span class="pre">wordList</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addSupFields</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Return the list of fields for which the fvModel adds source term. </p>
+<p>to the transport equation </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK4Foam2fv16anisotropySource6addSupER8fvMatrixI6scalarERK4word">
+<span id="_CPPv3NK4Foam2fv16anisotropySource6addSupER8fvMatrixI6scalarERK4word"></span><span id="_CPPv2NK4Foam2fv16anisotropySource6addSupER8fvMatrixI6scalarERK4word"></span><span id="Foam::fv::anisotropySource::addSup__fvMatrix:scalar:R.wordCRC"></span><span class="target" id="classFoam_1_1fv_1_1anisotropySource_1aa2da6e800f3f7903075fa78b078f4ded"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addSup</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">fvMatrix</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">scalar</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">eqn</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">word</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">fieldName</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Add implicit contribution to  equation. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4Foam2fv16anisotropySource10movePointsEv">
+<span id="_CPPv3N4Foam2fv16anisotropySource10movePointsEv"></span><span id="_CPPv2N4Foam2fv16anisotropySource10movePointsEv"></span><span id="Foam::fv::anisotropySource::movePoints"></span><span class="target" id="classFoam_1_1fv_1_1anisotropySource_1a04cb31ac07dc3135c86bebf656f68820"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">movePoints</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Update for mesh motion. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4Foam2fv16anisotropySource10topoChangeERK17polyTopoChangeMap">
+<span id="_CPPv3N4Foam2fv16anisotropySource10topoChangeERK17polyTopoChangeMap"></span><span id="_CPPv2N4Foam2fv16anisotropySource10topoChangeERK17polyTopoChangeMap"></span><span id="Foam::fv::anisotropySource::topoChange__polyTopoChangeMapCR"></span><span class="target" id="classFoam_1_1fv_1_1anisotropySource_1a64388609bc8291bc3f05274316b7d684"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">topoChange</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">polyTopoChangeMap</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Update topology using the given map. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4Foam2fv16anisotropySource7mapMeshERK11polyMeshMap">
+<span id="_CPPv3N4Foam2fv16anisotropySource7mapMeshERK11polyMeshMap"></span><span id="_CPPv2N4Foam2fv16anisotropySource7mapMeshERK11polyMeshMap"></span><span id="Foam::fv::anisotropySource::mapMesh__polyMeshMapCR"></span><span class="target" id="classFoam_1_1fv_1_1anisotropySource_1a6cefcf8f0f8747c0eed0ad955d7b6d94"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mapMesh</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">polyMeshMap</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Update from another mesh using the given map. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4Foam2fv16anisotropySource10distributeERK19polyDistributionMap">
+<span id="_CPPv3N4Foam2fv16anisotropySource10distributeERK19polyDistributionMap"></span><span id="_CPPv2N4Foam2fv16anisotropySource10distributeERK19polyDistributionMap"></span><span id="Foam::fv::anisotropySource::distribute__polyDistributionMapCR"></span><span class="target" id="classFoam_1_1fv_1_1anisotropySource_1a730d2690995e50feee2ebe6e71c9d4f7"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">distribute</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">polyDistributionMap</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Redistribute or update using the given distribution map. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4Foam2fv16anisotropySource4readERK10dictionary">
+<span id="_CPPv3N4Foam2fv16anisotropySource4readERK10dictionary"></span><span id="_CPPv2N4Foam2fv16anisotropySource4readERK10dictionary"></span><span id="Foam::fv::anisotropySource::read__dictionaryCR"></span><span class="target" id="classFoam_1_1fv_1_1anisotropySource_1a2b62ca88804bff57f513978eab976956"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">dictionary</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dict</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Read dictionary. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading">¶</a></h2>
+<p>The unit tests for the fvModels libraries require the Boost libraries (&gt;= 1.69.0). The tests are run in the tests/fvModels/case folder:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wmake<span class="w"> </span>..<span class="w"> </span><span class="c1"># Build the test executable</span>
+<span class="gp">$ </span>blockMesh<span class="w"> </span><span class="c1"># Create the mesh for the test case</span>
+<span class="gp">$ </span>./test_anisotropySource<span class="w"> </span>--log_level<span class="o">=</span>all<span class="w"> </span><span class="c1"># Run the tests</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">phaseFieldFoam</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=blebon&repo=phaseFieldFoam&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../solver/phaseFieldFoam.html">Phase field equations solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/theory.html">Theory</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Libraries</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Anisotropy source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/code.html">Code documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Libraries</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Libraries</a></li>
+      <li>Next: <a href="../tutorials/index.html" title="next chapter">Tutorials</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Bruno Lebon.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/src/fvModels.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/blebon/phaseFieldFoam" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
