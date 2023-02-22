@@ -55,8 +55,27 @@ Example usage:
   alpha           alpha  [0 1  0 0 0 0 0] 0.015;
   c               c      [0 0  0 0 0 0 0] 0.02;
   N               N      [0 0  0 0 0 0 0] 6;
-  kappa1          kappa1 [0 0  0 0 0 0 0] 0.9;
-  kappa2          kappa2 [0 0  0 0 0 0 0] 20;
+
+Other properties are also prescribed in the constant/fvModels dictionary file.
+
+Example usage: 
+
+.. code-block:: C 
+    
+  anisotropy
+  {
+      type           anisotropySource;
+      active         yes;
+
+      anisotropySourceCoeffs
+      {
+          selectionMode   all;
+          
+          tau             0.0003;
+          kappa1          0.9;
+          kappa2          20;
+      }
+  }
 
 Run the application
 ===================
