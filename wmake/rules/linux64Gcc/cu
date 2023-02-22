@@ -14,19 +14,20 @@ CU         = nvcc -ccbin=g++ -std=c++14 -m64 -arch=all
 
 include $(DEFAULT_RULES)/cu$(WM_COMPILE_OPTION)
 
-ptuFLAGS    = -DNoRepository -Xcompiler -ftemplate-depth-100
+ptuFLAGS   = -DNoRepository -Xcompiler -ftemplate-depth-100
 
-cuFLAGS     = -x cu $(GFLAGS) $(cuWARN) $(cuOPT) $(cuDBUG) $(ptuFLAGS) \
+cuFLAGS    = -x cu -D__HOST____DEVICE__='__host__ __device__'
+cu++FLAGS  = $(GFLAGS) $(cuWARN) $(cuOPT) $(cuDBUG) $(ptuFLAGS) \
              $(LIB_HEADER_DIRS) -Xcompiler -fPIC
 
-cutoo      = $(WM_SCHEDULER) $(CU) $(cuFLAGS) -c $< -o $@
+cutoo      = $(WM_SCHEDULER) $(CU) $(cu++FLAGS) $(cuFLAGS) -c $< -o $@
 
 LINK_LIBS  = $(cuDBUG)
 
-LINKLIBSO  = $(CU) $(cuFLAGS) -Xlinker -fuse-ld=bfd -shared \
-             -cudart shared \
+LINKLIBSO  = $(CU) $(cu++FLAGS) -shared -cudart shared \
+             -Xlinker -fuse-ld=bfd \
              -Xlinker --add-needed -Xlinker --no-as-needed
 
-LINKEXE    = $(CU) $(cuFLAGS) -Xlinker -fuse-ld=bfd \
-             -cudart shared \
+LINKEXE    = $(CU) $(cu++FLAGS) -cudart shared \
+             -Xlinker -fuse-ld=bfd \
              -Xlinker --add-needed -Xlinker --no-as-needed

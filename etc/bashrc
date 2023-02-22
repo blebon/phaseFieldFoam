@@ -48,6 +48,8 @@ if [ -d /opt/wvec/$WM_PROJECT ]; then
     export FOAM_INST_DIR=/opt/wvec/$WM_PROJECT
 elif [ -d /projects/bddir15/$WM_PROJECT ]; then
     export FOAM_INST_DIR=/projects/bddir15/$WM_PROJECT
+elif [ -d /opt/openfoam$WM_PROJECT_VERSION ]; then
+    export FOAM_INST_DIR=/opt
 elif [ -d /opt/$WM_PROJECT ]; then
     export FOAM_INST_DIR=/opt/$WM_PROJECT
 else
@@ -118,7 +120,11 @@ foamOldDirs="$WM_PROJECT_DIR $WM_THIRD_PARTY_DIR \
 # Location of installation
 # ~~~~~~~~~~~~~~~~~~~~~~~~
 export WM_PROJECT_INST_DIR=$FOAM_INST_DIR
-export WM_PROJECT_DIR=$WM_PROJECT_INST_DIR/$WM_PROJECT-$WM_PROJECT_VERSION
+if [ -d $WM_PROJECT_INST_DIR/openfoam$WM_PROJECT_VERSION ]; then
+    export WM_PROJECT_DIR=$WM_PROJECT_INST_DIR/openfoam$WM_PROJECT_VERSION
+else
+    export WM_PROJECT_DIR=$WM_PROJECT_INST_DIR/$WM_PROJECT-$WM_PROJECT_VERSION
+fi
 
 if [ -d "$WM_PROJECT_DIR" ]
 then
