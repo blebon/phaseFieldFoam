@@ -1,3 +1,4 @@
+============================
 Phase field equations solver
 ============================
 
@@ -6,11 +7,23 @@ phaseFieldFoam is based on `laplacianFoam <https://github.com/OpenFOAM/OpenFOAM-
 Definition in file phaseFieldFoam.C
 
 Installation
-------------
+============
+
+wmake
+-----
 
 Pre-requisites:  
 
 * A working installation of `OpenFOAM 10 <https://openfoam.org/release/10/>`_.
+* All the included libraries:
+
+  * :doc:`../src/fvModels`
+
+After cloning the repository, compile wmake applications:
+
+.. code-block:: console
+
+  $ (cd wmake/src && make ) 
 
 In the phaseFieldFoam/applications/solver/multiphase/phaseFieldFoam directory, run:    
 
@@ -19,7 +32,7 @@ In the phaseFieldFoam/applications/solver/multiphase/phaseFieldFoam directory, r
   $ wmake
 
 Running the application
------------------------
+=======================
 
 In the case directory, run:
 
@@ -28,7 +41,7 @@ In the case directory, run:
   $ phaseFieldFoam
 
 Nomenclature
-------------
+============
 
 .. table:: Variables used in phase field simulations.
   :widths: auto

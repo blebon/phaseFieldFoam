@@ -1,0 +1,8 @@
+EXE_INC = \
+    -I. \
+    -I$(WM_PROJECT_USER_DIR)/src/cudaTest/lnInclude
+
+EXE_LIBS = \
+    -L$(FOAM_USER_LIBBIN) \
+    -lcudaTest \
+    -lcudart

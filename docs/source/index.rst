@@ -17,6 +17,7 @@ A tutorial case for the growth of a crystal with 6 fold symmetry is found `here 
    :caption: Contents:
  
    solver/phaseFieldFoam
+   src/fvModels
    theory/theory
    code/code
    tutorials/phase

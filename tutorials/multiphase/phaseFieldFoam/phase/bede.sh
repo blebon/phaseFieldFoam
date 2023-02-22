@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 #SBATCH --account=bddir15  # Run job under project <project>
-#SBATCH --time=1:0:0       # Run for a max of 1 hour
+#SBATCH --time=0:15:0       # Run for a max of 15 min
 #SBATCH --partition=infer  # Choose either "gpu" or "infer" node type
 #SBATCH --nodes=1          # Resources from a single node
 #SBATCH --gres=gpu:1       # One GPU per node (plus 25% of node CPU and RAM per GPU)
@@ -9,7 +9,9 @@
 
 pwd; hostname; date
 
-module load OpenFOAM/10/Opt
+module load gcc/10.2.0; module load cmake; module load boost; module load openmpi; module load vtk; module load cuda
+source $HOME/OpenFOAM/${USER}-10/etc/bashrc
+unset FOAM_SIGFPE
 
 conda activate base
 

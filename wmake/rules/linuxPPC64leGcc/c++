@@ -1,6 +1,6 @@
 SUFFIXES += .C
 
-c++WARN     = -Wall -Wextra -Wold-style-cast -Wnon-virtual-dtor \
+c++WARN     = -Wall -Wextra -Wnon-virtual-dtor \
               -Wno-unused-parameter -Wno-invalid-offsetof -Wno-attributes
 
 # Suppress some warnings for flex++ and CGAL
@@ -20,10 +20,10 @@ cxxtoo      = $(Ctoo)
 cctoo       = $(Ctoo)
 cpptoo      = $(Ctoo)
 
-LINK_LIBS   = $(c++DBUG)
+LINK_LIBS  = $(c++DBUG)
 
-LINKLIBSO   = $(CC) $(c++FLAGS) -fuse-ld=bfd -shared \
-              -Xlinker --add-needed -Xlinker --no-as-needed
+LINKLIBSO  = $(CC) $(c++FLAGS) -fuse-ld=bfd -shared \
+             -Xlinker --add-needed -Xlinker --no-as-needed
 
-LINKEXE     = $(CC) $(c++FLAGS) -fuse-ld=bfd \
-              -Xlinker --add-needed -Xlinker --no-as-needed
+LINKEXE    = $(CC) $(c++FLAGS) -Xlinker -fuse-ld=bfd \
+             -Xlinker --add-needed -Xlinker --no-as-needed
