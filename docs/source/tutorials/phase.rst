@@ -74,7 +74,12 @@ Contour plots
 -------------
 
 The sump profile can be plotted from the VTK files that are saved in the 
-postProcessing directory.
+postProcessing directory using the ``phase.plot.plot_crystal()`` function.
+
+.. autofunction:: phase.plot.plot_crystal
+  :noindex:.
+
+.. _Crystal:
 
 .. Figure:: ../images/Crystal.png
   :width: 80%

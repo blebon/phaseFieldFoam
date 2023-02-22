@@ -2,8 +2,11 @@
 Code documentation
 ==================
 
+.. contents:: Contents:
+  :backlinks: none
+
 phaseFieldFoam call graph
--------------------------
+=========================
 
 .. Figure:: ../images/phase_call_graph.png
   :width: 80%
@@ -12,7 +15,7 @@ phaseFieldFoam call graph
   Call graph for phaseFieldFoam tutorial.
 
 Doxygen documentation
----------------------
+=====================
 
 .. doxygenindex::
    :project: phaseFieldFoam
