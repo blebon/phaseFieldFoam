@@ -102,6 +102,9 @@ message(STATUS "Setting common OpenFOAM link paths")
 link_directories($ENV{FOAM_LIBBIN})
 link_directories($ENV{FOAM_USER_LIBBIN})
 
+message(STATUS "Making install directories")
+file(MAKE_DIRECTORY $ENV{FOAM_USER_LIBBIN} $ENV{FOAM_USER_APPBIN})
+
 macro(build_OF_library)
     message(STATUS "Compiling and linking lib${OF_LIB_NAME}")
     add_library(${OF_LIB_NAME} SHARED ${OF_LIB_SOURCES})
