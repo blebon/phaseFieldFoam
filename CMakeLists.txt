@@ -164,7 +164,7 @@ foreach(loop_include
 endforeach()
 set(OF_LINK_LIBRARIES "")
 list(APPEND OF_LINK_LIBRARIES
-    finiteVolume fvModels meshTools sampling
+    finiteVolume fvModels meshTools sampling tbb
 )
 build_OF_library()
 
