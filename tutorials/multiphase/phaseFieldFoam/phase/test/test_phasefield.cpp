@@ -80,7 +80,7 @@ struct VariableVectors
                   e != expected.end() && n != numerical.end(); 
                   ++e, ++n)
         {
-            double tolerance = (*e > 0.1) ? large_tolerance : small_tolerance;
+            tolerance = (*e > 0.1) ? large_tolerance : small_tolerance;
             BOOST_CHECK_CLOSE(*e, *n, tolerance);
         };
         // BOOST_CHECK_CLOSE(expected.begin(), numerical.begin(), 1e-6);
@@ -153,3 +153,4 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
     }
 
 BOOST_AUTO_TEST_SUITE_END();
+
