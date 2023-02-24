@@ -1,0 +1,2 @@
+cuDBUG    = -Xcompiler -ggdb3 -DFULLDEBUG
+cuOPT      = -O0 -Xcompiler -fdefault-inline

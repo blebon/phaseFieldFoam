@@ -1,0 +1,2 @@
+cDBUG       = -Xlinker -ggdb -DFULLDEBUG
+cOPT        = -O1 -Xcompiler -fdefault-inline -Xcompiler -finline-functions
