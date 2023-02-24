@@ -5,6 +5,7 @@
 #SBATCH --partition=infer  # Choose either "gpu" or "infer" node type
 #SBATCH --nodes=1          # Resources from a single node
 #SBATCH --gres=gpu:1       # One GPU per node (plus 25% of node CPU and RAM per GPU)
+#SBATCH --job-name=OF10_GccOpt_Phase
 #SBATCH --output=OF10_Phase_%j.out
 
 pwd; hostname; date
