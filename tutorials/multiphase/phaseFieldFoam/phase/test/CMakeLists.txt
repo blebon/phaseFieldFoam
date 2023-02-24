@@ -8,17 +8,17 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
-else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "PGI")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdpar=gpu")
 endif(MSVC)
 
 # Boost Library
 if(UNIX)
-  message("-- Determining id of the Linux distributor")
+  message(STATUS "Determining id of the Linux distributor")
   execute_process(COMMAND lsb_release --short --id OUTPUT_VARIABLE LINUX_DISTRO OUTPUT_STRIP_TRAILING_WHITESPACE)
   # execute_process(COMMAND lsb_release --short --release OUTPUT_VARIABLE DISTRO_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
   if (LINUX_DISTRO MATCHES "CentOS") # If on davy or v-sys-bcast, distro will be Centos
-    message("-- Using boost 1.69 on CentOS")
+    message(STATUS "Using boost 1.69 on CentOS")
     set(Boost_NO_SYSTEM_PATHS TRUE)
     set(BOOST_ROOT "/usr/include/boost169")
     set(BOOST_INCLUDE_DIR "/usr/include/boost169/boost")
