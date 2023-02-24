@@ -10,7 +10,7 @@ cuWARN     = -Xcompiler -Wall -Xcompiler -Wextra -Xcompiler -Wold-style-cast -Xc
 # Suppress some warnings for flex++ and CGAL
 cuLESSWARN = -Xcompiler -Wno-old-style-cast -Xcompiler -Wno-unused-local-typedefs -Xcompiler -Wno-array-bounds
 
-CU         = nvcc -ccbin=g++ -std=c++14 -m64 -arch=sm_60
+CU         = nvcc -ccbin=g++ -std=c++17 -m64 -arch=sm_60
 
 include $(DEFAULT_RULES)/cu$(WM_COMPILE_OPTION)
 

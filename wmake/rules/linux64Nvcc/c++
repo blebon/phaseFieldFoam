@@ -10,7 +10,7 @@ c++WARN     = -Xcompiler -Wall -Xcompiler -Wextra -Xcompiler -Wold-style-cast -X
 # Suppress some warnings for flex++ and CGAL
 c++LESSWARN = -Xcompiler -Wno-old-style-cast -Xcompiler -Wno-unused-local-typedefs -Xcompiler -Wno-array-bounds
 
-CC          = nvcc -ccbin=/opt/wvec/OpenFOAM/ThirdParty-10/platforms/linux64/gcc-12.1.0/bin/g++ -std=c++14 -m64 -arch=all
+CC          = nvcc -ccbin=/opt/wvec/OpenFOAM/ThirdParty-10/platforms/linux64/gcc-12.1.0/bin/g++ -std=c++17 -m64 -arch=all
 
 include $(DEFAULT_RULES)/c++$(WM_COMPILE_OPTION)
 
