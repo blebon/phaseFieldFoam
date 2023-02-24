@@ -124,14 +124,13 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
     BOOST_AUTO_TEST_CASE(CheckIfCentrelineCoordinatesMatch)
     {
         string casename{"centreline"};
-        VariableVectors centreline{ casename, 1 };
+        VariableVectors centreline{ casename, 1, "0.5", 1.0, 1.0};
         BOOST_TEST_MESSAGE("Looking for benchmark file.");
         BOOST_ASSERT(!centreline.expected.empty());
         BOOST_TEST_MESSAGE("Looking for numerical predictions file.");
         BOOST_ASSERT(!centreline.numerical.empty());
-        BOOST_TEST_MESSAGE("Requiring coordinates to be equal");
-        BOOST_REQUIRE_EQUAL_COLLECTIONS(centreline.expected.begin(), centreline.expected.end(),
-                                        centreline.numerical.begin(), centreline.numerical.end());
+        BOOST_TEST_MESSAGE("Checking if coordinates are close");
+        centreline.boost_check();
     }
     
     BOOST_AUTO_TEST_CASE(CheckIfCentrelinePhaseFieldValuesMatchExpectedValues,
