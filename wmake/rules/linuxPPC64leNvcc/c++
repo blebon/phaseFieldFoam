@@ -32,5 +32,5 @@ LINKLIBSO  = $(CC) $(c++FLAGS) -Xcompiler -fuse-ld=bfd -shared \
              -Xlinker --add-needed -Xlinker --no-as-needed
 
 LINKEXE    = $(CC) $(c++FLAGS) -Xlinker -fuse-ld=bfd \
-             -cudart shared \             -cudart shared \             -cudart shared \             -cudart shared \
+             -cudart shared \
              -Xlinker --add-needed -Xlinker --no-as-needed
