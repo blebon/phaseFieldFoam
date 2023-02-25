@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Source tutorial clean functions
+source $WM_PROJECT_DIR/bin/tools/CleanFunctions
+
+cleanCase
+rm -f analysis*.txt
+application=$(foamDictionary system/controlDict -entry application -value)
+rm -f $application.*
+rm -f Crystal.png
+rm -f callgrind.out.*
+rm -rf vtune.$HOSTNAME/
+rm -f gmon.out*
+
+#------------------------------------------------------------------------------
