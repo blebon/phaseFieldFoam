@@ -10,7 +10,7 @@ c++WARN     = -Xcompiler -Wall -Xcompiler -Wextra -Xcompiler -Wold-style-cast -X
 # Suppress some warnings for flex++ and CGAL
 c++LESSWARN = -Xcompiler -Wno-old-style-cast -Xcompiler -Wno-unused-local-typedefs -Xcompiler -Wno-array-bounds
 
-cu++FLAGS   = -x c++
+cu++FLAGS   = -x c++ -lineinfo -Xptxas -v
 CC          = nvcc -ccbin=g++ -std=c++17 -m64 -arch=sm_70 -Xcompiler -mcpu=power8
 
 include $(DEFAULT_RULES)/c++$(WM_COMPILE_OPTION)

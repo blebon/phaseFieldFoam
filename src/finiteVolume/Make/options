@@ -1,0 +1,11 @@
+EXE_INC = \
+    -I/projects/bddir15/NVTX/c/include \
+    -I$(LIB_SRC)/finiteVolume/lnInclude \
+    -I$(LIB_SRC)/triSurface/lnInclude \
+    -I$(LIB_SRC)/meshTools/lnInclude \
+
+LIB_LIBS = \
+    -lOpenFOAM \
+    -lfiniteVolume \
+    -ltriSurface \
+    -lmeshTools

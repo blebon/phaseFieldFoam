@@ -1,0 +1,5 @@
+fvMatrices/fvMatrices.C
+fvMatrices/fvScalarMatrix/fvScalarMatrix.C
+fvMatrices/solvers/GAMGSymSolver/GAMGAgglomerations/faceAreaPairGAMGAgglomeration/faceAreaPairGAMGAgglomeration.C
+
+LIB = $(FOAM_USER_LIBBIN)/libmyFiniteVolume
