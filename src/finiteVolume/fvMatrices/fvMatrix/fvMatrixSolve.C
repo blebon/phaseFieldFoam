@@ -26,6 +26,7 @@ License
 #include "LduMatrix.H"
 #include "diagTensorField.H"
 #include "Residuals.H"
+#include <nvtx3/nvToolsExt.h>
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
@@ -59,6 +60,7 @@ Foam::SolverPerformance<Type> Foam::fvMatrix<Type>::solve
     const dictionary& solverControls
 )
 {
+    nvtxRangePushA("Foam_fvMatrix_solve");
     if (debug)
     {
         Info(this->mesh().comm())
@@ -97,6 +99,7 @@ Foam::SolverPerformance<Type> Foam::fvMatrix<Type>::solve
 
         return SolverPerformance<Type>();
     }
+    nvtxRangePop();
 }
 
 
