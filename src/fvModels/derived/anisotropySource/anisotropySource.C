@@ -133,7 +133,6 @@ void Foam::fv::anisotropySource::addSup
     //     const scalar S = fiSourceImplicit[celli];
     //     Sp[celli] += Vc*S;
     // }
-    #pragma acc parallel loop
     std::for_each_n(
         std::execution::par,
         (cells).begin(),
