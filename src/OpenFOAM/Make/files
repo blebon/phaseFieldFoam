@@ -1,115 +1,115 @@
 matrices/solution/solution.C
 
-scalarMatrices = matrices/scalarMatrices
-$(scalarMatrices)/scalarMatrices.C
-$(scalarMatrices)/SVD/SVD.C
+# scalarMatrices = matrices/scalarMatrices
+# $(scalarMatrices)/scalarMatrices.C
+# $(scalarMatrices)/SVD/SVD.C
 
-LUscalarMatrix = matrices/LUscalarMatrix
-$(LUscalarMatrix)/LUscalarMatrix.C
-$(LUscalarMatrix)/procLduMatrix.C
-$(LUscalarMatrix)/procLduInterface.C
+# LUscalarMatrix = matrices/LUscalarMatrix
+# $(LUscalarMatrix)/LUscalarMatrix.C
+# $(LUscalarMatrix)/procLduMatrix.C
+# $(LUscalarMatrix)/procLduInterface.C
 
-lduMatrix = matrices/lduMatrix
-$(lduMatrix)/lduMatrix/lduMatrix.C
-$(lduMatrix)/lduMatrix/lduMatrixOperations.C
-$(lduMatrix)/lduMatrix/lduMatrixATmul.C
-$(lduMatrix)/lduMatrix/lduMatrixUpdateMatrixInterfaces.C
-$(lduMatrix)/lduMatrix/lduMatrixSolver.C
-$(lduMatrix)/lduMatrix/lduMatrixSmoother.C
-$(lduMatrix)/lduMatrix/lduMatrixPreconditioner.C
+# lduMatrix = matrices/lduMatrix
+# $(lduMatrix)/lduMatrix/lduMatrix.C
+# $(lduMatrix)/lduMatrix/lduMatrixOperations.C
+# $(lduMatrix)/lduMatrix/lduMatrixATmul.C
+# $(lduMatrix)/lduMatrix/lduMatrixUpdateMatrixInterfaces.C
+# $(lduMatrix)/lduMatrix/lduMatrixSolver.C
+# $(lduMatrix)/lduMatrix/lduMatrixSmoother.C
+# $(lduMatrix)/lduMatrix/lduMatrixPreconditioner.C
 
-$(lduMatrix)/solvers/diagonalSolver/diagonalSolver.C
-$(lduMatrix)/solvers/smoothSolver/smoothSolver.C
-$(lduMatrix)/solvers/PCG/PCG.C
-$(lduMatrix)/solvers/PBiCG/PBiCG.C
-$(lduMatrix)/solvers/PBiCGStab/PBiCGStab.C
+# $(lduMatrix)/solvers/diagonalSolver/diagonalSolver.C
+# $(lduMatrix)/solvers/smoothSolver/smoothSolver.C
+# $(lduMatrix)/solvers/PCG/PCG.C
+# $(lduMatrix)/solvers/PBiCG/PBiCG.C
+# $(lduMatrix)/solvers/PBiCGStab/PBiCGStab.C
 
-$(lduMatrix)/smoothers/GaussSeidel/GaussSeidelSmoother.C
-$(lduMatrix)/smoothers/symGaussSeidel/symGaussSeidelSmoother.C
-$(lduMatrix)/smoothers/nonBlockingGaussSeidel/nonBlockingGaussSeidelSmoother.C
-$(lduMatrix)/smoothers/DIC/DICSmoother.C
-$(lduMatrix)/smoothers/FDIC/FDICSmoother.C
-$(lduMatrix)/smoothers/DICGaussSeidel/DICGaussSeidelSmoother.C
-$(lduMatrix)/smoothers/DILU/DILUSmoother.C
-$(lduMatrix)/smoothers/DILUGaussSeidel/DILUGaussSeidelSmoother.C
+# $(lduMatrix)/smoothers/GaussSeidel/GaussSeidelSmoother.C
+# $(lduMatrix)/smoothers/symGaussSeidel/symGaussSeidelSmoother.C
+# $(lduMatrix)/smoothers/nonBlockingGaussSeidel/nonBlockingGaussSeidelSmoother.C
+# $(lduMatrix)/smoothers/DIC/DICSmoother.C
+# $(lduMatrix)/smoothers/FDIC/FDICSmoother.C
+# $(lduMatrix)/smoothers/DICGaussSeidel/DICGaussSeidelSmoother.C
+# $(lduMatrix)/smoothers/DILU/DILUSmoother.C
+# $(lduMatrix)/smoothers/DILUGaussSeidel/DILUGaussSeidelSmoother.C
 
-$(lduMatrix)/preconditioners/noPreconditioner/noPreconditioner.C
-$(lduMatrix)/preconditioners/diagonalPreconditioner/diagonalPreconditioner.C
-$(lduMatrix)/preconditioners/DICPreconditioner/DICPreconditioner.C
-$(lduMatrix)/preconditioners/FDICPreconditioner/FDICPreconditioner.C
-$(lduMatrix)/preconditioners/DILUPreconditioner/DILUPreconditioner.C
-$(lduMatrix)/preconditioners/GAMGPreconditioner/GAMGPreconditioner.C
+# $(lduMatrix)/preconditioners/noPreconditioner/noPreconditioner.C
+# $(lduMatrix)/preconditioners/diagonalPreconditioner/diagonalPreconditioner.C
+# $(lduMatrix)/preconditioners/DICPreconditioner/DICPreconditioner.C
+# $(lduMatrix)/preconditioners/FDICPreconditioner/FDICPreconditioner.C
+# $(lduMatrix)/preconditioners/DILUPreconditioner/DILUPreconditioner.C
+# $(lduMatrix)/preconditioners/GAMGPreconditioner/GAMGPreconditioner.C
 
-lduAddressing = $(lduMatrix)/lduAddressing
-$(lduAddressing)/lduAddressing.C
-$(lduAddressing)/lduInterface/lduInterface.C
-$(lduAddressing)/lduInterface/processorLduInterface.C
-$(lduAddressing)/lduInterface/cyclicLduInterface.C
+# lduAddressing = $(lduMatrix)/lduAddressing
+# $(lduAddressing)/lduAddressing.C
+# $(lduAddressing)/lduInterface/lduInterface.C
+# $(lduAddressing)/lduInterface/processorLduInterface.C
+# $(lduAddressing)/lduInterface/cyclicLduInterface.C
 
-lduInterfaceFields = $(lduAddressing)/lduInterfaceFields
-$(lduInterfaceFields)/lduInterfaceField/lduInterfaceField.C
-$(lduInterfaceFields)/processorLduInterfaceField/processorLduInterfaceField.C
-$(lduInterfaceFields)/cyclicLduInterfaceField/cyclicLduInterfaceField.C
+# lduInterfaceFields = $(lduAddressing)/lduInterfaceFields
+# $(lduInterfaceFields)/lduInterfaceField/lduInterfaceField.C
+# $(lduInterfaceFields)/processorLduInterfaceField/processorLduInterfaceField.C
+# $(lduInterfaceFields)/cyclicLduInterfaceField/cyclicLduInterfaceField.C
 
-GAMG = $(lduMatrix)/solvers/GAMG
-$(GAMG)/GAMGSolver.C
-$(GAMG)/GAMGSolverAgglomerateMatrix.C
-$(GAMG)/GAMGSolverInterpolate.C
-$(GAMG)/GAMGSolverScale.C
-$(GAMG)/GAMGSolverSolve.C
+# GAMG = $(lduMatrix)/solvers/GAMG
+# $(GAMG)/GAMGSolver.C
+# $(GAMG)/GAMGSolverAgglomerateMatrix.C
+# $(GAMG)/GAMGSolverInterpolate.C
+# $(GAMG)/GAMGSolverScale.C
+# $(GAMG)/GAMGSolverSolve.C
 
-GAMGInterfaces = $(GAMG)/interfaces
-$(GAMGInterfaces)/GAMGInterface/GAMGInterface.C
-$(GAMGInterfaces)/GAMGInterface/GAMGInterfaceNew.C
-$(GAMGInterfaces)/processorGAMGInterface/processorGAMGInterface.C
-$(GAMGInterfaces)/processorCyclicGAMGInterface/processorCyclicGAMGInterface.C
-$(GAMGInterfaces)/cyclicGAMGInterface/cyclicGAMGInterface.C
+# GAMGInterfaces = $(GAMG)/interfaces
+# $(GAMGInterfaces)/GAMGInterface/GAMGInterface.C
+# $(GAMGInterfaces)/GAMGInterface/GAMGInterfaceNew.C
+# $(GAMGInterfaces)/processorGAMGInterface/processorGAMGInterface.C
+# $(GAMGInterfaces)/processorCyclicGAMGInterface/processorCyclicGAMGInterface.C
+# $(GAMGInterfaces)/cyclicGAMGInterface/cyclicGAMGInterface.C
 
-GAMGInterfaceFields = $(GAMG)/interfaceFields
-$(GAMGInterfaceFields)/GAMGInterfaceField/GAMGInterfaceField.C
-$(GAMGInterfaceFields)/GAMGInterfaceField/GAMGInterfaceFieldNew.C
-$(GAMGInterfaceFields)/processorGAMGInterfaceField/processorGAMGInterfaceField.C
-$(GAMGInterfaceFields)/processorCyclicGAMGInterfaceField/processorCyclicGAMGInterfaceField.C
-$(GAMGInterfaceFields)/cyclicGAMGInterfaceField/cyclicGAMGInterfaceField.C
+# GAMGInterfaceFields = $(GAMG)/interfaceFields
+# $(GAMGInterfaceFields)/GAMGInterfaceField/GAMGInterfaceField.C
+# $(GAMGInterfaceFields)/GAMGInterfaceField/GAMGInterfaceFieldNew.C
+# $(GAMGInterfaceFields)/processorGAMGInterfaceField/processorGAMGInterfaceField.C
+# $(GAMGInterfaceFields)/processorCyclicGAMGInterfaceField/processorCyclicGAMGInterfaceField.C
+# $(GAMGInterfaceFields)/cyclicGAMGInterfaceField/cyclicGAMGInterfaceField.C
 
-GAMGAgglomerations = $(GAMG)/GAMGAgglomerations
+# GAMGAgglomerations = $(GAMG)/GAMGAgglomerations
 
-GAMGAgglomeration = $(GAMGAgglomerations)/GAMGAgglomeration
-$(GAMGAgglomeration)/GAMGAgglomeration.C
-$(GAMGAgglomeration)/GAMGAgglomerateLduAddressing.C
+# GAMGAgglomeration = $(GAMGAgglomerations)/GAMGAgglomeration
+# $(GAMGAgglomeration)/GAMGAgglomeration.C
+# $(GAMGAgglomeration)/GAMGAgglomerateLduAddressing.C
 
-pairGAMGAgglomeration = $(GAMGAgglomerations)/pairGAMGAgglomeration
-$(pairGAMGAgglomeration)/pairGAMGAgglomeration.C
-$(pairGAMGAgglomeration)/pairGAMGAgglomerate.C
+# pairGAMGAgglomeration = $(GAMGAgglomerations)/pairGAMGAgglomeration
+# $(pairGAMGAgglomeration)/pairGAMGAgglomeration.C
+# $(pairGAMGAgglomeration)/pairGAMGAgglomerate.C
 
-algebraicPairGAMGAgglomeration = $(GAMGAgglomerations)/algebraicPairGAMGAgglomeration
-$(algebraicPairGAMGAgglomeration)/algebraicPairGAMGAgglomeration.C
+# algebraicPairGAMGAgglomeration = $(GAMGAgglomerations)/algebraicPairGAMGAgglomeration
+# $(algebraicPairGAMGAgglomeration)/algebraicPairGAMGAgglomeration.C
 
-dummyAgglomeration = $(GAMGAgglomerations)/dummyAgglomeration
-$(dummyAgglomeration)/dummyAgglomeration.C
+# dummyAgglomeration = $(GAMGAgglomerations)/dummyAgglomeration
+# $(dummyAgglomeration)/dummyAgglomeration.C
 
 
-GAMGProcAgglomerations = $(GAMG)/GAMGProcAgglomerations
+# GAMGProcAgglomerations = $(GAMG)/GAMGProcAgglomerations
 
-GAMGProcAgglomeration = $(GAMGProcAgglomerations)/GAMGProcAgglomeration
-$(GAMGProcAgglomeration)/GAMGProcAgglomeration.C
-masterCoarsestGAMGProcAgglomeration = $(GAMGProcAgglomerations)/masterCoarsestGAMGProcAgglomeration
-$(masterCoarsestGAMGProcAgglomeration)/masterCoarsestGAMGProcAgglomeration.C
-manualGAMGProcAgglomeration = $(GAMGProcAgglomerations)/manualGAMGProcAgglomeration
-$(manualGAMGProcAgglomeration)/manualGAMGProcAgglomeration.C
-eagerGAMGProcAgglomeration = $(GAMGProcAgglomerations)/eagerGAMGProcAgglomeration
-$(eagerGAMGProcAgglomeration)/eagerGAMGProcAgglomeration.C
-noneGAMGProcAgglomeration = $(GAMGProcAgglomerations)/noneGAMGProcAgglomeration
-$(noneGAMGProcAgglomeration)/noneGAMGProcAgglomeration.C
-procFacesGAMGProcAgglomeration = $(GAMGProcAgglomerations)/procFacesGAMGProcAgglomeration
-$(procFacesGAMGProcAgglomeration)/procFacesGAMGProcAgglomeration.C
+# GAMGProcAgglomeration = $(GAMGProcAgglomerations)/GAMGProcAgglomeration
+# $(GAMGProcAgglomeration)/GAMGProcAgglomeration.C
+# masterCoarsestGAMGProcAgglomeration = $(GAMGProcAgglomerations)/masterCoarsestGAMGProcAgglomeration
+# $(masterCoarsestGAMGProcAgglomeration)/masterCoarsestGAMGProcAgglomeration.C
+# manualGAMGProcAgglomeration = $(GAMGProcAgglomerations)/manualGAMGProcAgglomeration
+# $(manualGAMGProcAgglomeration)/manualGAMGProcAgglomeration.C
+# eagerGAMGProcAgglomeration = $(GAMGProcAgglomerations)/eagerGAMGProcAgglomeration
+# $(eagerGAMGProcAgglomeration)/eagerGAMGProcAgglomeration.C
+# noneGAMGProcAgglomeration = $(GAMGProcAgglomerations)/noneGAMGProcAgglomeration
+# $(noneGAMGProcAgglomeration)/noneGAMGProcAgglomeration.C
+# procFacesGAMGProcAgglomeration = $(GAMGProcAgglomerations)/procFacesGAMGProcAgglomeration
+# $(procFacesGAMGProcAgglomeration)/procFacesGAMGProcAgglomeration.C
 
-LduMatrix = matrices/LduMatrix
-$(LduMatrix)/LduMatrix/lduMatrices.C
-$(LduMatrix)/LduMatrix/solverPerformance.C
-$(LduMatrix)/LduMatrix/LduInterfaceField/LduInterfaceFields.C
-$(LduMatrix)/Smoothers/lduSmoothers.C
-$(LduMatrix)/Preconditioners/lduPreconditioners.C
-$(LduMatrix)/Solvers/lduSolvers.C
+# LduMatrix = matrices/LduMatrix
+# $(LduMatrix)/LduMatrix/lduMatrices.C
+# $(LduMatrix)/LduMatrix/solverPerformance.C
+# $(LduMatrix)/LduMatrix/LduInterfaceField/LduInterfaceFields.C
+# $(LduMatrix)/Smoothers/lduSmoothers.C
+# $(LduMatrix)/Preconditioners/lduPreconditioners.C
+# $(LduMatrix)/Solvers/lduSolvers.C
 
 LIB = $(FOAM_USER_LIBBIN)/libmyOpenFOAM
