@@ -4,6 +4,7 @@ EXE_INC = \
     -I$(LIB_SRC)/meshTools/lnInclude \
 
 LIB_LIBS = \
-    -lOpenFOAM \
+    -L$(FOAM_USER_LIBBIN) \
+    -lmyOpenFOAM \
     -ltriSurface \
     -lmeshTools

@@ -53,6 +53,7 @@ OptimisationSwitches
 libs (
     "libmyFvModels.so"
     "libmyFiniteVolume.so"
+    "libmyFvOpenFOAM.so"
 );
 
 // ************************************************************************* //
