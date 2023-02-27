@@ -99,7 +99,7 @@ void Foam::fv::anisotropySource::addSup
     const word& fieldName
 ) const
 {
-    nvtxRangePushA("Foam_fv_anisotropySource_addSup");
+    nvtxRangePushA("Foam_fv_anisotropySource_addSupFields");
     
     if (debug)
     {
