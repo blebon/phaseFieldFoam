@@ -58,6 +58,7 @@ __pycache__/
 linux*Clang*/
 linux*Gcc*/
 linux*Nvcc*/
+linux*Nvcpp*/
 linux*Icc*/
 linuxming*/
 mingw*Gcc*/
