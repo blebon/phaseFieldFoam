@@ -60,7 +60,8 @@ Foam::SolverPerformance<Type> Foam::fvMatrix<Type>::solve
     const dictionary& solverControls
 )
 {
-    nvtxRangePushA("Foam_fvMatrix_solve");
+    nvtxRangePushA("Foam_fv_finiteVolume_fvMatrices_fvMatrixSolve_solve");
+
     if (debug)
     {
         Info(this->mesh().comm())
@@ -99,6 +100,7 @@ Foam::SolverPerformance<Type> Foam::fvMatrix<Type>::solve
 
         return SolverPerformance<Type>();
     }
+    
     nvtxRangePop();
 }
 
