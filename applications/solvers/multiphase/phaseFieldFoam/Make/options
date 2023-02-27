@@ -1,10 +1,9 @@
 EXE_INC = \
-    -I$(WM_PROJECT_USER_DIR)/src/finiteVolume/lnInclude \
+    -I$(LIB_SRC)/finiteVolume/lnInclude \
     -I$(LIB_SRC)/meshTools/lnInclude
 
 EXE_LIBS = \
-    -L$(FOAM_USER_LIBBIN) \
-    -lmyFiniteVolume \
+    -lfiniteVolume \
     -lfvModels \
     -lfvConstraints \
     -lmeshTools

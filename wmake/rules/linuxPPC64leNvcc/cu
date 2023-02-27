@@ -16,7 +16,7 @@ include $(DEFAULT_RULES)/cu$(WM_COMPILE_OPTION)
 
 ptuFLAGS   = -DNoRepository -Xcompiler -ftemplate-depth-100
 
-cuFLAGS    = -x cu -D__HOST____DEVICE__='__host__ __device__' -lineinfo -Xptxas -v
+cuFLAGS    = -x cu -D__HOST____DEVICE__='__host__ __device__'
 cu++FLAGS  = $(GFLAGS) $(cuWARN) $(cuOPT) $(cuDBUG) $(ptuFLAGS) \
              $(LIB_HEADER_DIRS) -Xcompiler -fPIC
 
