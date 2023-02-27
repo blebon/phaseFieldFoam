@@ -32,7 +32,9 @@ if [ ! -f log.decomposePar ]; then
     ./Allrun.pre
 fi
 
-nsys profile -t nvtx,cuda --stats=true mpirun runParallel $application
+nProcs=$(foamDictionary system/decomposeParDict -entry numberOfSubdomains -value)
+echo "Running $application in parallel on $(pwd) using $nProcs processes"
+nsys profile -t nvtx,cuda --stats=true mpirun -n $nProcs $FOAM_USER_APPBIN/$application -parallel > log.$application 2>&1
 runApplication reconstructPar -newTimes
 
 ./Allpost
