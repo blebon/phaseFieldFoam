@@ -29,6 +29,7 @@ License
 #include "fvModels.H"
 #include "fvmSup.H"
 #include "addToRunTimeSelectionTable.H"
+#include <nvtx3/nvToolsExt.h>
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
@@ -98,6 +99,8 @@ void Foam::fv::anisotropySource::addSup
     const word& fieldName
 ) const
 {
+    nvtxRangePushA("Foam_fv_anisotropySource_addSupFields");
+    
     if (debug)
     {
         Info << type() << ": applying source to " << eqn.psi().name() << endl;
@@ -143,6 +146,8 @@ void Foam::fv::anisotropySource::addSup
             Sp[celli] += Vc*S;
         }
     );
+
+    nvtxRangePop();
 }
 
 
