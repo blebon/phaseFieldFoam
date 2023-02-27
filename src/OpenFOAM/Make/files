@@ -112,4 +112,4 @@ $(LduMatrix)/Smoothers/lduSmoothers.C
 $(LduMatrix)/Preconditioners/lduPreconditioners.C
 $(LduMatrix)/Solvers/lduSolvers.C
 
-LIB = $(FOAM_USER_LIBBIN)/libmyOpenFOAM
+LIB = $(FOAM_LIBBIN)/libmyOpenFOAM
