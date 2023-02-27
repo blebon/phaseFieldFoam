@@ -1,0 +1,9 @@
+EXE_INC = \
+    -I$(OBJECTS_DIR) \
+    -I$(FOAM_SRC)/OpenFOAM/lnInclude \
+    -I/projects/bddir15/NVTX/c/include
+
+LIB_LIBS = \
+    $(FOAM_LIBBIN)/libOSspecific.o \
+    -L$(FOAM_LIBBIN)/dummy -lPstream \
+    -lz
