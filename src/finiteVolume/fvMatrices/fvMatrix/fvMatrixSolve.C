@@ -60,7 +60,8 @@ Foam::SolverPerformance<Type> Foam::fvMatrix<Type>::solve
     const dictionary& solverControls
 )
 {
-    nvtxRangePushA("Foam_fvMatrix_solve");
+    nvtxRangePushA("Foam_fv_finiteVolume_fvMatrices_fvMatrixSolve_solve");
+
     if (debug)
     {
         Info(this->mesh().comm())
@@ -99,6 +100,7 @@ Foam::SolverPerformance<Type> Foam::fvMatrix<Type>::solve
 
         return SolverPerformance<Type>();
     }
+    
     nvtxRangePop();
 }
 
@@ -109,6 +111,8 @@ Foam::SolverPerformance<Type> Foam::fvMatrix<Type>::solveSegregated
     const dictionary& solverControls
 )
 {
+    nvtxRangePushA("Foam_fv_finiteVolume_fvMatrices_fvMatrixSolve_solveSegregated");
+
     if (debug)
     {
         Info(this->mesh().comm())
@@ -214,6 +218,8 @@ Foam::SolverPerformance<Type> Foam::fvMatrix<Type>::solveSegregated
     psi.correctBoundaryConditions();
 
     Residuals<Type>::append(psi.mesh(), solverPerfVec);
+
+    nvtxRangePop();
 
     return solverPerfVec;
 }

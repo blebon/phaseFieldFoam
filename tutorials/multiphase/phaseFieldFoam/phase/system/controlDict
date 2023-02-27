@@ -20,7 +20,8 @@ startFrom       latestTime;
 
 startTime       0;
 
-stopAt          endTime;
+// stopAt          endTime;
+stopAt          writeNow;
 
 endTime         0.5;
 
@@ -51,6 +52,7 @@ OptimisationSwitches
 
 libs (
     "libmyFvModels.so"
+    "libmyFiniteVolume.so"
 );
 
 // ************************************************************************* //

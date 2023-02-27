@@ -92,15 +92,27 @@ Foam::wordList Foam::fv::anisotropySource::addSupFields() const
     return wordList(1, "fi");
 }
 
+__global__ void calculate_fiSourceImplicit(
+    int n,
+    volScalarField *fiSourceImplicit,
+    volScalarField *fi,
+    volScalarField *dT,
+    double k1,
+    double k2,
+    double ta)
+{
+    for (int i = 0; i < n; ++i)
+        fiSourceImplicit[i] = (1.0 - fi[i]) *
+            (fi[i] - 0.5 - k1/constant::mathematical::pi
+            * atan(k2 * dT[i]))/ta; 
+}
 
 void Foam::fv::anisotropySource::addSup
 (
     fvMatrix<scalar>& eqn,
     const word& fieldName
 ) const
-{
-    nvtxRangePushA("Foam_fv_anisotropySource_addSup");
-    
+{    
     if (debug)
     {
         Info << type() << ": applying source to " << eqn.psi().name() << endl;
@@ -111,18 +123,49 @@ void Foam::fv::anisotropySource::addSup
     //- Undercooling variable &Delta;T
     const volScalarField& dT = mesh().lookupObject<volScalarField>("dT");
 
-    // No &phi;* as source is implicit
-    volScalarField fiSourceImplicit =
-        (1.0 - fi) *
-        (fi - 0.5 - this->kappa1()/constant::mathematical::pi
-        * Foam::atan(this->kappa2() * dT))/this->tau();
-
     //- Sp terms
     scalarField& Sp = eqn.diag();
     //- Cell volumes
     const scalarField& V = mesh().V();
     //- Cells in cellset
     const labelList& cells = set_.cells();
+
+    nvtxRangePushA("Foam_fv_anisotropySource_addSup");
+
+    // No &phi;* as source is implicit
+    volScalarField fiSourceImplicit;
+
+    int N = 1<<20;
+
+    // Allocate Unifed Memory
+    cudaMallocManaged(&fiSourceImplicit, N*sizeof(double));
+    cudaMallocManaged(&fi, N*sizeof(double));
+    cudaMallocManaged(&dT, N*sizeof(double));
+
+    // Run kernel
+    calculate_fiSourceImplicit<<<1, 1>>>(
+        N,
+        fiSourceImplicit, fi, dT,
+        this->kappa1().value(), this->kappa2().value(), this->tau().value());
+
+    // Wait for GPU to finish
+    cudaDeviceSynchronize();
+
+     // Check for errors (all values should be 3.0f)
+    float maxError = 0.0f;
+    for (int i = 0; i < N; i++)
+        maxError = fmax(maxError, fabs(y[i]-3.0f));
+    Info << "Max error: " << maxError << endl;
+
+    // Free memory
+    cudaFree(fiSourceImplicit);
+    cudaFree(fi);
+    cudaFree(dT);
+
+    // volScalarField fiSourceImplicit =
+    //     (1.0 - fi) *
+    //     (fi - 0.5 - this->kappa1()/constant::mathematical::pi
+    //     * Foam::atan(this->kappa2() * dT))/this->tau();  
     
     // Equivalent to eqn -= fvm::Sp(fiSourceImplicit, fi); over cellset set_
     // forAll(cells, i)
