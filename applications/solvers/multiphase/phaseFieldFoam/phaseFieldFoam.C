@@ -33,6 +33,7 @@ Description
 #include "fvModels.H"
 #include "fvConstraints.H"
 #include "simpleControl.H"
+#include <nvtx3/nvToolsExt.h>
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

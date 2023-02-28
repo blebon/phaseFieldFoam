@@ -17,5 +17,7 @@
 
     dTEqn.relax(); //!< Apply relaxation to the undercooling equation
 
+    nvtxRangePushA("phaseFieldFoam_dTEqn_solve");
     dTEqn.solve(); //!< Solve the undercooling equation
+    nvtxRangePop();
 }
