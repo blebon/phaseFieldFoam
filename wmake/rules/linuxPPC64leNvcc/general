@@ -7,6 +7,6 @@ include $(GENERAL_RULES)/standard
 include $(DEFAULT_RULES)/X
 include $(DEFAULT_RULES)/c
 include $(DEFAULT_RULES)/c++
+include $(DEFAULT_RULES)/cu
 include $(DEFAULT_RULES)/flex++
 include $(DEFAULT_RULES)/version
-include $(DEFAULT_RULES)/cu

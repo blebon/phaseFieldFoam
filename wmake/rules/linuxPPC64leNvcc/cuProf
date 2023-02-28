@@ -1,2 +1,2 @@
-cuDBUG    = -pg -lineinfo -opt-info inline
+cuDBUG    = -pg -Minfo=inline
 cuOPT     = -O2

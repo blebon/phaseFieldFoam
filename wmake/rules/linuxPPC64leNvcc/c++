@@ -10,8 +10,7 @@ c++WARN     = -Xcompiler -Wall -Xcompiler -Wextra -Xcompiler -Wold-style-cast -X
 # Suppress some warnings for flex++ and CGAL
 c++LESSWARN = -Xcompiler -Wno-old-style-cast -Xcompiler -Wno-unused-local-typedefs -Xcompiler -Wno-array-bounds
 
-cu++FLAGS   = -x c++
-CC          = nvcc -ccbin=g++ -std=c++17 -m64 -arch=sm_70 -Xcompiler -mcpu=power8
+CC          = nvcc -ccbin=g++ -std=c++17 -x c++ -m64 -arch=sm_70 -Xcompiler -mcpu=power8
 
 include $(DEFAULT_RULES)/c++$(WM_COMPILE_OPTION)
 
@@ -20,7 +19,7 @@ ptFLAGS     = -DNoRepository -Xcompiler -ftemplate-depth-100
 c++FLAGS    = $(GFLAGS) $(c++WARN) $(c++OPT) $(c++DBUG) $(ptFLAGS) \
               $(LIB_HEADER_DIRS) -Xcompiler -fPIC
 
-Ctoo        = $(WM_SCHEDULER) $(CC) $(c++FLAGS) $(cu++FLAGS) -c $< -o $@
+Ctoo        = $(WM_SCHEDULER) $(CC) $(c++FLAGS) -c $< -o $@
 cxxtoo      = $(Ctoo)
 cctoo       = $(Ctoo)
 cpptoo      = $(Ctoo)

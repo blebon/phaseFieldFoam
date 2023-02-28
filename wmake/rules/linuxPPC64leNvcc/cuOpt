@@ -1,4 +1,4 @@
 cuDBUG     =
 cuOPT      = -O3
 
-ROUNDING_MATH = -Xcompiler -frounding-math
+ROUNDING_MATH = 
