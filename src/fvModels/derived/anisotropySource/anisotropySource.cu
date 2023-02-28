@@ -125,19 +125,11 @@ void Foam::fv::anisotropySource::addSup
     const labelList& cells = set_.cells();
     
     // Equivalent to eqn -= fvm::Sp(fiSourceImplicit, fi); over cellset set_
-    // forAll(cells, i)
-    // {
-    //     const label celli = cells[i];
-
-    //     const scalar Vc = V[celli];
-    //     const scalar S = fiSourceImplicit[celli];
-    //     Sp[celli] += Vc*S;
-    // }
     std::for_each_n(
         std::execution::par,
         (cells).begin(),
         (cells).size(),
-        [=, &Sp](auto i)
+        [&cells, &V, &fiSourceImplicit, &Sp](auto i)
         {
             const label celli = cells[i];
          

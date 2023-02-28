@@ -5,7 +5,7 @@ cuWARN     =
 # Suppress some warnings for flex++ and CGAL
 cuLESSWARN = 
 
-CU         = nvc++ -stdpar=gpu -std=c++17
+CU         = nvc++ -silent -stdpar=gpu -std=c++17
 
 include $(DEFAULT_RULES)/cu$(WM_COMPILE_OPTION)
 
@@ -19,6 +19,7 @@ cutoo      = $(WM_SCHEDULER) $(CU) $(cu++FLAGS) $(cuFLAGS) -c $< -o $@
 
 LINK_LIBS  = $(cuDBUG)
 
-LINKLIBSO  = $(CU) $(cu++FLAGS) -shared
+LINKLIBSO  = $(CU) $(cu++FLAGS) -shared \
+             -lgcc --as-needed -lgcc_s --no-as-needed
 
-LINKEXE    = $(CU) $(cu++FLAGS)
+LINKEXE    = $(CU) $(cu++FLAGS) -lgcc --as-needed -lgcc_s --no-as-needed
