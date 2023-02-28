@@ -1,9 +1,9 @@
 SUFFIXES += .cu
 
-cuWARN     = -Minform=warn
+cuWARN     = 
 
 # Suppress some warnings for flex++ and CGAL
-cuLESSWARN = -Minform=warn
+cuLESSWARN = 
 
 CU         = nvc++ -stdpar=gpu -std=c++17
 
