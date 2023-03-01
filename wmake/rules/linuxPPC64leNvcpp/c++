@@ -22,6 +22,8 @@ cpptoo      = $(Ctoo)
 
 LINK_LIBS  = $(c++DBUG)
 
-LINKLIBSO  = $(CC) $(c++FLAGS) -shared
+LINKLIBSO  = $(CC) $(c++FLAGS) -Xlinker -fuse-ld=bfd -shared \
+             -Xlinker --add-needed -Xlinker --no-as-needed
 
-LINKEXE    = $(CC) $(c++FLAGS)
+LINKEXE    = $(CC) $(c++FLAGS) -Xlinker -fuse-ld=bfd \
+             -Xlinker --add-needed -Xlinker --no-as-needed
