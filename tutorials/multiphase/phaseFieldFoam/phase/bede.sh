@@ -24,8 +24,8 @@ source $WM_PROJECT_DIR/bin/tools/RunFunctions
 export application=`getApplication`
 
 # Set to number of procs
-foamDictionary system/decomposeParDict -entry numberOfSubdomains -set 16
-foamDictionary system/decomposeParDict -entry hierarchicalCoeffs/n -set "( 4 4 1 )"
+# foamDictionary system/decomposeParDict -entry numberOfSubdomains -set 16
+# foamDictionary system/decomposeParDict -entry hierarchicalCoeffs/n -set "( 4 4 1 )"
 # sed -i 's/(400 400 1)/(4000 4000 1)/g' system/blockMeshDict
 
 if [ ! -f log.decomposePar ]; then
@@ -34,7 +34,7 @@ fi
 
 nProcs=$(foamDictionary system/decomposeParDict -entry numberOfSubdomains -value)
 echo "Running $application in parallel on $(pwd) using $nProcs processes"
-nsys profile -t nvtx,cuda --stats=true mpirun -n $nProcs $FOAM_USER_APPBIN/$application -parallel > log.$application 2>&1
+nsys profile -t nvtx,cuda -o report_cpu --stats=true mpirun -n $nProcs $FOAM_USER_APPBIN/$application -parallel > log.$application 2>&1
 runApplication reconstructPar -newTimes
 
 ./Allpost

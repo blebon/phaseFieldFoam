@@ -39,14 +39,16 @@ Description
 
 int main(int argc, char *argv[])
 {
+    nvtxRangePushA("phaseFieldFoam_init");
     #include "setRootCaseLists.H"
-
+    
     #include "createTime.H"
     #include "createMesh.H"
 
     simpleControl simple(mesh);
 
     #include "createFields.H"
+    nvtxRangePop();
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

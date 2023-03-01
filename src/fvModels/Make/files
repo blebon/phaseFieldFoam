@@ -1,3 +1,3 @@
-derived/anisotropySource/anisotropySource.cu
+derived/anisotropySource/anisotropySource.C
 
 LIB = $(FOAM_USER_LIBBIN)/libmyFvModels
