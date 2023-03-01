@@ -3,3 +3,7 @@
 *.jpeg
 *.jpg
 *.png
+
+# Profiling
+*.nsys-rep
+*.sqlite
