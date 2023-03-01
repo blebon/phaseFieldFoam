@@ -34,6 +34,7 @@ Description
 #include "fvModels.H"
 #include "fvConstraints.H"
 #include "pisoControl.H"
+#include <nvtx3/nvToolsExt.h>
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -70,10 +71,13 @@ int main(int argc, char *argv[])
 
         if (piso.momentumPredictor())
         {
+            nvtxRangePushA("icoPhaseFieldFoam_piso_momentumPredictor");
             solve(UEqn == -fvc::grad(p));
+            nvtxRangePop();
         }
 
         // --- PISO loop
+        nvtxRangePushA("icoPhaseFieldFoam_piso_correct");
         while (piso.correct())
         {
             volScalarField rAU(1.0/UEqn.A());
@@ -115,6 +119,7 @@ int main(int argc, char *argv[])
             U = HbyA - rAU*fvc::grad(p);
             U.correctBoundaryConditions();
         }
+        nvtxRangePop();
 
         #include "fiEqn.H"
         #include "dTEqn.H"

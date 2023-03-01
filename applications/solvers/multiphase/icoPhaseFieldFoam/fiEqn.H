@@ -83,5 +83,7 @@
 
     fiEqn.relax(); //!< Apply relaxation to the phase field equation
 
+    nvtxRangePushA("icoPhaseFieldFoam_fiEqn_solve");
     fiEqn.solve(); //!< Solve the phase field equation
+    nvtxRangePop();
 }
