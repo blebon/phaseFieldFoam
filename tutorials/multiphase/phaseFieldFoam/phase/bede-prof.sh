@@ -13,6 +13,7 @@ pwd; hostname; date
 
 module load gcc/10.2.0; module load cmake; module load boost; module load openmpi; module load vtk;
 module load /nobackup/projects/bddir15/hpc_sdk/modulefiles/nvhpc/23.1
+export NVLOCALRC=$HOME/localrc
 source $HOME/OpenFOAM/${USER}-10/etc/bashrc WM_COMPILER=Nvcpp
 unset FOAM_SIGFPE
 
@@ -37,7 +38,7 @@ fi
 
 nProcs=$(foamDictionary system/decomposeParDict -entry numberOfSubdomains -value)
 echo "Running $application in parallel on $(pwd) using $nProcs processes"
-nsys profile -t nvtx,cuda -o report_cpu --stats=true mpirun -n $nProcs $FOAM_USER_APPBIN/$application -parallel > log.$application 2>&1
+nsys profile -t nvtx,cuda -o report_cpu --stats=true /nobackup/projects/bddir15/hpc_sdk/Linux_ppc64le/23.1/comm_libs/mpi/bin/mpirun -n $nProcs $FOAM_USER_APPBIN/$application -parallel > log.$application 2>&1
 runApplication reconstructPar -newTimes
 
 ./Allpost
