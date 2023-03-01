@@ -59,6 +59,17 @@
 
 /**
 @var
+    @brief Phase field anisotropy source
+*/
+    nvtxRangePushA("phaseFieldFoam_fiSourceImplicit");
+    volScalarField fiSourceImplicit =
+            (1.0 - fi) *
+            (fi - 0.5 - kappa1/constant::mathematical::pi
+            * Foam::atan(kappa2 * dT))/tau;
+    nvtxRangePop();
+
+/**
+@var
     @brief &beta;
 */
     volScalarField beta = (1 - sqr(Phi))/(1 + sqr(Phi));
@@ -77,7 +88,8 @@
         fvm::ddt(fi) 
       - fvm::laplacian(D, fi)
      ==
-        fvModels.source(fi)
+        fvm::Sp(fiSourceImplicit, fi)
+        // fvModels.source(fi)
     );
 
     fiEqn.relax(); //!< Apply relaxation to the phase field equation

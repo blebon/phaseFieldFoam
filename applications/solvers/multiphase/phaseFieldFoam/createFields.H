@@ -150,4 +150,30 @@
         physicalProperties.lookup("N")
     );
 
-#include "createFvModels.H"
+    Info<< "Reading symmetry kappa1\n" << endl;
+/**
+@var
+    @brief &kappa;_1
+*/
+dimensionedScalar kappa1
+    (
+        "kappa1",
+        dimless,
+        physicalProperties.lookup("kappa1")
+    );
+
+    Info<< "Reading symmetry kappa2\n" << endl;
+
+/**
+@var
+    @brief &kappa;_2
+*/
+    dimensionedScalar kappa2
+    (
+        "kappa2",
+        dimless,
+        physicalProperties.lookup("kappa2")
+    );
+
+
+// #include "createFvModels.H"
