@@ -78,12 +78,19 @@
 @var
     @brief &beta;
 */
+    nvtxRangePushA("phaseFieldFoam_fiEqn_beta");
     volScalarField beta = (1 - sqr(Phi))/(1 + sqr(Phi));
+    nvtxRangePop();
 
+    nvtxRangePushA("phaseFieldFoam_fiEqn_Da");
     volScalarField Da = sqr(alpha) * (1 + c*beta)/tau;
+    nvtxRangePop();
+
+    nvtxRangePushA("phaseFieldFoam_fiEqn_D");
     volScalarField Ddiag = Da * (1 + c*beta);
     volScalarField Doffdiag = Da * c * (-N * 2 * Phi / (1 + sqr(Phi)));
     D = Ddiag*tensor(1,0,0,0,1,0,0,0,0) + Doffdiag*tensor(0,1,0,-1,0,0,0,0,0);
+    nvtxRangePop();
     
 /**
 @var

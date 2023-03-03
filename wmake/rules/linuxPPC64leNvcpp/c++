@@ -6,7 +6,7 @@ c++WARN     =
 c++LESSWARN = 
 
 cu++FLAGS   = 
-CC          = nvc++ -stdpar=gpu -std=c++17 -silent
+CC          = nvc++ -stdpar=gpu -std=c++17 -silent -gpu=fastmath
 
 include $(DEFAULT_RULES)/c++$(WM_COMPILE_OPTION)
 

@@ -115,7 +115,7 @@ void Foam::fv::anisotropySource::addSup
     volScalarField fiSourceImplicit =
         (1.0 - fi) *
         (fi - 0.5 - this->kappa1()/constant::mathematical::pi
-        * Foam::atan(this->kappa2() * dT))/this->tau();
+       * Foam::atan(this->kappa2() * dT))/this->tau();
 
     //- Sp terms
     scalarField& Sp = eqn.diag();
@@ -126,10 +126,11 @@ void Foam::fv::anisotropySource::addSup
     
     // Equivalent to eqn -= fvm::Sp(fiSourceImplicit, fi); over cellset set_
     std::for_each_n(
-        std::execution::par,
+        std::execution::par_unseq,
         (cells).begin(),
         (cells).size(),
-        [&cells, &V, &fiSourceImplicit, &Sp](auto i)
+        [&cells, &V, &fiSourceImplicit, 
+         &Sp](auto i)
         {
             const label celli = cells[i];
          
