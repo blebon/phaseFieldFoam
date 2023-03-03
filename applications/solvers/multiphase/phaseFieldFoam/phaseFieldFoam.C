@@ -29,11 +29,14 @@ Description
 
 \*---------------------------------------------------------------------------*/
 
+#include <algorithm>
+#include <execution>
+#include <nvtx3/nvToolsExt.h>
+
 #include "fvCFD.H"
 #include "fvModels.H"
 #include "fvConstraints.H"
 #include "simpleControl.H"
-#include <nvtx3/nvToolsExt.h>
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

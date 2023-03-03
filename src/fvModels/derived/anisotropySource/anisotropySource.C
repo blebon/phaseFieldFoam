@@ -25,11 +25,12 @@ License
 
 #include <algorithm>
 #include <execution>
+#include <nvtx3/nvToolsExt.h>
+
 #include "anisotropySource.H"
 #include "fvModels.H"
 #include "fvmSup.H"
 #include "addToRunTimeSelectionTable.H"
-#include <nvtx3/nvToolsExt.h>
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
@@ -111,12 +112,6 @@ void Foam::fv::anisotropySource::addSup
     //- Undercooling variable &Delta;T
     const volScalarField& dT = mesh().lookupObject<volScalarField>("dT");
 
-    // No &phi;* as source is implicit
-    // volScalarField fiSourceImplicit =
-    //     (1.0 - fi) *
-    //     (fi - 0.5 - this->kappa1()/constant::mathematical::pi
-    //    * Foam::atan(this->kappa2() * dT))/this->tau();
-
     //- Sp terms
     scalarField& Sp = eqn.diag();
     //- Cell volumes
@@ -141,10 +136,12 @@ void Foam::fv::anisotropySource::addSup
             const label celli = cells[i];
          
             const scalar Vc = V[celli];
-            // const scalar S = fiSourceImplicit[celli];
-            const scalar S = (1.0 - fi[celli]) *
-                             (fi[celli] - 0.5 - _kappa1/_pi
-                             * atan(_kappa2 * dT[celli]))/_tau;
+            const scalar fic = fi[celli];
+            const scalar dTc = dT[celli];
+            // No &phi;* as source is implicit
+            const scalar S = (1.0 - fic) *
+                             (fic - 0.5 - _kappa1/_pi
+                             * atan(_kappa2 * dTc))/_tau;
             Sp[celli] += Vc*S;
         }
     );

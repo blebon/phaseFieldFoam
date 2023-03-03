@@ -8,4 +8,5 @@ EXE_LIBS = \
     -lfvConstraints \
     -lfvModels \
     -lfiniteVolume \
-    -lmeshTools
+    -lmeshTools \
+    -ltbb
