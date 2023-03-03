@@ -7,7 +7,9 @@
 @var
     @brief Phase field gradients
 */
+    nvtxRangePushA("phaseFieldFoam_fiEqn_gradFi");
     volVectorField gradFi(fvc::grad(fi));
+    nvtxRangePop();
 
 /**
 @var
@@ -47,15 +49,19 @@
 @var
     @brief &psi;
 */
+    nvtxRangePushA("phaseFieldFoam_fiEqn_psi");
     volScalarField psi =
         constant::mathematical::pi/8.
         + Foam::atan2(gradFiy, gradFix);
+    nvtxRangePop();
 
 /**
 @var
     @brief &Phi;
 */
+    nvtxRangePushA("phaseFieldFoam_fiEqn_Phi");
     volScalarField Phi = Foam::tan(N * psi/2);
+    nvtxRangePop();
 
 /**
 @var
@@ -83,6 +89,7 @@
 @var
     @brief The phase field equation
 */
+    nvtxRangePushA("phaseFieldFoam_fiEqn_assemble");
     fvScalarMatrix fiEqn
     (
         fvm::ddt(fi) 
@@ -91,8 +98,11 @@
         // fvm::Sp(fiSourceImplicit, fi)
         fvModels.source(fi)
     );
+    nvtxRangePop();
 
+    nvtxRangePushA("phaseFieldFoam_fiEqn_relax");
     fiEqn.relax(); //!< Apply relaxation to the phase field equation
+    nvtxRangePop();
 
     nvtxRangePushA("phaseFieldFoam_fiEqn_solve");
     fiEqn.solve(); //!< Solve the phase field equation
