@@ -112,10 +112,10 @@ void Foam::fv::anisotropySource::addSup
     const volScalarField& dT = mesh().lookupObject<volScalarField>("dT");
 
     // No &phi;* as source is implicit
-    volScalarField fiSourceImplicit =
-        (1.0 - fi) *
-        (fi - 0.5 - this->kappa1()/constant::mathematical::pi
-       * Foam::atan(this->kappa2() * dT))/this->tau();
+    // volScalarField fiSourceImplicit =
+    //     (1.0 - fi) *
+    //     (fi - 0.5 - this->kappa1()/constant::mathematical::pi
+    //    * Foam::atan(this->kappa2() * dT))/this->tau();
 
     //- Sp terms
     scalarField& Sp = eqn.diag();
@@ -129,13 +129,22 @@ void Foam::fv::anisotropySource::addSup
         std::execution::par_unseq,
         (cells).begin(),
         (cells).size(),
-        [&cells, &V, &fiSourceImplicit, 
+        [&cells, &V,
+         &fi, &dT,
+         _kappa1=this->kappa1(),
+         _kappa2=this->kappa2(),
+         _tau=this->tau(),
+         _pi=constant::mathematical::pi,
+         // &fiSourceImplicit, 
          &Sp](auto i)
         {
             const label celli = cells[i];
          
             const scalar Vc = V[celli];
-            const scalar S = fiSourceImplicit[celli];
+            // const scalar S = fiSourceImplicit[celli];
+            const scalar S = (1.0 - fi[celli]) *
+                             (fi[celli] - 0.5 - _kappa1/_pi
+                             * atan(_kappa2 * dT[celli]))/_tau;
             Sp[celli] += Vc*S;
         }
     );
