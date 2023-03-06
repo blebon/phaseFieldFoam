@@ -50,7 +50,7 @@
     @brief &psi;
 */
     nvtxRangePushA("phaseFieldFoam_fiEqn_psi");
-    volScalarField psi =
+    volScalarField _psi =
         constant::mathematical::pi/8.
         + Foam::atan2(gradFiy, gradFix);
     nvtxRangePop();
@@ -60,26 +60,42 @@
     @brief &Phi;
 */
     nvtxRangePushA("phaseFieldFoam_fiEqn_Phi");
-    volScalarField Phi = Foam::tan(N * psi/2);
+    volScalarField Phi = Foam::tan(N * _psi/2);
     nvtxRangePop();
-
-/**
-@var
-    @brief Phase field anisotropy source
-*/
-    // nvtxRangePushA("phaseFieldFoam_fiSourceImplicit");
-    // volScalarField fiSourceImplicit =
-    //         (1.0 - fi) *
-    //         (fi - 0.5 - kappa1/constant::mathematical::pi
-    //         * Foam::atan(kappa2 * dT))/tau;
-    // nvtxRangePop();
 
 /**
 @var
     @brief &beta;
 */
     nvtxRangePushA("phaseFieldFoam_fiEqn_beta");
-    volScalarField beta = (1 - sqr(Phi))/(1 + sqr(Phi));
+    volScalarField beta
+    (
+        IOobject
+        (
+            "beta",
+            runTime.timeName(),
+            mesh,
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        mesh,
+        dimensionedScalar(
+            "_beta",
+            dimless,
+            0.
+        )
+    );
+    
+    std::for_each_n(
+        std::execution::par,
+        beta.begin(),
+        beta.size(),
+        [=, &beta](label celli)
+        {        
+            const scalar Phic = Phi[celli];
+            beta[celli] = (1 - sqr(Phic))/(1 + sqr(Phic));
+        }
+    );
     nvtxRangePop();
 
     nvtxRangePushA("phaseFieldFoam_fiEqn_Da");
@@ -102,7 +118,6 @@
         fvm::ddt(fi) 
       - fvm::laplacian(D, fi)
      ==
-        // fvm::Sp(fiSourceImplicit, fi)
         fvModels.source(fi)
     );
     nvtxRangePop();
