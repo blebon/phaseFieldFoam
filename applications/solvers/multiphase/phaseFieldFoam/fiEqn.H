@@ -45,22 +45,25 @@
         gradFi.component(vector::Y)
     );
 
-/**
-@var
-    @brief &psi;
-*/
-    nvtxRangePushA("phaseFieldFoam_fiEqn_psi");
-    volScalarField _psi =
-        constant::mathematical::pi/8.
-        + Foam::atan2(gradFiy, gradFix);
-    nvtxRangePop();
 
-/**
-@var
-    @brief &Phi;
-*/
     nvtxRangePushA("phaseFieldFoam_fiEqn_Phi");
-    volScalarField Phi = Foam::tan(N * _psi/2);
+    std::transform(
+        std::execution::par,
+        (gradFiy).cbegin(),
+        (gradFiy).cend(),
+        (gradFix).cbegin(),
+        Phi.begin(),
+        [=, _pi=constant::mathematical::pi, _N=N.value()]
+        (scalar gradFiyc, scalar gradFixc)
+        {       
+            /**
+            @var
+                @brief &psi;
+            */ 
+            scalar _psi = _pi/8. + Foam::atan2(gradFiyc, gradFixc);
+            return Foam::tan(_N * _psi/2);
+        }
+    );
     nvtxRangePop();
 
     nvtxRangePushA("phaseFieldFoam_fiEqn_beta");   

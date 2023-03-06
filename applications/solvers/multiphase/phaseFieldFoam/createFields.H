@@ -74,6 +74,31 @@
     );
 
 
+Info<< "Creating scalar field Phi\n" << endl;
+
+/**
+@var
+    @brief &Phi;
+*/
+volScalarField Phi
+    (
+        IOobject
+        (
+            "Phi",
+            runTime.timeName(),
+            mesh,
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        mesh,
+        dimensionedScalar(
+            "_Phi",
+            dimless,
+            0.
+        )
+    );
+
+
     Info<< "Creating scalar field beta\n" << endl;
 
 /**
