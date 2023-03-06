@@ -19,6 +19,8 @@ module load cmake
 module load boost
 module load vtk
 module load /nobackup/projects/bddir15/hpc_sdk/modulefiles/nvhpc/23.1
+makelocalrc -x -d $HOME -gcc /opt/software/builder/developers/compilers/gcc/10.2.0/1/default/bin/gcc -gpp /opt/software/builder/developers/compilers/gcc/10.2.0/1/default/bin/g++ -g77 /opt/software/builder/developers/compilers/gcc/10.2.0/1/default/bin/gfortran
+export NVLOCALRC=$HOME/localrc
 
 source ${HOME}/OpenFOAM/${USER}-10/etc/bashrc WM_COMPILE_OPTION=Opt WM_COMPILER=Nvcpp
 

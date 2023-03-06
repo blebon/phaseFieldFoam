@@ -9,8 +9,8 @@
 #SBATCH --nodes=1          # Resources from a single node
 #SBATCH --gres=gpu:1       # One GPU per node (plus 25% of node CPU and RAM per GPU)
 
-#SBATCH --job-name=OF10_NvGccOpt_wmake_libso_finiteVolume
-#SBATCH --output=NvGccOpt_wmake_%j.out
+#SBATCH --job-name=OF10_GccOpt_wmake_libso_finiteVolume
+#SBATCH --output=GccOpt_wmake_%j.out
 
 pwd; hostname; date
 
