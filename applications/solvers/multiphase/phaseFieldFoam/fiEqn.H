@@ -63,37 +63,15 @@
     volScalarField Phi = Foam::tan(N * _psi/2);
     nvtxRangePop();
 
-/**
-@var
-    @brief &beta;
-*/
-    nvtxRangePushA("phaseFieldFoam_fiEqn_beta");
-    volScalarField beta
-    (
-        IOobject
-        (
-            "beta",
-            runTime.timeName(),
-            mesh,
-            IOobject::NO_READ,
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        dimensionedScalar(
-            "_beta",
-            dimless,
-            0.
-        )
-    );
-    
-    std::for_each_n(
+    nvtxRangePushA("phaseFieldFoam_fiEqn_beta");   
+    std::transform(
         std::execution::par,
-        (beta).begin(),
-        (beta).size(),
-        [&](label celli)
+        (Phi).cbegin(),
+        (Phi).cend(),
+        beta.begin(),
+        [=](scalar Phic)
         {        
-            const scalar Phic = Phi[celli];
-            beta[celli] = (1 - sqr(Phic))/(1 + sqr(Phic));
+            return (1 - sqr(Phic))/(1 + sqr(Phic));
         }
     );
     nvtxRangePop();

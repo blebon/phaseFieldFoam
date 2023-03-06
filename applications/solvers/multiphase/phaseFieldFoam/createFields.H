@@ -73,6 +73,31 @@
         physicalProperties.lookup("DT")
     );
 
+
+    Info<< "Creating scalar field beta\n" << endl;
+
+/**
+@var
+    @brief &beta;
+*/
+volScalarField beta
+    (
+        IOobject
+        (
+            "beta",
+            runTime.timeName(),
+            mesh,
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        mesh,
+        dimensionedScalar(
+            "_beta",
+            dimless,
+            0.
+        )
+    );
+
     Info<< "Creating tensor field D\n" << endl;
 
 /**
