@@ -88,9 +88,9 @@
     
     std::for_each_n(
         std::execution::par,
-        beta.begin(),
-        beta.size(),
-        [=, &beta](label celli)
+        (beta).begin(),
+        (beta).size(),
+        [&](label celli)
         {        
             const scalar Phic = Phi[celli];
             beta[celli] = (1 - sqr(Phic))/(1 + sqr(Phic));
