@@ -17,7 +17,7 @@ struct VariableVectors
     VariableVectors(
         string casename,
         size_t column = 1, 
-        string end_time = "0.5",
+        string end_time = "0.05",
         double large_tolerance = 3.0,
         double small_tolerance = 40.0
         )
@@ -124,7 +124,7 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
     BOOST_AUTO_TEST_CASE(CheckIfCentrelineCoordinatesMatch)
     {
         string casename{"centreline"};
-        VariableVectors centreline{ casename, 1, "0.5", 1.0, 1.0};
+        VariableVectors centreline{ casename, 1, "0.05", 1.0, 1.0};
         BOOST_TEST_MESSAGE("Looking for benchmark file.");
         BOOST_ASSERT(!centreline.expected.empty());
         BOOST_TEST_MESSAGE("Looking for numerical predictions file.");
@@ -137,7 +137,7 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
         * utf::depends_on("CheckIfVariableValuesMatchExpectedValues/CheckIfCentrelineCoordinatesMatch"))
     {
         string casename{"centreline"};
-        VariableVectors centreline{ casename, 2, "0.5", 12.0, 50.0};
+        VariableVectors centreline{ casename, 2, "0.05", 12.0, 50.0};
         BOOST_TEST_MESSAGE("Checking centreline phase field values");
         centreline.boost_check();
     }
@@ -146,7 +146,7 @@ BOOST_FIXTURE_TEST_SUITE(CheckIfVariableValuesMatchExpectedValues, F);
         * utf::depends_on("CheckIfVariableValuesMatchExpectedValues/CheckIfCentrelineCoordinatesMatch"))
     {
         string casename{"centreline"};
-        VariableVectors centreline{ casename, 3, "0.5", 3.0, 20.0};
+        VariableVectors centreline{ casename, 3, "0.05", 3.0, 20.0};
         BOOST_TEST_MESSAGE("Checking centreline undercooling values");
         centreline.boost_check();
     }
