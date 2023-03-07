@@ -42,6 +42,7 @@ Description
 
 int main(int argc, char *argv[])
 {
+    nvtxRangePushA("phaseFieldFoam_main");
     nvtxRangePushA("phaseFieldFoam_init");
     #include "setRootCaseLists.H"
     
@@ -73,7 +74,8 @@ int main(int argc, char *argv[])
             << "  ClockTime = " << runTime.elapsedClockTime() << " s"
             << nl << endl;
     }
-
+    nvtxRangePop();
+    
     #include "freeMemory.H"
 
     Info<< "End\n" << endl;
