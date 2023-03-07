@@ -4,8 +4,7 @@
 #SBATCH --time=2:0:0       # Run for a max of 2 h
 #SBATCH --partition=gpu    # Choose either "gpu" or "infer" node type
 #SBATCH --nodes=1          # Resources from a single node
-#SBATCH --gres=gpu:2       # Two GPUs per node (plus 25% of node CPU and RAM per GPU)
-#SBATCH --exclusive        # Grab entire node
+#SBATCH --gres=gpu:4       # Four GPUs per node (plus 25% of node CPU and RAM per GPU)
 #SBATCH --job-name=OF10_NvcppOpt_Phase
 #SBATCH --output=OF10_Phase_%j.out
 #SBATCH --mail-user=<your.email>@brunel.ac.uk
