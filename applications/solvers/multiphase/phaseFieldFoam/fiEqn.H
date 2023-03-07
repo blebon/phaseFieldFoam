@@ -44,7 +44,7 @@
         ),
         gradFi.component(vector::Y)
     );
-
+    
 
     nvtxRangePushA("phaseFieldFoam_fiEqn_Phi");
     std::transform(
@@ -52,7 +52,7 @@
         (gradFiy).cbegin(),
         (gradFiy).cend(),
         (gradFix).cbegin(),
-        Phi.begin(),
+        (*Phi).begin(),
         [=, _pi=constant::mathematical::pi, _N=N.value()]
         (scalar gradFiyc, scalar gradFixc)
         {       
@@ -67,14 +67,12 @@
     nvtxRangePop();
 
     nvtxRangePushA("phaseFieldFoam_fiEqn_beta");
-    auto* Phi_p = &Phi;
-    auto* beta_p = &beta;
     std::transform(
         std::execution::par,
-        (*Phi_p).cbegin(),
-        (*Phi_p).cend(),
-        (*beta_p).begin(),
-        [=](scalar Phic)
+        (*Phi).cbegin(),
+        (*Phi).cend(),
+        (*beta).begin(),
+        [](scalar Phic)
         {        
             return (1 - sqr(Phic))/(1 + sqr(Phic));
         }
@@ -82,12 +80,12 @@
     nvtxRangePop();
 
     nvtxRangePushA("phaseFieldFoam_fiEqn_Da");
-    volScalarField Da = sqr(alpha) * (1 + c*beta)/tau;
+    volScalarField Da = sqr(alpha) * (1 + c*(*beta))/tau;
     nvtxRangePop();
 
     nvtxRangePushA("phaseFieldFoam_fiEqn_D");
-    volScalarField Ddiag = Da * (1 + c*beta);
-    volScalarField Doffdiag = Da * c * (-N * 2 * Phi / (1 + sqr(Phi)));
+    volScalarField Ddiag = Da * (1 + c*(*beta));
+    volScalarField Doffdiag = Da * c * (-N * 2 * (*Phi) / (1 + sqr(*Phi)));
     D = Ddiag*tensor(1,0,0,0,1,0,0,0,0) + Doffdiag*tensor(0,1,0,-1,0,0,0,0,0);
     nvtxRangePop();
     

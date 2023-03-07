@@ -80,7 +80,8 @@ Info<< "Creating scalar field Phi\n" << endl;
 @var
     @brief &Phi;
 */
-volScalarField Phi
+volScalarField* Phi;
+Phi = new volScalarField
     (
         IOobject
         (
@@ -105,7 +106,8 @@ volScalarField Phi
 @var
     @brief &beta;
 */
-volScalarField beta
+volScalarField* beta;
+beta = new volScalarField
     (
         IOobject
         (
@@ -122,6 +124,7 @@ volScalarField beta
             0.
         )
     );
+
 
     Info<< "Creating tensor field D\n" << endl;
 
