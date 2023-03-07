@@ -11,7 +11,7 @@
 
 pwd; hostname; date
 
-module load gcc/10.2.0; module load cmake; module load boost; module load openmpi; module load vtk;
+module load gcc/10.2.0; module load cmake; module load boost; module load vtk;
 module load /nobackup/projects/bddir15/hpc_sdk/modulefiles/nvhpc/23.1
 export NVLOCALRC=$HOME/localrc
 source $HOME/OpenFOAM/${USER}-10/etc/bashrc WM_COMPILER=Nvcpp
