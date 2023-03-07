@@ -39,7 +39,7 @@ fi
 nProcs=$(foamDictionary system/decomposeParDict -entry numberOfSubdomains -value)
 echo "Running $application in parallel on $(pwd) using $nProcs processes"
 /nobackup/projects/bddir15/hpc_sdk/Linux_ppc64le/23.1/comm_libs/mpi/bin/mpirun -n $nProcs --bind-to none ./bind.sh $FOAM_USER_APPBIN/$application -parallel > log.$application 2>&1
-runApplication reconstructPar -newTimes
+runApplication reconstructPar
 
 ./Allpost
 
