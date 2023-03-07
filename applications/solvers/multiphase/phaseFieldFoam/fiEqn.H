@@ -66,12 +66,14 @@
     );
     nvtxRangePop();
 
-    nvtxRangePushA("phaseFieldFoam_fiEqn_beta");   
+    nvtxRangePushA("phaseFieldFoam_fiEqn_beta");
+    auto* Phi_p = &Phi;
+    auto* beta_p = &beta;
     std::transform(
         std::execution::par,
-        (Phi).cbegin(),
-        (Phi).cend(),
-        beta.begin(),
+        (*Phi_p).cbegin(),
+        (*Phi_p).cend(),
+        (*beta_p).begin(),
         [=](scalar Phic)
         {        
             return (1 - sqr(Phic))/(1 + sqr(Phic));
