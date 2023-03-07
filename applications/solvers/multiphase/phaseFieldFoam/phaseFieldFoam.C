@@ -74,6 +74,8 @@ int main(int argc, char *argv[])
             << nl << endl;
     }
 
+    #include "freeMemory.H"
+
     Info<< "End\n" << endl;
 
     return 0;

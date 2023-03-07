@@ -53,15 +53,15 @@
         (gradFiy).cend(),
         (gradFix).cbegin(),
         (*Phi).begin(),
-        [=, _pi=constant::mathematical::pi, _N=N.value()]
+        [pi_=constant::mathematical::pi, N_=N.value()]
         (scalar gradFiyc, scalar gradFixc)
         {       
             /**
             @var
                 @brief &psi;
             */ 
-            scalar _psi = _pi/8. + Foam::atan2(gradFiyc, gradFixc);
-            return Foam::tan(_N * _psi/2);
+            scalar psi_ = pi_/8. + Foam::atan2(gradFiyc, gradFixc);
+            return Foam::tan(N_ * psi_/2);
         }
     );
     nvtxRangePop();
@@ -80,13 +80,23 @@
     nvtxRangePop();
 
     nvtxRangePushA("phaseFieldFoam_fiEqn_Da");
-    volScalarField Da = sqr(alpha) * (1 + c*(*beta))/tau;
+    std::transform(
+        std::execution::par,
+        (*beta).cbegin(),
+        (*beta).cend(),
+        (*Da).begin(),
+        [alpha_=alpha.value(), c_=c.value(), tau_=tau.value()]
+        (scalar betac)
+        {        
+            return sqr(alpha_) * (1 + c_*betac)/tau_;
+        }
+    );
     nvtxRangePop();
 
     nvtxRangePushA("phaseFieldFoam_fiEqn_D");
-    volScalarField Ddiag = Da * (1 + c*(*beta));
-    volScalarField Doffdiag = Da * c * (-N * 2 * (*Phi) / (1 + sqr(*Phi)));
-    D = Ddiag*tensor(1,0,0,0,1,0,0,0,0) + Doffdiag*tensor(0,1,0,-1,0,0,0,0,0);
+    volScalarField Ddiag = *Da * (1 + c*(*beta));
+    volScalarField Doffdiag = *Da * c * (-N * 2 * (*Phi) / (1 + sqr(*Phi)));
+    *D = Ddiag*tensor(1,0,0,0,1,0,0,0,0) + Doffdiag*tensor(0,1,0,-1,0,0,0,0,0);
     nvtxRangePop();
     
 /**
@@ -97,7 +107,7 @@
     fvScalarMatrix fiEqn
     (
         fvm::ddt(fi) 
-      - fvm::laplacian(D, fi)
+      - fvm::laplacian(*D, fi)
      ==
         fvModels.source(fi)
     );

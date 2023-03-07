@@ -80,8 +80,8 @@ Info<< "Creating scalar field Phi\n" << endl;
 @var
     @brief &Phi;
 */
-volScalarField* Phi;
-Phi = new volScalarField
+    volScalarField* Phi;
+    Phi = new volScalarField
     (
         IOobject
         (
@@ -106,8 +106,8 @@ Phi = new volScalarField
 @var
     @brief &beta;
 */
-volScalarField* beta;
-beta = new volScalarField
+    volScalarField* beta;
+    beta = new volScalarField
     (
         IOobject
         (
@@ -126,13 +126,40 @@ beta = new volScalarField
     );
 
 
+Info<< "Creating scalar field Da\n" << endl;
+
+/**
+@var
+    @brief Da
+*/
+    volScalarField* Da;
+    Da = new volScalarField
+    (
+        IOobject
+        (
+            "Da",
+            runTime.timeName(),
+            mesh,
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        mesh,
+        dimensionedScalar(
+            "_Da",
+            dimArea/dimTime,
+            0.
+        )
+    );
+
+
     Info<< "Creating tensor field D\n" << endl;
 
 /**
 @var
     @brief Anisotropy diffusion tensor
 */
-    volTensorField D
+    volTensorField* D;
+    D = new volTensorField
     (
         IOobject
         (
