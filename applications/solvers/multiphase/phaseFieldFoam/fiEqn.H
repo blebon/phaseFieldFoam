@@ -8,14 +8,15 @@
     @brief Phase field gradients
 */
     nvtxRangePushA("phaseFieldFoam_fiEqn_gradFi");
-    volVectorField gradFi(fvc::grad(fi));
+    *gradFi = fvc::grad(fi);
     nvtxRangePop();
 
 /**
 @var
     @brief x component of the phase field gradients
 */
-    volScalarField gradFix
+    volScalarField* gradFix;
+    gradFix = new volScalarField
     (
         IOobject
         (
@@ -25,14 +26,15 @@
             IOobject::NO_READ,
             IOobject::AUTO_WRITE
         ),
-        gradFi.component(vector::X)
+        (*gradFi).component(vector::X)
     );
 
 /**
 @var
     @brief y component of the phase field gradients
 */
-    volScalarField gradFiy
+    volScalarField* gradFiy;
+    gradFiy = new volScalarField
     (
         IOobject
         (
@@ -42,16 +44,16 @@
             IOobject::NO_READ,
             IOobject::AUTO_WRITE
         ),
-        gradFi.component(vector::Y)
+        (*gradFi).component(vector::Y)
     );
     
 
     nvtxRangePushA("phaseFieldFoam_fiEqn_Phi");
     std::transform(
         std::execution::par,
-        (gradFiy).cbegin(),
-        (gradFiy).cend(),
-        (gradFix).cbegin(),
+        (*gradFiy).cbegin(),
+        (*gradFiy).cend(),
+        (*gradFix).cbegin(),
         (*Phi).begin(),
         [pi_=constant::mathematical::pi, N_=N.value()]
         (scalar gradFiyc, scalar gradFixc)
@@ -98,6 +100,9 @@
     volScalarField Doffdiag = *Da * c * (-N * 2 * (*Phi) / (1 + sqr(*Phi)));
     *D = Ddiag*tensor(1,0,0,0,1,0,0,0,0) + Doffdiag*tensor(0,1,0,-1,0,0,0,0,0);
     nvtxRangePop();
+
+    delete gradFix;
+    delete gradFiy;
     
 /**
 @var

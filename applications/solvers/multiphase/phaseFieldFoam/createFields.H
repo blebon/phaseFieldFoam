@@ -74,7 +74,33 @@
     );
 
 
-Info<< "Creating scalar field Phi\n" << endl;
+    Info<< "Creating vector field grad(fi)\n" << endl;
+
+/**
+@var
+    @brief grad(&phi;)
+*/
+    volVectorField* gradFi;
+    gradFi = new volVectorField
+    (
+        IOobject
+        (
+            "gradFi",
+            runTime.timeName(),
+            mesh,
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        mesh,
+        dimensionedVector(
+            "_gradFi",
+            inv(dimLength),
+            vector(0, 0, 0)
+        )
+    );
+    
+    
+    Info<< "Creating scalar field Phi\n" << endl;
 
 /**
 @var
