@@ -98,84 +98,6 @@
             vector(0, 0, 0)
         )
     );
-    
-    
-    Info<< "Creating scalar field Phi\n" << endl;
-
-/**
-@var
-    @brief &Phi;
-*/
-    volScalarField* Phi;
-    Phi = new volScalarField
-    (
-        IOobject
-        (
-            "Phi",
-            runTime.timeName(),
-            mesh,
-            IOobject::NO_READ,
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        dimensionedScalar(
-            "_Phi",
-            dimless,
-            0.
-        )
-    );
-
-
-    Info<< "Creating scalar field beta\n" << endl;
-
-/**
-@var
-    @brief &beta;
-*/
-    volScalarField* beta;
-    beta = new volScalarField
-    (
-        IOobject
-        (
-            "beta",
-            runTime.timeName(),
-            mesh,
-            IOobject::NO_READ,
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        dimensionedScalar(
-            "_beta",
-            dimless,
-            0.
-        )
-    );
-
-
-Info<< "Creating scalar field Da\n" << endl;
-
-/**
-@var
-    @brief Da
-*/
-    volScalarField* Da;
-    Da = new volScalarField
-    (
-        IOobject
-        (
-            "Da",
-            runTime.timeName(),
-            mesh,
-            IOobject::NO_READ,
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        dimensionedScalar(
-            "_Da",
-            dimArea/dimTime,
-            0.
-        )
-    );
 
 
     Info<< "Creating tensor field D\n" << endl;
@@ -261,7 +183,7 @@ Info<< "Creating scalar field Da\n" << endl;
 @var
     @brief &kappa;_1
 */
-dimensionedScalar kappa1
+    dimensionedScalar kappa1
     (
         "kappa1",
         dimless,
@@ -282,4 +204,4 @@ dimensionedScalar kappa1
     );
 
 
-#include "createFvModels.H"
+    #include "createFvModels.H"
